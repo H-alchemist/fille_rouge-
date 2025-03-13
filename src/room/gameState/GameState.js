@@ -1,5 +1,5 @@
 class GameState {
-    constructor(whitePlayer, blackPlayer) {
+    constructor(whitePlayer, blackPlayer, time) {
       this.board = [
         [-2,-3,-4,-5,-6,-4,-3,-2],
         [-1,-1,-1,-1,-1,-1,-1,-1],
@@ -10,34 +10,32 @@ class GameState {
         [1, 1, 1, 1, 1, 1, 1, 1],
         [2, 3, 4, 5, 6, 4, 3, 2]
       ];
-    
-      this.turn = "white";
-      this.whitePlayer = whitePlayer;
-      this.blackPlayer = blackPlayer;
-      this.whitePlayerTime = 600;
-      this.blackPlayerTime = 600;
-      this.chatMap = new Map();
-      this.moves = [];
-      this.winner = null;
-      this.result = null; 
-      this.gameState = "ongoing";
+
+      this.start = [null, null, null]; 
+      this.end = [null, null, null];
+
     }
   
-    makeMove(move) {
-      if (this.gameState !== "ongoing") return;
-      this.moves.push(move);
-     
+    updateMatrix(x,y) {
+        board[x[0]][x[1]]=x[2];
+        board[y[0]][y[1]]=y[2];
     }
+
+
+    setStart(x,y,piece) {
+        this.start[0]=x;
+        this.start[1]=y;
+        this.start[2]=piece;
+    }
+    setEnd(x,y,piece) {
+        this.start[0]=x;
+        this.start[1]=y;
+        this.start[2]=piece;
+    }
+
   
-    addMessage(player, message) {
-      this.chatMap.set(player, message);
-    }
   
-    endGame(winner, result) {
-      this.winner = winner;
-      this.result = result;
-      this.gameState = "completed";
-    }
+  
   }
   
   module.exports = GameState;
