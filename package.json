@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@colyseus/ws-transport": "^0.16.3",
+    "colyseus": "^0.16.3",
+    "express": "^4.21.2"
+  },
+  "scripts": {
+    "start": "node src/server.js"
+  }
+}
