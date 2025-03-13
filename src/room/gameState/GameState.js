@@ -26,7 +26,7 @@ class GameState {
     makeMove(move) {
       if (this.gameState !== "ongoing") return;
       this.moves.push(move);
-      this.turn = this.turn === "white" ? "black" : "white";
+     
     }
   
     addMessage(player, message) {
