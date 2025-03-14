@@ -1,5 +1,7 @@
 {
+  "type": "module",
   "dependencies": {
+    "@colyseus/core": "^0.16.12",
     "@colyseus/ws-transport": "^0.16.3",
     "colyseus": "^0.16.3",
     "express": "^4.21.2"

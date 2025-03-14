@@ -1,30 +1,62 @@
-const { Room } = require("colyseus");
-const GameState = require("./gameState");
+// GameRoom.js
+import { Room } from "colyseus";
+import GameState from './gameState/GameState.js';
+import { calculatepieceMove } from '../calculmoves/calculMoves.js'; 
 
 class GameRoom extends Room {
   onCreate() {
+    console.log("GameRoom created!");
+
     this.maxClients = 2;
-    this.gameState = new GameState(client.sessionId, client.sessionId , );
-   
+    this.players = 0;
+
+    
+    this.state = GameState.createGameState();
+
+    
+    this.onMessage("selectPiece", (client, message) => {
+
+      console.log("Received movePiece message:", message);
+      
+
+
+    });
+
+    
+    
+    
   }
 
   onJoin(client) {
-   
-  }
+    if (this.players < 2) {
+      this.players++;
 
-  onMessage(client, message) {
-    if (message.type === "move") {
-      this.gameState.makeMove(message.move);
-      this.broadcast("move", message);
-    } else if (message.type === "chat") {
-      this.gameState.addMessage(client.sessionId, message.text);
-      this.broadcast("chat", { player: client.sessionId, text: message.text });
+      if (this.players === 1) {
+        
+        this.state.whitePlayer = client.sessionId;
+        client.send("playerColor", "white");
+      } else if (this.players === 2) {
+
+        this.state.blackPlayer = client.sessionId;
+        client.send("playerColor", "black");
+
+        
+        this.broadcast("gameStart", this.state);
+      }
     }
   }
 
   onLeave(client) {
     console.log(`Player ${client.sessionId} left.`);
+
+    if (this.state) {
+      if (client.sessionId === this.state.whitePlayer) {
+        this.broadcast("playerLeft", { color: "white" });
+      } else if (client.sessionId === this.state.blackPlayer) {
+        this.broadcast("playerLeft", { color: "black" });
+      }
+    }
   }
 }
 
-module.exports = GameRoom;
+export default GameRoom;

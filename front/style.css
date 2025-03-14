@@ -1,0 +1,103 @@
+
+
+#gameControls {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#gameStatus {
+    margin-top: 10px;
+    font-weight: bold;
+}
+/* Enhanced chess board styling */
+html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  #gameControls {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  #gameStatus {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+  
+  .board {
+    position: relative;
+    background-image: url('https://images.chesscomfiles.com/chess-themes/boards/icy_sea/200.png');
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 500px;
+    height: 500px;
+    border: 2px solid #000;
+  }
+  
+  .board .numLett {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 0;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .pieceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    /* No background color since we're using a background image */
+  }
+  
+  .pieceContainer img, .piece {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    cursor: pointer;
+  }
+  
+  .selected {
+    filter: blur(0.3px);
+    background-color: rgba(0, 0, 255, 0.2); /* Blue tint for selected squares */
+  }
+  
+  .legalSquare {
+    -webkit-box-shadow: inset -1px 9px 18px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset -1px 9px 18px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset -1px 9px 18px 0px rgba(0, 0, 0, 0.75);
+  }
+  
+  /* Preserve the last move highlighting from original styles */
+  .lastMove {
+    background-color: rgba(173, 216, 230, 0.5) !important;
+  }
+  
+  /* Alternative way to indicate legal moves if the shadow doesn't look good with the background image */
+  .legalSquare::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 255, 0, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }

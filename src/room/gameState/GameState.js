@@ -1,42 +1,44 @@
-class GameState {
-    constructor(whitePlayer, blackPlayer, time) {
-      this.board = [
-        [-2,-3,-4,-5,-6,-4,-3,-2],
-        [-1,-1,-1,-1,-1,-1,-1,-1],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0],
-        [1, 1, 1, 1, 1, 1, 1, 1],
-        [2, 3, 4, 5, 6, 4, 3, 2]
-      ];
+// gameState.js
+const GameState = {
+  createGameState(whitePlayer = null, blackPlayer = null) {
+    return {
+      board: initializeBoard(),
+      turn: "white",
+      whitePlayer,
+      blackPlayer,
+    };
+  },
 
-      this.start = [null, null, null]; 
-      this.end = [null, null, null];
+  updateMatrix(gameState, from, to) {
+    const [fromRow, fromCol] = from;
+    const [toRow, toCol] = to;
 
-    }
-  
-    updateMatrix(x,y) {
-        board[x[0]][x[1]]=x[2];
-        board[y[0]][y[1]]=y[2];
-    }
+    // Move the piece
+    gameState.board[toRow][toCol] = gameState.board[fromRow][fromCol];
+    gameState.board[fromRow][fromCol] = 0;
 
+    return gameState;
+  },
 
-    setStart(x,y,piece) {
-        this.start[0]=x;
-        this.start[1]=y;
-        this.start[2]=piece;
-    }
-    setEnd(x,y,piece) {
-        this.start[0]=x;
-        this.start[1]=y;
-        this.start[2]=piece;
-    }
-
-  
-  
-  
+  switchTurn(gameState) {
+    gameState.turn = gameState.turn === "white" ? "black" : "white";
+    return gameState;
   }
-  
-  module.exports = GameState;
-  
+};
+
+function initializeBoard() {
+  const board = [
+    [-2, -3, -4, -5, -6, -4, -3, -2],
+    [-1, -1, -1, -1, -1, -1, -1, -1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [2, 3, 4, 5, 6, 4, 3, 2]
+  ];
+
+  return board;
+}
+
+export default GameState;
