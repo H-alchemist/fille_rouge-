@@ -9,19 +9,32 @@ const GameState = {
     };
   },
 
-  updateMatrix(gameState, from, to) {
+  updateMatrix(board, from, to) {
+   
+    
+    // console.log("Updating matrix from:", from, "to:", to);
+    
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
 
     // Move the piece
-    gameState.board[toRow][toCol] = gameState.board[fromRow][fromCol];
-    gameState.board[fromRow][fromCol] = 0;
+    board[toRow][toCol] = board[fromRow][fromCol];
+    board[fromRow][fromCol] = 0;
 
-    return gameState;
+    // console.log("Matrix after update:", board);
+    // console.log("////////////////////////////////////");
+    
+    return ;
   },
 
   switchTurn(gameState) {
-    gameState.turn = gameState.turn === "white" ? "black" : "white";
+    if (gameState.turn === "white") {
+      gameState.turn = "black";
+    } else {
+      gameState.turn = "white";
+    }
+  
+    console.log("Turn switched to:", gameState.turn);
     return gameState;
   }
 };

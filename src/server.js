@@ -17,5 +17,5 @@ const gameServer = new Server({
 gameServer.define("game_room", GameRoom);
 
 server.listen(3000, () => {
-  console.log("Colyseus server running on ws://localhost:9876");
+  console.log("Colyseus server running on ws://localhost:3000");
 });

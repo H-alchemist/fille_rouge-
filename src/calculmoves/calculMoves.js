@@ -1,94 +1,95 @@
 
 
 
-  export   function calculatepieceMove(r,c,num){
+  export   function calculatepieceMove(r,c,num,board) {
 
+//    console.log('test');
 
 
 
     switch (num) {
         case 1:
-            return WhitePawn(r,c);
+            return WhitePawn(r,c , board);
             
             break;
         case -1:
         
-            return BlackPawn(r,c);
+            return BlackPawn(r,c,board);
                 
             break;
         case 2:
         
-            return whiteRook(r,c);
+            return whiteRook(r,c,board);
                 
         break;
         case -2:
                         
 
-            return blackRook(r,c);
+            return blackRook(r,c,board);
                 
         break;
         
         case 2:
         
-            return whiteRook(r,c);
+            return whiteRook(r,c,board);
                 
         break;
 
 
         case 4:
-            console.log(r +'test'+c);
+            console.log(r +'test'+c,board);
             
         
-            return whiteBishop(r,c);
+            return whiteBishop(r,c,board);
                 
         break;
         
         case -4:
         
-            return blackBishop(r,c);
+            return blackBishop(r,c,board);
                 
         break;
 
         case 5:
-            console.log(r +'test'+c);
+            console.log(r +'test'+c,board);
             
         
-            return whiteQueen(r,c);
+            return whiteQueen(r,c,board);
                 
         break;
         
         case -5:
         
-            return blackQueen(r,c);
+            return blackQueen(r,c,board);
                 
         break;
 
         case 6:
-            console.log(r +'test'+c);
+            console.log(r +'test'+c,board);
             
         
-            return whiteKing(r,c);
+            return whiteKing(r,c,board);
                 
         break;
         
         case -6:
         
-            return blackKing(r,c);
+            return blackKing(r,c,board);
                 
         break;
 
 
         case 3:
-            console.log(r +'test'+c);
+            console.log(r +'test'+c,board);
             
         
-            return whiteKnight(r,c);
+            return whiteKnight(r,c,board);
                 
         break;
         
         case -3:
         
-            return blackKnight(r,c);
+            return blackKnight(r,c,board);
                 
         break;
 
@@ -105,7 +106,7 @@
 
 
 
-  export   function WhitePawn(r, c) {
+  export   function WhitePawn(r, c , board) {
     let list = [];
 
     if (r > 0 && board[r - 1][c] === 0) {
@@ -133,7 +134,7 @@
 
 
 
-  export   function BlackPawn(r, c) {
+  export   function BlackPawn(r, c, board) {
     let list = [];
 
     
@@ -159,7 +160,7 @@
     return list;
 }
 
-  export   function whiteRook(r, c) {
+  export   function whiteRook(r, c, board) {
     let list = [];
 
    
@@ -220,7 +221,7 @@
     return list;
 }
 
-  export   function blackRook(r, c) {
+  export   function blackRook(r, c, board) {
     let list = [];
 
     
@@ -291,7 +292,7 @@
 
 
 
-  export   function blackBishop(r, c) {
+  export   function blackBishop(r, c, board) {
     let list = [];
 
     
@@ -357,7 +358,7 @@
 
 
 
-  export   function whiteBishop(r, c) {
+  export   function whiteBishop(r, c, board) {
     let list = [];
   console.log(list);
   
@@ -429,7 +430,7 @@
     return list;
 }
 
-  export   function blackQueen(r, c) {
+  export   function blackQueen(r, c, board) {
     let list = [];
   
    
@@ -545,7 +546,7 @@
 }
 
 
-  export   function whiteQueen(r, c) {
+  export   function whiteQueen(r, c, board) {
     let list = [];
   
     let col = c - 1;
@@ -662,7 +663,7 @@
 }
 
 
-  export   function whiteKing(r, c) {
+  export   function whiteKing(r, c, board) {
     let list = [];
 
     const directions = [
@@ -689,7 +690,7 @@
 
 
 
-  export   function blackKing(r, c) {
+  export   function blackKing(r, c, board) {
     let list = [];
 
     const directions = [
@@ -717,7 +718,7 @@
 
 
 
-  export   function whiteKnight(r,c){
+  export   function whiteKnight(r,c , board){
 
    
     
@@ -752,7 +753,7 @@
 }
 
 
-  export   function blackKnight(r,c){
+  export   function blackKnight(r,c, board){
 
    
     

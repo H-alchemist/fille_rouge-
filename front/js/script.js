@@ -96,7 +96,7 @@ function setupRoomListeners() {
     room.onMessage("validMoves", (message) => {
         const { validMoves, selectedPiece } = message;
         
-        start = [selectedPiece.row, selectedPiece.col, selectedPiece.piece];
+        start = [selectedPiece.row, selectedPiece.col, selectedPiece.pieceN];
         document.querySelector(`[data-row="${selectedPiece.row}"][data-col="${selectedPiece.col}"]`).classList.add('selected');
         
         addStylingforlegalMoves(validMoves);
@@ -162,10 +162,24 @@ function handlePieceSelection(row, col, pieceN) {
         return;
     }
 
-    
     room.send("selectPiece", { row, col , pieceN});
 }
 
+function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
+    
+    if (!isMyTurn) {
+        document.getElementById('gameStatus').textContent = "Not your turn";
+        return;
+
+    }
+
+    console.log(fromRow, fromCol , toRow , toCol , pieceN);
+    
+
+    room.send("handleMove", { fromRow, fromCol , toRow , toCol , pieceN});
+    clearSelection();
+
+}
 
 
 
@@ -174,7 +188,8 @@ function renderBoard() {
     const boardElement = document.querySelector('.board');
     boardElement.innerHTML = '';
     
-    boardElement.innerHTML = '<svg class="numLett" viewBox="0 0 100 100" class="coordinates"><!-- Your SVG text coordinates here --></svg>';
+    boardElement.innerHTML = '<svg class="numLett" viewBox="0 0 100 100" class="coordinates"><text x="0.75" y="3.5" font-size="2.8" class="coordinate-light">8</text><text x="0.75" y="15.75" font-size="2.8" class="coordinate-dark">7</text><text x="0.75" y="28.25" font-size="2.8" class="coordinate-light">6</text><text x="0.75" y="40.75" font-size="2.8" class="coordinate-dark">5</text><text x="0.75" y="53.25" font-size="2.8" class="coordinate-light">4</text><text x="0.75" y="65.75" font-size="2.8" class="coordinate-dark">3</text><text x="0.75" y="78.25" font-size="2.8" class="coordinate-light">2</text><text x="0.75" y="90.75" font-size="2.8" class="coordinate-dark">1</text><text x="10" y="99" font-size="2.8" class="coordinate-dark">a</text><text x="22.5" y="99" font-size="2.8" class="coordinate-light">b</text><text x="35" y="99" font-size="2.8" class="coordinate-dark">c</text><text x="47.5" y="99" font-size="2.8" class="coordinate-light">d</text><text x="60" y="99" font-size="2.8" class="coordinate-dark">e</text><text x="72.5" y="99" font-size="2.8" class="coordinate-light">f</text><text x="85" y="99" font-size="2.8" class="coordinate-dark">g</text><text x="97.5" y="99" font-size="2.8" class="coordinate-light">h</text></svg>';
+ 
     
     for (let row = 0; row < 8; row++) {
         for (let col = 0; col < 8; col++) {
@@ -212,18 +227,33 @@ function renderBoard() {
             const col = parseInt(element.dataset.col, 10);
             const pieceN = parseInt(element.dataset.content, 10);
             const available = parseInt(element.dataset.available, 10);
+            console.log("available", available);
+            
 
             if (start[2] === null || start[2] === 0) {
+                console.log('s');
                 
                 if (pieceN !== 0) {
                     handlePieceSelection(row, col, pieceN);
                 }
-            } else if (start[0] === row && start[1] === col) {
+            }else if(pieceN*start[2]>0) {
+                console.log('test');
+
+                clearSelection();
+
+                if (pieceN !== 0) {
+                    handlePieceSelection(row, col, pieceN);
+                }
+            
+            
+            }else if ((start[0] === row && start[1] === col) ) {
+                console.log('3');
                 
                 clearSelection();
             } else if (available === 1) {
+                console.log('available');
                 
-                handleMove(start[0], start[1], row, col);
+                handleMove(start[0], start[1], row, col , pieceN);
             }
         });
     });
@@ -236,3 +266,54 @@ document.addEventListener('DOMContentLoaded', () => {
     
     renderBoard();
 });
+
+
+
+function addStylingforlegalMoves(list){
+
+    if (list==null) {
+        return
+        
+    } else {
+        
+    
+
+    list.forEach(element => {
+
+        const res = document.querySelector(`[data-row="${element[0]}"][data-col="${element[1]}"]`);
+        res.dataset.available=1;
+
+        res.classList.add('legalSquare');
+
+        
+    });
+    }
+
+
+
+}
+
+function  removeStylingforlegalMoves(list){
+
+    if (list==null) {
+        return
+        
+    } else {
+        
+    
+
+
+    list.forEach(element => {
+
+        console.log(element);
+        
+
+        const res = document.querySelector(`[data-row="${element[0]}"][data-col="${element[1]}"]`);
+        res.dataset.available=0;
+        res.classList.remove('legalSquare');
+
+        
+    });
+}
+
+}

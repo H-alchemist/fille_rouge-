@@ -1,31 +1,56 @@
 // GameRoom.js
 import { Room } from "colyseus";
 import GameState from './gameState/GameState.js';
-import { calculatepieceMove } from '../calculmoves/calculMoves.js'; 
-
+import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,blackBishop,whiteQueen,blackQueen,whiteKing,blackKing,whiteKnight,blackKnight
+} from '../calculmoves/calculMoves.js';
 class GameRoom extends Room {
   onCreate() {
     console.log("GameRoom created!");
 
     this.maxClients = 2;
     this.players = 0;
-
+    let list = [];
     
     this.state = GameState.createGameState();
 
     
     this.onMessage("selectPiece", (client, message) => {
 
-      console.log("Received movePiece message:", message);
-      
+      // console.log("Received movePiece message:", message);
+
+      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board);
+
+      // console.log(list);
+      client.send("validMoves", {validMoves: list,selectedPiece: {row: message.row,col: message.col,pieceN: message.pieceN}});
 
 
     });
 
-    
-    
-    
-  }
+    this.onMessage("handleMove", (client, message) => {
+
+      // console.log("Received movePiece message:", message);
+      const exists = list.find(item => item[0] === target[0] && item[1] === target[1]) !== undefined;
+
+      if (exists==undefined) {
+        client.send("invalidMove", {message: "Invalid move"});
+        return;
+        
+      }
+
+      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol]);
+      console.log(this.state.turn);
+      
+      GameState.switchTurn(this.state);
+      console.log(this.state.turn);
+
+      // console.log(this.state.board);
+      
+      this.broadcast("boardUpdate", this.state);
+  
+    });
+
+
+    }
 
   onJoin(client) {
     if (this.players < 2) {
@@ -56,7 +81,7 @@ class GameRoom extends Room {
         this.broadcast("playerLeft", { color: "black" });
       }
     }
-  }
+  }turn
 }
 
 export default GameRoom;
