@@ -2,7 +2,10 @@ import http from "http";
 import express from "express";
 import { Server } from "colyseus";
 import { WebSocketTransport } from "@colyseus/ws-transport";
+
 import  GameRoom  from "./room/gameRoom.js"; 
+
+import  MatchmakingRoom  from "./room/matchMakingRoom.js"; 
 
 
 
@@ -14,6 +17,8 @@ const gameServer = new Server({
   }),
 });
 
+
+gameServer.define("matchMaking_room", MatchmakingRoom);
 gameServer.define("game_room", GameRoom);
 
 server.listen(3000, () => {

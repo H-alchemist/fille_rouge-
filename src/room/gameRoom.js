@@ -1,10 +1,13 @@
-// GameRoom.js
 import { Room } from "colyseus";
 import GameState from './gameState/GameState.js';
-import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,blackBishop,whiteQueen,blackQueen,whiteKing,blackKing,whiteKnight,blackKnight
-} from '../calculmoves/calculMoves.js';
+
+
+import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,blackBishop,whiteQueen,blackQueen,whiteKing,blackKing,whiteKnight,blackKnight} from '../calculmoves/calculMoves.js';
+
+
 class GameRoom extends Room {
   onCreate() {
+
     console.log("GameRoom created!");
 
     this.maxClients = 2;
@@ -81,7 +84,7 @@ class GameRoom extends Room {
         this.broadcast("playerLeft", { color: "black" });
       }
     }
-  }turn
+  }
 }
 
 export default GameRoom;

@@ -60,7 +60,11 @@ async function createGame() {
     }
     
     try {
-        room = await client.joinOrCreate("game_room");
+        room = await client.joinOrCreate("matchMaking_room");
+        room.onMessage("matchmak", (message) => {
+            console.log("Received matchmaking join message:", message);
+            // Handle the matchmaking join message
+        });
        
         document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
 
@@ -76,6 +80,22 @@ async function createGame() {
 
 
 function setupRoomListeners() {
+
+
+
+    ///// test matchmaking 
+
+   
+
+
+
+
+
+
+
+
+
+
     room.onMessage("playerColor", (message) => {
         console.log("Received player color:", message);
         playerColor = message;
