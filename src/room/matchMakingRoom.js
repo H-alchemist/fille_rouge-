@@ -21,10 +21,22 @@ import MatchmakingQueue from "./gameState/MatchmakingQueue.js";
 
 
 
-  onJoin(client) {
-    console.log("Matchmaking room joined by client:", client.id);
+  onJoin(client,options) {
+    // console.log("Matchmaking room joined by client:", client.id);
+
+    MatchmakingQueue.addPlayer(this.state ,client, options);
+    console.log();
+    
+
     this.broadcast("matchmak", this.state.queue );
     // this.broadcast("matchmaking:join", client.id);
+  }
+
+  onLeave(client) {
+    console.log("Matchmaking room left by client:", client.id);
+    
+    MatchmakingQueue.removePlayer( this.state,client.id);
+   
   }
 
 }

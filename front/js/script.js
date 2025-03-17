@@ -60,13 +60,14 @@ async function createGame() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room");
+        room = await client.joinOrCreate("matchMaking_room", {name: "hamza",rating: 1500,timeControl: "blitz"});
+
         room.onMessage("matchmak", (message) => {
             console.log("Received matchmaking join message:", message);
             // Handle the matchmaking join message
         });
        
-        document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
+        // document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
 
         setupRoomListeners();
     } catch (error) {
