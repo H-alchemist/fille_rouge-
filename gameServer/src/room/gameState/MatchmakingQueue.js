@@ -26,7 +26,7 @@ const MatchmakingQueue = {
 
   addPlayer(state,player , playerData) {
 
-    const { sessionId, name, rating, timeControl } = playerData;
+    const {  name, rating, timeControl } = playerData;
 
 
     const obj = {
