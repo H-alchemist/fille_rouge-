@@ -11,7 +11,10 @@ class GameRoom extends Room {
    
     this.maxClients = 2;
     
-    
+    this.players = 0;
+
+    let list =null;
+
     this.whitePlayer = null;
     this.blackPlayer = null;
     
@@ -23,13 +26,12 @@ class GameRoom extends Room {
       options.timeControl
     );
 
-    // console.log(`Room created for:
-    //   White: ${this.state.whitePlayerData.name} 
-    //   Black: ${this.state.blackPlayerData.name} `);
-
-
+   
 
     this.onMessage("selectPiece", (client, message) => {
+
+      console.log(`Received "selectPiece" from ${client.sessionId}:`, message);
+
 
       // console.log("Received movePiece message:", message);
 
@@ -43,8 +45,8 @@ class GameRoom extends Room {
 
     this.onMessage("handleMove", (client, message) => {
 
-      // console.log("Received movePiece message:", message);
-      const exists = list.find(item => item[0] === target[0] && item[1] === target[1]) !== undefined;
+      console.log("Received movePiece message:", message);
+      const exists = list.find(item => item[0] === message.toRow && item[1] === message.toCol) !== undefined;
 
       if (exists==undefined) {
         client.send("invalidMove", {message: "Invalid move"});
@@ -68,27 +70,28 @@ class GameRoom extends Room {
     }
 
     onJoin(client, options) {
+      console.log(options);
+      
       if (this.players < 2) {
         this.players++;
+        
   
         if (this.players === 1) {
           this.state.whitePlayer = client.sessionId;
-          this.state.whitePlayerData = {
+          console.log(this.state.whitePlayer);
+          this.state.whitePlayerData = { ...options };
+          // this.state.whitePlayerData = {
 
-            name: options.name,
-            rating: options.rating,
-            accountId: options.accountId,
-          };
+          //   name: options.name,
+          //   rating: options.rating,
+          //   accountId: options.accountId,
+          // };
           client.send("playerColor", "white");
         } else if (this.players === 2) {
-          this.state.blackPlayer = client.sessionId;
-          this.state.blackPlayerData = {
+          console.log(this.state.whitePlayer);
 
-            
-            name: options.name,
-            rating: options.rating,
-            accountId: options.accountId,
-          };
+          this.state.blackPlayer = client.sessionId;
+          this.state.blackPlayerData = { ...options };
           client.send("playerColor", "black");
   
           this.broadcast("gameStart", this.state);
