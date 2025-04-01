@@ -4,16 +4,17 @@ import { matchMaker } from "colyseus";
 export class MatchmakingQueue {
   constructor() {
     this.queue = [];
+    this.count = 0;
     this.everyTime = 4000;
-    this.maxRatingDifference = 200;
+    this.maxRatingDifference = 50;
     this.ratingIncrease = 60; 
     this.maxWaitTime = 15000;
-    // this.intervalId = setInterval(() =>{
+    this.intervalId = setInterval(() =>{
 
-    //   console.log("Matchmaking loop running...");
+      console.log("Matchmaking loop running..." + this.count++);
       
-    //   this.findMatches.bind(this)
-    // }, this.everyTime);
+      this.findMatches.bind(this)
+    }, this.everyTime);
   }
 
   async addToQueue(client, options) {
@@ -53,10 +54,14 @@ export class MatchmakingQueue {
 
   findMatches() {
     if (this.queue.length < 2) return;
+    console.log('none' + this.count++);
+    
     
     this.queue.sort((a, b) => a.joinedAt - b.joinedAt);
     
     for (let i = 0; i < this.queue.length; i++) {
+
+      console.log("<<<<<<<<<<<<<<",i);
       const entry = this.queue[i];
       
       if (!entry.searching) continue;
@@ -67,7 +72,10 @@ export class MatchmakingQueue {
       console.log("Wait time:", waitTime);
       
       const waitFactor = Math.floor(waitTime / this.everyTime);
+      console.log("Wait factor:", waitFactor);
+      
       const currentDifference = this.maxRatingDifference + (waitFactor * this.ratingIncrease);
+      console.log("Current difference:", currentDifference);
       
       for (let j = 0; j < this.queue.length; j++) {
         if (i === j || !this.queue[j].searching) continue;
@@ -79,10 +87,14 @@ export class MatchmakingQueue {
         if (entry.timeControl !== checkmatching.timeControl) continue;
         
         const ratingDiff = Math.abs(entry.rating - checkmatching.rating);
+        console.log("Rating difference:", ratingDiff);
+
+
+
         // console.log(  this.maxRatingDifference +'Two player'+ waitFactor);
         if (ratingDiff <= currentDifference || waitTime >= this.maxWaitTime) {
          
-          console.log('test' + entry.name + checkmatching.name);
+           console.log('createhere' + entry.name + checkmatching.name);
           this.createMatch(entry, checkmatching);
           break; 
         }
@@ -100,8 +112,8 @@ export class MatchmakingQueue {
     player2.searching = false;
     console.log(player1.accounId);
     console.log(player2.accounId);
-    console.log(player1.client);
-    console.log(player2.client);
+    console.log(player1.rating);
+    console.log(player2.rating);
     
 
     const room = await matchMaker.createRoom("game_room", {

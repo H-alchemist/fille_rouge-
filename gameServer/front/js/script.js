@@ -21,6 +21,11 @@ var client = null;
 var room = null;
 let gameRoom=null ;
 
+// let RR =Math.floor(Math.random() * 301) + 1200;
+
+// console.log(RR);
+
+
 
 // Piece images
 const pieceMap = {
@@ -42,8 +47,7 @@ const pieceMap = {
 
 async function connectToServer() {
     try {
-        client = new Colyseus.Client('ws://localhost:3000');
-        // Test the connection by attempting to get available rooms
+        client = new Colyseus.Client('ws://localhost:3001');
         // await client.getAvailableRooms();
         document.getElementById('gameStatus').textContent = "Connected to server";
         return true;
@@ -62,7 +66,7 @@ async function joinMatchMaking() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating: 1500,timeControl: "blitz"});
+        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating:1200,timeControl: "blitz"});
 
         room.onMessage("matchmakingFound",async (message) => {
             console.log("Matchmaking found:", message.roomId);
@@ -256,7 +260,7 @@ function renderBoard() {
     
     const allPieces = document.querySelectorAll('.pieceContainer');
     allPieces.forEach(element => {
-        console.log('elem');
+        // console.log('elem');
         
         element.addEventListener('click', function() {
             const row = parseInt(element.dataset.row, 10);
