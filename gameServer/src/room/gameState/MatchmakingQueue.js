@@ -116,19 +116,7 @@ export class MatchmakingQueue {
 
 
 
-    // const reservedSeat1 = await matchMaker.reserveSeatFor(room, {
-    //   client: player1.client.sessionId,
-    //   name: player1.name,
-    //   rating: player1.rating,
-    //   color: "white"
-    // });
     
-    // const reservedSeat2 = await matchMaker.reserveSeatFor(room, {
-    //   client: player2.client.sessionId,
-    //   name: player2.name,
-    //   rating: player2.rating,
-    //   color: "black"
-    // });
     
 
     player1.client.send("matchmakingFound", {
