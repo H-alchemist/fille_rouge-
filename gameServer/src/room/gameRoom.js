@@ -8,26 +8,24 @@ import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,b
 class GameRoom extends Room {
   onCreate(options) {
     
-    if (!options.whitePlayerId || !options.blackPlayerId) {
-      throw new Error("Missing player IDs in room creation");
-    }
-
+   
     this.maxClients = 2;
     
     
-    this.whitePlayerId = options.whitePlayerId;
-    this.blackPlayerId = options.blackPlayerId;
+    this.whitePlayer = null;
+    this.blackPlayer = null;
     
     
     this.state = GameState.createGameState(
-      options.whitePlayerData,
-      options.blackPlayerData,
+      null,
+      null,
+    
       options.timeControl
     );
 
-    console.log(`Room created for:
-      White: ${this.state.whitePlayerData.name} (${this.whitePlayerId})
-      Black: ${this.state.blackPlayerData.name} (${this.blackPlayerId})`);
+    // console.log(`Room created for:
+    //   White: ${this.state.whitePlayerData.name} 
+    //   Black: ${this.state.blackPlayerData.name} `);
 
 
 
@@ -69,23 +67,33 @@ class GameRoom extends Room {
 
     }
 
-  onJoin(client) {
-    if (this.players < 2) {
-      this.players++;
+    onJoin(client, options) {
+      if (this.players < 2) {
+        this.players++;
+  
+        if (this.players === 1) {
+          this.state.whitePlayer = client.sessionId;
+          this.state.whitePlayerData = {
 
-      if (this.players === 1) {
-        
-        this.state.whitePlayer = client.sessionId;
-        client.send("playerColor", "white");
-      } else if (this.players === 2) {
+            name: options.name,
+            rating: options.rating,
+            accountId: options.accountId,
+          };
+          client.send("playerColor", "white");
+        } else if (this.players === 2) {
+          this.state.blackPlayer = client.sessionId;
+          this.state.blackPlayerData = {
 
-        this.state.blackPlayer = client.sessionId;
-        client.send("playerColor", "black");
-
-        
-        this.broadcast("gameStart", this.state);
+            
+            name: options.name,
+            rating: options.rating,
+            accountId: options.accountId,
+          };
+          client.send("playerColor", "black");
+  
+          this.broadcast("gameStart", this.state);
+        }
       }
-    }
   }
 
   onLeave(client) {

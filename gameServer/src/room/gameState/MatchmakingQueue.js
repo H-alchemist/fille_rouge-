@@ -4,23 +4,23 @@ import { matchMaker } from "colyseus";
 export class MatchmakingQueue {
   constructor() {
     this.queue = [];
-    this.everyTime = 2000;
+    this.everyTime = 4000;
     this.maxRatingDifference = 200;
     this.ratingIncrease = 60; 
     this.maxWaitTime = 15000;
-    this.intervalId = setInterval(() =>{
+    // this.intervalId = setInterval(() =>{
 
-      console.log("Matchmaking loop running...");
+    //   console.log("Matchmaking loop running...");
       
-      this.findMatches.bind(this)
-    }, this.everyTime);
+    //   this.findMatches.bind(this)
+    // }, this.everyTime);
   }
 
   async addToQueue(client, options) {
-    const { sessionId, name, rating, timeControl , accountId} = options;
+    const {  name, rating, timeControl , accounId} = options;
     
-    const obj = {client,sessionId,
-      accountId,name,rating: rating || 1200,
+    const obj = {client,
+      accounId,name,rating: rating || 1200,
       timeControl: timeControl || "rapid", joinedAt: Date.now(),maxRatingDifference: this.maxRatingDifference,searching: true
     };
     
@@ -36,7 +36,19 @@ export class MatchmakingQueue {
     this.findMatches();
   }
   
-
+  removeFromQueue(sessionId) {
+    const index = this.queue.findIndex(entry => entry.sessionId === sessionId);
+    if (index !== -1) {
+      const entry = this.queue[index];
+      console.log(`Player ${entry.name} removed from ${entry.timeControl} queue`);
+      this.queue.splice(index, 1);
+      
+      // Update queue positions for remaining players
+      this.updateQueuePositions();
+      return true;
+    }
+    return false;
+  }
 
 
   findMatches() {
@@ -52,22 +64,25 @@ export class MatchmakingQueue {
       /////// time cheking for (time , rating )
          
       const waitTime = Date.now() - entry.joinedAt;
-      const waitFactor = Math.floor(waitTime / this.tickRate);
-      const currentMaxDifference = this.maxRatingDifference + (waitFactor * this.ratingIncrease);
+      console.log("Wait time:", waitTime);
+      
+      const waitFactor = Math.floor(waitTime / this.everyTime);
+      const currentDifference = this.maxRatingDifference + (waitFactor * this.ratingIncrease);
       
       for (let j = 0; j < this.queue.length; j++) {
         if (i === j || !this.queue[j].searching) continue;
         
         const checkmatching = this.queue[j];
-        console.log('test' + entry.name + checkmatching.name);
+        
         
         
         if (entry.timeControl !== checkmatching.timeControl) continue;
         
         const ratingDiff = Math.abs(entry.rating - checkmatching.rating);
-        
-        if (ratingDiff <= currentMaxDifference || waitTime >= this.maxWaitTime) {
-       
+        // console.log(  this.maxRatingDifference +'Two player'+ waitFactor);
+        if (ratingDiff <= currentDifference || waitTime >= this.maxWaitTime) {
+         
+          console.log('test' + entry.name + checkmatching.name);
           this.createMatch(entry, checkmatching);
           break; 
         }
@@ -83,6 +98,58 @@ export class MatchmakingQueue {
     
     player1.searching = false;
     player2.searching = false;
+    console.log(player1.accounId);
+    console.log(player2.accounId);
+    console.log(player1.client);
+    console.log(player2.client);
+    
+
+    const room = await matchMaker.createRoom("game_room", {
+
+
+          timeControl: player1.timeControl,
+         
+        
+        });
+    
+    console.log(`Match created: ${room.roomId}`);
+
+
+
+    // const reservedSeat1 = await matchMaker.reserveSeatFor(room, {
+    //   client: player1.client.sessionId,
+    //   name: player1.name,
+    //   rating: player1.rating,
+    //   color: "white"
+    // });
+    
+    // const reservedSeat2 = await matchMaker.reserveSeatFor(room, {
+    //   client: player2.client.sessionId,
+    //   name: player2.name,
+    //   rating: player2.rating,
+    //   color: "black"
+    // });
+    
+
+    player1.client.send("matchmakingFound", {
+      roomId: room.roomId,
+      // reservation: reservedSeat1,
+      opponent: {
+        name: player2.name,
+        rating: player2.rating
+      }
+    });
+    
+
+    player2.client.send("matchmakingFound", {
+      roomId: room.roomId,
+      // reservation: reservedSeat2,
+      opponent: {
+        name: player1.name,
+        rating: player1.rating
+      }
+    });
+    
     
     
   }

@@ -1,6 +1,6 @@
 // gameState.js
 const GameState = {
-  createGameState(whitePlayer = null, blackPlayer = null) {
+  createGameState(whitePlayerData = null, blackPlayerData = null ,timeControl) {
     return {
       board: initializeBoard(),
       turn: "white",

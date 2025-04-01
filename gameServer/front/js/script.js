@@ -53,7 +53,7 @@ async function connectToServer() {
 }
 
 // Create a new game
-async function createGame() {
+async function joinMatchMaking() {
     if (!client) {
         const connected = await connectToServer();
         if (!connected) return;
@@ -62,14 +62,16 @@ async function createGame() {
     try {
         room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating: 1500,timeControl: "blitz"});
 
-        room.onMessage("matchmak", (message) => {
-            console.log("Received matchmaking join message:", message);
-            // Handle the matchmaking join message
+        room.onMessage("matchmakingFound",async (message) => {
+            
+            await joinGameRoom(message.roomId);
+
+            
         });
        
         // document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
 
-        setupRoomListeners();
+        // setupRoomListeners();
     } catch (error) {
         console.error("Could not create game:", error);
         document.getElementById('gameStatus').textContent = "Could not create game";
@@ -79,42 +81,40 @@ async function createGame() {
 
 
 
+async function joinGameRoom(roomId) {
+    try {
+       let gameRoom = await client.joinById(roomId);
+        console.log("Joined game room:", gameRoom);
 
-function setupRoomListeners() {
+        setupRoomListeners(gameRoom);
+    } catch (error) {
+        console.error("Error joining game room:", error);
+    }
+}
 
-
-
-    ///// test matchmaking 
-
-   
-
-
-
-
-
-
+function setupRoomListeners(gameRoom) {
 
 
 
 
-    room.onMessage("playerColor", (message) => {
+    gameRoom.onMessage("playerColor", (message) => {
         console.log("Received player color:", message);
         playerColor = message;
         document.getElementById('gameStatus').textContent = `You are playing as ${playerColor}`;
     });
 
-    room.onMessage("waitingForOpponent", (message) => {
+    gameRoom.onMessage("waitingForOpponent", (message) => {
         document.getElementById('gameStatus').textContent = "Waiting for opponent...";
     });
 
-    room.onMessage("gameStart", (message) => {
+    gameRoom.onMessage("gameStart", (message) => {
         board = message.board;
         isMyTurn = playerColor === message.turn;
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
         renderBoard();
     });
 
-    room.onMessage("validMoves", (message) => {
+    gameRoom.onMessage("validMoves", (message) => {
         const { validMoves, selectedPiece } = message;
         
         start = [selectedPiece.row, selectedPiece.col, selectedPiece.pieceN];
@@ -123,13 +123,13 @@ function setupRoomListeners() {
         addStylingforlegalMoves(validMoves);
     });
 
-    room.onMessage("invalidMove", (message) => {
+    gameRoom.onMessage("invalidMove", (message) => {
 
         clearSelection();
         document.getElementById('gameStatus').textContent = message.reason;
     });
 
-    room.onMessage("boardUpdate", (message) => {
+    gameRoom.onMessage("boardUpdate", (message) => {
         board = message.board;
         isMyTurn = playerColor === message.turn;
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
@@ -145,11 +145,11 @@ function setupRoomListeners() {
         if (toSquare) toSquare.classList.add('lastMove');
     });
 
-    room.onMessage("playerLeft", (message) => {
+    gameRoom.onMessage("playerLeft", (message) => {
         document.getElementById('gameStatus').textContent = `Opponent (${message.color}) left the game`;
     });
 
-    room.onError((code, message) => {
+    gameRoom.onError((code, message) => {
         console.error(`Room error: ${code} - ${message}`);
         document.getElementById('gameStatus').textContent = `Error: ${message}`;
     });
@@ -282,7 +282,7 @@ function renderBoard() {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('createGame').addEventListener('click', createGame);
+    document.getElementById('createGame').addEventListener('click', joinMatchMaking);
     
     
     renderBoard();
