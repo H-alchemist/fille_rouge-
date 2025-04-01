@@ -50,6 +50,10 @@ export class MatchmakingQueue {
       if (!entry.searching) continue;
 
       /////// time cheking for (time , rating )
+         
+      const waitTime = Date.now() - entry.joinedAt;
+      const waitFactor = Math.floor(waitTime / this.tickRate);
+      const currentMaxDifference = this.maxRatingDifference + (waitFactor * this.ratingIncrease);
       
       for (let j = 0; j < this.queue.length; j++) {
         if (i === j || !this.queue[j].searching) continue;
