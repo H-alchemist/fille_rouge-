@@ -1,65 +1,89 @@
+// matchmaking.js
+import { matchMaker } from "colyseus";
 
+export class MatchmakingQueue {
+  constructor() {
+    this.queue = [];
+    this.everyTime = 2000;
+    this.maxRatingDifference = 200;
+    this.ratingIncrease = 60; 
+    this.maxWaitTime = 15000;
+    this.intervalId = setInterval(() =>{
 
+      console.log("Matchmaking loop running...");
+      
+      this.findMatches.bind(this)
+    }, this.everyTime);
+  }
 
-const MatchmakingQueue = {
-  createMatchMakingQueue() {
-    let queue = [];
-    const checkTime = 2000;
-    const rateDifference = 200;
-    const waitingTime = 30000;
-
-    // this.intervalId = setInterval(() => {
-    //   this.findMatches();
-    // }, checkTime);
+  async addToQueue(client, options) {
+    const { sessionId, name, rating, timeControl , accountId} = options;
     
-    return {
-      queue,
-      checkTime,
-      rateDifference,
-      waitingTime,
-      // intervalId: this.intervalId
-
-
+    const obj = {client,sessionId,
+      accountId,name,rating: rating || 1200,
+      timeControl: timeControl || "rapid", joinedAt: Date.now(),maxRatingDifference: this.maxRatingDifference,searching: true
     };
+    
+    this.queue.push(obj);
+    console.log(`Player ${name} (${rating}) added to ${timeControl} queue`);
+    
+    client.send("added", { 
+      status: "added to the queue", 
+      position: this.queue.length,
+      timeControl
+    });
+    
+    this.findMatches();
   }
-  ,
-
-  addPlayer(state,player , playerData) {
-
-    const {  name, rating, timeControl } = playerData;
-
-
-    const obj = {
-      player,
-      id: player.sessionId,
-      name,
-      rating: rating || 1200,
-      timeControl: timeControl || "rapid", 
-      joinedAt: Date.now(),
-      rateDifference: state.rateDifference,
-      searching: true
-    };
-
-
-    state.queue.push(obj);
-  } ,
-  removePlayer(state, sessionId) {
-    const index = state.queue.findIndex(entry => entry.id === sessionId);
   
-    if (index !== -1) {
-      const entry = state.queue[index];
+
+
+
+  findMatches() {
+    if (this.queue.length < 2) return;
+    
+    this.queue.sort((a, b) => a.joinedAt - b.joinedAt);
+    
+    for (let i = 0; i < this.queue.length; i++) {
+      const entry = this.queue[i];
       
-      state.queue.splice(index, 1); // Remove the player from the queue
+      if (!entry.searching) continue;
+
+      /////// time cheking for (time , rating )
       
-      console.log(`Player with sessionId ${sessionId} removed from the queue.`);
-      
-  
-      return true; 
-    } else {
-      console.log(`No player found with sessionId ${sessionId}`);
-      return false; 
+      for (let j = 0; j < this.queue.length; j++) {
+        if (i === j || !this.queue[j].searching) continue;
+        
+        const checkmatching = this.queue[j];
+        console.log('test' + entry.name + checkmatching.name);
+        
+        
+        if (entry.timeControl !== checkmatching.timeControl) continue;
+        
+        const ratingDiff = Math.abs(entry.rating - checkmatching.rating);
+        
+        if (ratingDiff <= currentMaxDifference || waitTime >= this.maxWaitTime) {
+       
+          this.createMatch(entry, checkmatching);
+          break; 
+        }
+      }
     }
+    
+    this.queue = this.queue.filter(entry => entry.searching);
   }
   
-};
-export default MatchmakingQueue ;
+
+  async createMatch(player1, player2) {
+    console.log(`Matching ${player1.name} ,,,,, ${player2.name}`);
+    
+    player1.searching = false;
+    player2.searching = false;
+    
+    
+  }
+  
+
+
+ 
+}

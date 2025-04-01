@@ -6,17 +6,31 @@ import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,b
 
 
 class GameRoom extends Room {
-  onCreate() {
-
-    console.log("GameRoom created!");
+  onCreate(options) {
+    
+    if (!options.whitePlayerId || !options.blackPlayerId) {
+      throw new Error("Missing player IDs in room creation");
+    }
 
     this.maxClients = 2;
-    this.players = 0;
-    let list = [];
     
-    this.state = GameState.createGameState();
+    
+    this.whitePlayerId = options.whitePlayerId;
+    this.blackPlayerId = options.blackPlayerId;
+    
+    
+    this.state = GameState.createGameState(
+      options.whitePlayerData,
+      options.blackPlayerData,
+      options.timeControl
+    );
 
-    
+    console.log(`Room created for:
+      White: ${this.state.whitePlayerData.name} (${this.whitePlayerId})
+      Black: ${this.state.blackPlayerData.name} (${this.blackPlayerId})`);
+
+
+
     this.onMessage("selectPiece", (client, message) => {
 
       // console.log("Received movePiece message:", message);

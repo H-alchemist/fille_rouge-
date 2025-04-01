@@ -1,46 +1,28 @@
 import { Room } from "colyseus";
-import MatchmakingQueue from "./gameState/MatchmakingQueue.js";
+import { MatchmakingQueue } from "./gameState/MatchmakingQueue.js";
 
- class MatchmakingRoom extends Room {
+class MatchmakingRoom extends Room {
   onCreate() {
     console.log("Matchmaking room created!");
-    
 
-    // this.testRR = 'nothing';
-    
-    
-    this.state =  MatchmakingQueue.createMatchMakingQueue();
-    
-    
-    this.broadcast("matchmak", this.state.queue );
-      
+    this.matchmakingQueue = new MatchmakingQueue();
 
-    }
-  
+    this.broadcast("matchmak", this.matchmakingQueue.queue);
+  }
 
+  onJoin(client, options) {
+    console.log(`Matchmaking room joined by client: ${client.id}`);
 
+    this.matchmakingQueue.addToQueue(client, options);
 
-
-  onJoin(client,options) {
-    // console.log("Matchmaking room joined by client:", client.id);
-
-    MatchmakingQueue.addPlayer(this.state ,client, options);
-    console.log();
-    
-
-    this.broadcast("matchmak", this.state.queue );
-    // this.broadcast("matchmaking:join", client.id);
+    this.broadcast("matchmak", this.matchmakingQueue.queue);
   }
 
   onLeave(client) {
-    console.log("Matchmaking room left by client:", client.id);
-    
-    MatchmakingQueue.removePlayer( this.state,client.id);
-   
+    console.log(`Matchmaking room left by client: ${client.id}`);
+
+    this.matchmakingQueue.removeFromQueue(client.id);
   }
-
 }
-
-
 
 export default MatchmakingRoom;

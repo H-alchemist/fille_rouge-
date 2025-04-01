@@ -60,7 +60,7 @@ async function createGame() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name: "hamza",rating: 1500,timeControl: "blitz"});
+        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating: 1500,timeControl: "blitz"});
 
         room.onMessage("matchmak", (message) => {
             console.log("Received matchmaking join message:", message);

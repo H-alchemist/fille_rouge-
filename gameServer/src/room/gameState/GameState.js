@@ -4,15 +4,20 @@ const GameState = {
     return {
       board: initializeBoard(),
       turn: "white",
-      whitePlayer,
-      blackPlayer,
+      whitePlayerData,  
+      blackPlayerData,  
+      timeControl,     
+      timeRemaining: {  
+        white: timeControl?.initialTime || 600,
+        black: timeControl?.initialTime || 600
+      }
     };
   },
 
   updateMatrix(board, from, to) {
    
     
-    // console.log("Updating matrix from:", from, "to:", to);
+  // console.log("Updating matrix from:", from, "to:", to);
     
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
