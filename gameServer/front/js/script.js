@@ -47,7 +47,7 @@ const pieceMap = {
 
 async function connectToServer() {
     try {
-        client = new Colyseus.Client('ws://localhost:3001');
+        client = new Colyseus.Client('ws://localhost:3000');
         // await client.getAvailableRooms();
         document.getElementById('gameStatus').textContent = "Connected to server";
         return true;
@@ -76,6 +76,10 @@ async function joinMatchMaking() {
             
         });
        
+        room.onMessage("removed", (message) => {
+            document.getElementById('gameStatus').textContent = "sorry we didnt find any opponent in your level ";
+            
+        });
         // document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
 
         // setupRoomListeners();
@@ -117,6 +121,9 @@ function setupRoomListeners() {
     gameRoom.onMessage("waitingForOpponent", (message) => {
         document.getElementById('gameStatus').textContent = "Waiting for opponent...";
     });
+
+   
+    
 
     gameRoom.onMessage("gameStart", (message) => {
         board = message.board;

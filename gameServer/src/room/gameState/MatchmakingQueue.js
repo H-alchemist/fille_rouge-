@@ -7,13 +7,12 @@ export class MatchmakingQueue {
     this.count = 0;
     this.everyTime = 4000;
     this.maxRatingDifference = 50;
-    this.ratingIncrease = 60; 
+    this.ratingIncrease = 10; 
     this.maxWaitTime = 15000;
     this.intervalId = setInterval(() =>{
 
       console.log("Matchmaking loop running..." + this.count++);
-      
-      this.findMatches.bind(this)
+      this.findMatches();
     }, this.everyTime);
   }
 
@@ -53,7 +52,7 @@ export class MatchmakingQueue {
 
 
   findMatches() {
-    if (this.queue.length < 2) return;
+    // if (this.queue.length < 2) return;
     console.log('none' + this.count++);
     
     
@@ -69,6 +68,11 @@ export class MatchmakingQueue {
       /////// time cheking for (time , rating )
          
       const waitTime = Date.now() - entry.joinedAt;
+      if(waitTime > this.maxWaitTime) {
+        entry.searching = false;
+        entry.client.send("removed", { status: "removed from the queue" });
+        continue;
+      }
       console.log("Wait time:", waitTime);
       
       const waitFactor = Math.floor(waitTime / this.everyTime);
