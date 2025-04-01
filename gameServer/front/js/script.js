@@ -19,6 +19,8 @@ let playerColor = null;
 let isMyTurn = false;
 var client = null;
 var room = null;
+let gameRoom=null ;
+
 
 // Piece images
 const pieceMap = {
@@ -63,6 +65,7 @@ async function joinMatchMaking() {
         room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating: 1500,timeControl: "blitz"});
 
         room.onMessage("matchmakingFound",async (message) => {
+            console.log("Matchmaking found:", message.roomId);
             
             await joinGameRoom(message.roomId);
 
@@ -83,16 +86,20 @@ async function joinMatchMaking() {
 
 async function joinGameRoom(roomId) {
     try {
-       let gameRoom = await client.joinById(roomId);
+        gameRoom = await client.joinById(roomId , {
+        name: "hamza",  
+        rating: 1500,   
+        accounId: 2425  
+    });
         console.log("Joined game room:", gameRoom);
 
-        setupRoomListeners(gameRoom);
+        setupRoomListeners();
     } catch (error) {
         console.error("Error joining game room:", error);
     }
 }
 
-function setupRoomListeners(gameRoom) {
+function setupRoomListeners() {
 
 
 
@@ -183,7 +190,12 @@ function handlePieceSelection(row, col, pieceN) {
         return;
     }
 
-    room.send("selectPiece", { row, col , pieceN});
+
+    console.log('handle');
+    
+
+
+    gameRoom.send("selectPiece", { row, col , pieceN});
 }
 
 function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
@@ -197,7 +209,7 @@ function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
     console.log(fromRow, fromCol , toRow , toCol , pieceN);
     
 
-    room.send("handleMove", { fromRow, fromCol , toRow , toCol , pieceN});
+    gameRoom.send("handleMove", { fromRow, fromCol , toRow , toCol , pieceN});
     clearSelection();
 
 }
@@ -228,6 +240,7 @@ function renderBoard() {
             const pieceNum = board[row][col];
             if (pieceNum !== 0) {
                 const piece = pieceMap[pieceNum];
+                sq.dataset.available = 0;
                 
                 const img = document.createElement('img');
                 img.src = piece;
@@ -243,6 +256,8 @@ function renderBoard() {
     
     const allPieces = document.querySelectorAll('.pieceContainer');
     allPieces.forEach(element => {
+        console.log('elem');
+        
         element.addEventListener('click', function() {
             const row = parseInt(element.dataset.row, 10);
             const col = parseInt(element.dataset.col, 10);
