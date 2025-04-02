@@ -62,7 +62,7 @@ class GameRoom extends Room {
         
       }
 
-      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol]);
+      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves);
       // console.log(this.state.turn);
       
       this.switchTurn(this.state);
@@ -125,6 +125,11 @@ class GameRoom extends Room {
         this.broadcast("playerLeft", { color: "black" });
       }
     }
+  }
+
+  onDispose() {
+    console.log(this.state.gameMoves);
+    
   }
 
 

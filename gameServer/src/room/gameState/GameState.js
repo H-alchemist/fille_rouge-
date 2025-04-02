@@ -15,15 +15,18 @@ const GameState = {
     };
   },
 
-  updateMatrix(board, from, to) {
-   
-    
-  // console.log("Updating matrix from:", from, "to:", to);
-    
+  updateMatrix(board, from, to , gameMoves) {
+  
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
 
     const movingPiece = board[fromRow][fromCol];
+
+    gameMoves.push({
+      from: [fromRow, fromCol],
+      to: [toRow, toCol],
+      piece: movingPiece
+    });
     
     // Move the piece
     board[toRow][toCol] = board[fromRow][fromCol];
