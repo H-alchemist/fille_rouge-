@@ -8,6 +8,14 @@ import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,b
 class GameRoom extends Room {
   onCreate(options) {
     
+    
+    this.turnTimer = null;
+    this.timeRemaining = {
+      white: options.timeControl?.initialTime || 600,
+      black: options.timeControl?.initialTime || 600,
+    };
+
+    
    
     this.maxClients = 2;
     
@@ -30,10 +38,10 @@ class GameRoom extends Room {
 
     this.onMessage("selectPiece", (client, message) => {
 
-      console.log(`Received "selectPiece" from ${client.sessionId}:`, message);
+      // console.log(`Received "selectPiece" from ${client.sessionId}:`, message);
 
 
-      // console.log("Received movePiece message:", message);
+      console.log("Received movePiece message:", message);
 
       list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board);
 
@@ -45,7 +53,7 @@ class GameRoom extends Room {
 
     this.onMessage("handleMove", (client, message) => {
 
-      console.log("Received movePiece message:", message);
+      // console.log("Received movePiece message:", message);
       const exists = list.find(item => item[0] === message.toRow && item[1] === message.toCol) !== undefined;
 
       if (exists==undefined) {
@@ -55,10 +63,10 @@ class GameRoom extends Room {
       }
 
       GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol]);
-      console.log(this.state.turn);
+      // console.log(this.state.turn);
       
-      GameState.switchTurn(this.state);
-      console.log(this.state.turn);
+      this.switchTurn(this.state);
+      // console.log(this.state.turn);
 
       // console.log(this.state.board);
       
@@ -68,9 +76,16 @@ class GameRoom extends Room {
 
 
     }
+    switchTurn(gameState) {
+      this.clearTurnTimer();
+      this.state.turn = this.state.turn === 'white' ? 'black' : 'white';
+      this.startTurnTimer();
+      // console.log("Turn switched to:", gameState.turn);
+      return gameState;
+    }
 
     onJoin(client, options) {
-      console.log(options);
+      // console.log(options);
       
       if (this.players < 2) {
         this.players++;
@@ -78,7 +93,7 @@ class GameRoom extends Room {
   
         if (this.players === 1) {
           this.state.whitePlayer = client.sessionId;
-          console.log(this.state.whitePlayer);
+          // console.log(this.state.whitePlayer);
           this.state.whitePlayerData = { ...options };
           // this.state.whitePlayerData = {
 
@@ -88,19 +103,20 @@ class GameRoom extends Room {
           // };
           client.send("playerColor", "white");
         } else if (this.players === 2) {
-          console.log(this.state.whitePlayer);
+          // console.log(this.state.whitePlayer);
 
           this.state.blackPlayer = client.sessionId;
           this.state.blackPlayerData = { ...options };
           client.send("playerColor", "black");
   
           this.broadcast("gameStart", this.state);
+          this.startTurnTimer();
         }
       }
   }
 
   onLeave(client) {
-    console.log(`Player ${client.sessionId} left.`);
+    // console.log(`Player ${client.sessionId} left.`);
 
     if (this.state) {
       if (client.sessionId === this.state.whitePlayer) {
@@ -110,6 +126,43 @@ class GameRoom extends Room {
       }
     }
   }
+
+
+
+
+  startTurnTimer() {
+    this.clearTurnTimer();
+    const currentPlayer = this.state.turn;
+
+    this.turnTimer = this.clock.setInterval(() => {
+      this.timeRemaining[currentPlayer]--;
+      console.log(currentPlayer + ' : time : ' + this.timeRemaining[currentPlayer]);
+      
+
+      if (this.timeRemaining[currentPlayer] <= 0) {
+        this.handleTurnTimeout();
+      } else {
+        this.broadcast('updateTime', {
+          player: currentPlayer,
+          timeRemaining: this.timeRemaining[currentPlayer],
+        });
+      }
+    }, 1000);
+  }
+  clearTurnTimer() {
+    if (this.turnTimer) {
+      this.turnTimer.clear();
+      this.turnTimer = null;
+    }
+  }
+
+  handleTurnTimeout() {
+    const currentPlayer = this.state.turn;
+    // console.log(`${currentPlayer}'s turn has timed out.`);
+    this.switchTurn();
+  }
+
+
 }
 
 export default GameRoom;

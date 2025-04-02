@@ -1,4 +1,4 @@
-// matchmaking.js
+
 import { matchMaker } from "colyseus";
 
 export class MatchmakingQueue {
@@ -11,7 +11,7 @@ export class MatchmakingQueue {
     this.maxWaitTime = 15000;
     this.intervalId = setInterval(() =>{
 
-      console.log("Matchmaking loop running..." + this.count++);
+      // console.log("Matchmaking loop running..." + this.count++);
       this.findMatches();
     }, this.everyTime);
   }
@@ -25,7 +25,7 @@ export class MatchmakingQueue {
     };
     
     this.queue.push(obj);
-    console.log(`Player ${name} (${rating}) added to ${timeControl} queue`);
+    // console.log(`Player ${name} (${rating}) added to ${timeControl} queue`);
     
     client.send("added", { 
       status: "added to the queue", 
@@ -40,10 +40,9 @@ export class MatchmakingQueue {
     const index = this.queue.findIndex(entry => entry.sessionId === sessionId);
     if (index !== -1) {
       const entry = this.queue[index];
-      console.log(`Player ${entry.name} removed from ${entry.timeControl} queue`);
+      // console.log(`Player ${entry.name} removed from ${entry.timeControl} queue`);
       this.queue.splice(index, 1);
       
-      // Update queue positions for remaining players
       this.updateQueuePositions();
       return true;
     }
@@ -53,14 +52,14 @@ export class MatchmakingQueue {
 
   findMatches() {
     // if (this.queue.length < 2) return;
-    console.log('none' + this.count++);
+    // console.log('none' + this.count++);
     
     
     this.queue.sort((a, b) => a.joinedAt - b.joinedAt);
     
     for (let i = 0; i < this.queue.length; i++) {
 
-      console.log("<<<<<<<<<<<<<<",i);
+      // console.log("<<<<<<<<<<<<<<",i);
       const entry = this.queue[i];
       
       if (!entry.searching) continue;
@@ -73,13 +72,13 @@ export class MatchmakingQueue {
         entry.client.send("removed", { status: "removed from the queue" });
         continue;
       }
-      console.log("Wait time:", waitTime);
+      // console.log("Wait time:", waitTime);
       
       const waitFactor = Math.floor(waitTime / this.everyTime);
-      console.log("Wait factor:", waitFactor);
+      // console.log("Wait factor:", waitFactor);
       
       const currentDifference = this.maxRatingDifference + (waitFactor * this.ratingIncrease);
-      console.log("Current difference:", currentDifference);
+      // console.log("Current difference:", currentDifference);
       
       for (let j = 0; j < this.queue.length; j++) {
         if (i === j || !this.queue[j].searching) continue;
@@ -91,14 +90,14 @@ export class MatchmakingQueue {
         if (entry.timeControl !== checkmatching.timeControl) continue;
         
         const ratingDiff = Math.abs(entry.rating - checkmatching.rating);
-        console.log("Rating difference:", ratingDiff);
+        // console.log("Rating difference:", ratingDiff);
 
 
 
-        // console.log(  this.maxRatingDifference +'Two player'+ waitFactor);
+        console.log(  this.maxRatingDifference +'Two player'+ waitFactor);
         if (ratingDiff <= currentDifference || waitTime >= this.maxWaitTime) {
          
-           console.log('createhere' + entry.name + checkmatching.name);
+          //  console.log('createhere' + entry.name + checkmatching.name);
           this.createMatch(entry, checkmatching);
           break; 
         }
@@ -110,14 +109,14 @@ export class MatchmakingQueue {
   
 
   async createMatch(player1, player2) {
-    console.log(`Matching ${player1.name} ,,,,, ${player2.name}`);
+    // console.log(`Matching ${player1.name} ,,,,, ${player2.name}`);
     
     player1.searching = false;
     player2.searching = false;
-    console.log(player1.accounId);
-    console.log(player2.accounId);
-    console.log(player1.rating);
-    console.log(player2.rating);
+    // console.log(player1.accounId);
+    // console.log(player2.accounId);
+    // console.log(player1.rating);
+    // console.log(player2.rating);
     
 
     const room = await matchMaker.createRoom("game_room", {
@@ -128,7 +127,7 @@ export class MatchmakingQueue {
         
         });
     
-    console.log(`Match created: ${room.roomId}`);
+    // console.log(`Match created: ${room.roomId}`);
 
 
 

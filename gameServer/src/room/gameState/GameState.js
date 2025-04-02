@@ -1,8 +1,9 @@
-// gameState.js
+
 const GameState = {
   createGameState(whitePlayerData = null, blackPlayerData = null ,timeControl) {
     return {
       board: initializeBoard(),
+      gameMoves :[] ,
       turn: "white",
       whitePlayerData,  
       blackPlayerData,  
@@ -22,6 +23,8 @@ const GameState = {
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
 
+    const movingPiece = board[fromRow][fromCol];
+    
     // Move the piece
     board[toRow][toCol] = board[fromRow][fromCol];
     board[fromRow][fromCol] = 0;
@@ -32,16 +35,7 @@ const GameState = {
     return ;
   },
 
-  switchTurn(gameState) {
-    if (gameState.turn === "white") {
-      gameState.turn = "black";
-    } else {
-      gameState.turn = "white";
-    }
   
-    console.log("Turn switched to:", gameState.turn);
-    return gameState;
-  }
 };
 
 function initializeBoard() {

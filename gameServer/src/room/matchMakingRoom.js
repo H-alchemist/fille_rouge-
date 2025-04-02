@@ -3,7 +3,7 @@ import { MatchmakingQueue } from "./gameState/MatchmakingQueue.js";
 
 class MatchmakingRoom extends Room {
   onCreate() {
-    console.log("Matchmaking room created!");
+    // console.log("Matchmaking room created!");
 
     this.matchmakingQueue = new MatchmakingQueue();
 
@@ -11,7 +11,7 @@ class MatchmakingRoom extends Room {
   }
 
   onJoin(client, options) {
-    console.log(`Matchmaking room joined by client: ${client.id}`);
+    // console.log(`Matchmaking room joined by client: ${client.id}`);
 
     this.matchmakingQueue.addToQueue(client, options);
 
@@ -19,7 +19,7 @@ class MatchmakingRoom extends Room {
   }
 
   onLeave(client) {
-    console.log(`Matchmaking room left by client: ${client.id}`);
+    // console.log(`Matchmaking room left by client: ${client.id}`);
 
     this.matchmakingQueue.removeFromQueue(client.id);
   }
