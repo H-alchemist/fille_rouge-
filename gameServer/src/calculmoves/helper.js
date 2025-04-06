@@ -67,6 +67,7 @@ export function isClearBetween(pos1, pos2, board) {
 
 export function findThreatInDirection(piecePos, direction, board, color) {
 
+    direction = [direction[0]* -1 ,direction[1]* -1];
     let [dx, dy] = direction;
     
     let [x, y] = piecePos;
@@ -78,6 +79,8 @@ export function findThreatInDirection(piecePos, direction, board, color) {
         if (x < 0 || x >= 8 || y < 0 || y >= 8) break;
 
         let target = board[y][x];
+        console.log(target + 'target');
+        
         if (target === 0) continue;
 
       

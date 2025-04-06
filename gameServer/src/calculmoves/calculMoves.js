@@ -799,11 +799,11 @@ export function whiteQueen(r, c, board , color) {
         while (row < board.length && col < board[row].length) {
             if (board[row][col] === 0) {
                 list.push([row, col]);
-                console.log('empty' + [row, col]);
+
                 
             } else if (board[row][col] < 0) {
                 list.push([row, col]);
-                console.log('enemy' + [row, col]);
+                
                 break;
             } else {
                 break;
@@ -822,8 +822,10 @@ export function whiteQueen(r, c, board , color) {
         while (x >= 0 && x < 8 && y >= 0 && y < 8) {
             if (board[x][y] === 0) {
                 list.push([x, y]);
+                console.log('empty' + [x, y]);
             } else if (board[x][y] < 0) {
                 list.push([x, y]);
+                console.log('enemy' + [x, y]);
                 break;
             } else {
                 break;
@@ -831,6 +833,26 @@ export function whiteQueen(r, c, board , color) {
 
             x += dy;
             y += dx;
+        }
+       
+        let x1 = r + dy*-1;
+        let y2 = c + dx*-1;
+
+        // Loop through the direction until the end of the board or an obstacle
+        while (x1 >= 0 && x1 < 8 && y2 >= 0 && y2 < 8) {
+            if (board[x1][y2] === 0) {
+                list.push([x1, y2]);
+                // console.log('empty' + [x, y]);
+            } else if (board[x1][y2] < 0) {
+                list.push([x1, y2]);
+                console.log('enemy' + [x1, y2]);
+                break;
+            } else {
+                break;
+            }
+
+            x1 += dy*-1;
+            y2 += dx*-1;
         }
     }
 
