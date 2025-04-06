@@ -1,16 +1,21 @@
 
 // return if the pieace and the king in the same line to check if the piece pinned
 
-function isPieceAligned(piecePosition, kingPosition) {
+
+export function isPieceAligned(piecePosition, kingPosition) {
     let x = kingPosition[0] - piecePosition[0];
     let y = kingPosition[1] - piecePosition[1];
 
+    console.log(x + 'piecePosition');
+    console.log(y + 'kingPosition');
+    
+
     if (x === 0) {
-        return [0, 1 * Math.sign(y)];
+        return [0, Math.sign(y)];
     } else if (y === 0) {
         return [Math.sign(x), 0];
     } else if (Math.abs(x) === Math.abs(y)) {
-        return [Math.abs(x),Math.abs(y)];
+        return [Math.sign(x),Math.sign(y)];
     } else {
         return false;
     }
@@ -18,7 +23,8 @@ function isPieceAligned(piecePosition, kingPosition) {
 
 // the squares between the king and pieace  is empty
 
-function isClearBetween(pos1, pos2, board) {
+
+export function isClearBetween(pos1, pos2, board) {
     let [x1, y1] = pos1;
     
     let [x2, y2] = pos2;
@@ -48,13 +54,18 @@ function isClearBetween(pos1, pos2, board) {
         y += dy;
     }
 
+    console.log(x + 'x');
+    console.log(y + 'y');
+    
+
     return true;
 }
 
 
 // if there is treat an enemy pieace in the other way of the line 
 
-function findThreatInDirection(piecePos, direction, board, color) {
+
+export function findThreatInDirection(piecePos, direction, board, color) {
 
     let [dx, dy] = direction;
     
@@ -70,15 +81,13 @@ function findThreatInDirection(piecePos, direction, board, color) {
         if (target === 0) continue;
 
       
-        let Enemy;
-     if (color === 'white') {
-        Enemy = target < 0;
-       } else {
-        Enemy = target > 0;
-    }
+        
+     
+    
 
-        if (!Enemy) break;
+        if (Math.sign(target)== Math.sign(color)){ return false};
 
+        // console.log(Enemy + 'qlnqzjendzjkqe');
         let abs = Math.abs(target);
         if (
             (abs === 2 && (dx === 0 || dy === 0)) ||         
@@ -96,16 +105,23 @@ function findThreatInDirection(piecePos, direction, board, color) {
 
     
 
-function checkPin(kingPosition , piecePosition , board , color){
+export function checkPin(kingPosition , piecePosition , board , color){
 
 
     let direction =isPieceAligned(piecePosition, kingPosition);
+    console.log(',o//'+direction + '/fromhelper');
+    
 
     if (!direction) return false;
 
     if (!isClearBetween(kingPosition, piecePosition, board)) return false;
 
-    if (findThreatInDirection(piecePosition, direction, board, color)) return true;
+    if (!findThreatInDirection(piecePosition, direction, board, color)) return false;
+
+  
+    direction = [direction[0]* -1 ,direction[1]* -1];
+
+
 
 
 

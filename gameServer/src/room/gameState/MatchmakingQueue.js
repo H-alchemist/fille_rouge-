@@ -94,7 +94,7 @@ export class MatchmakingQueue {
 
 
 
-        console.log(  this.maxRatingDifference +'Two player'+ waitFactor);
+        // console.log(  this.maxRatingDifference +'Two player'+ waitFactor);
         if (ratingDiff <= currentDifference || waitTime >= this.maxWaitTime) {
          
           //  console.log('createhere' + entry.name + checkmatching.name);

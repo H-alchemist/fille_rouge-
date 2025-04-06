@@ -1,9 +1,24 @@
 
 
+import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '../calculmoves/helper.js';
+ 
+ export function findKingPosition(board, sign) {
+    for (let row = 0; row < board.length; row++) {
+        for (let col = 0; col < board[row].length; col++) {
+            // Check for the king based on the sign
+            if (board[row][col] === 6 * sign) {
+                return [col, row]; // Return the position [row, col] of the king
+            }
+        }
+    }
+    return null; // If no king is found, return null
+}
+
+
 
   export   function calculatepieceMove(r,c,num,board) {
 
-//    console.log('test');
+
 
 
 
@@ -19,7 +34,9 @@
             break;
         case 2:
         
+             
             return whiteRook(r,c,board);
+
                 
         break;
         case -2:
@@ -161,6 +178,9 @@
 }
 
   export   function whiteRook(r, c, board) {
+
+    
+
     let list = [];
 
    
@@ -546,121 +566,277 @@
 }
 
 
-  export   function whiteQueen(r, c, board) {
-    let list = [];
+//   export   function whiteQueen(r, c, board) {
+//     let list = [];
   
-    let col = c - 1;
-    while (col >= 0) {
-        if (board[r][col] === 0) {
-            list.push([r, col]);
-        } else if (board[r][col] < 0) {  
-            list.push([r, col]);
-            break; 
-        } else {
-            break; 
-        }
-        col--;
-    }
+//     let col = c - 1;
+//     while (col >= 0) {
+//         if (board[r][col] === 0) {
+//             list.push([r, col]);
+//         } else if (board[r][col] < 0) {  
+//             list.push([r, col]);
+//             break; 
+//         } else {
+//             break; 
+//         }
+//         col--;
+//     }
 
-    col = c + 1;
-    while (col < board[r].length) {
-        if (board[r][col] === 0) {
-            list.push([r, col]);
-        } else if (board[r][col] < 0) {
-            list.push([r, col]);
-            break;
-        } else {
-            break;
-        }
-        col++;
-    }
+//     col = c + 1;
+//     while (col < board[r].length) {
+//         if (board[r][col] === 0) {
+//             list.push([r, col]);
+//         } else if (board[r][col] < 0) {
+//             list.push([r, col]);
+//             break;
+//         } else {
+//             break;
+//         }
+//         col++;
+//     }
 
-    let row = r - 1;
-    while (row >= 0) {
-        if (board[row][c] === 0) {
-            list.push([row, c]);
-        } else if (board[row][c] < 0) {
-            list.push([row, c]);
-            break;
-        } else {
-            break;
-        }
-        row--;
-    }
+//     let row = r - 1;
+//     while (row >= 0) {
+//         if (board[row][c] === 0) {
+//             list.push([row, c]);
+//         } else if (board[row][c] < 0) {
+//             list.push([row, c]);
+//             break;
+//         } else {
+//             break;
+//         }
+//         row--;
+//     }
 
-    row = r + 1;
-    while (row < board.length) {
-        if (board[row][c] === 0) {
-            list.push([row, c]);
-        } else if (board[row][c] < 0) {
-            list.push([row, c]);
-            break;
-        } else {
-            break;
-        }
-        row++;
-    }
+//     row = r + 1;
+//     while (row < board.length) {
+//         if (board[row][c] === 0) {
+//             list.push([row, c]);
+//         } else if (board[row][c] < 0) {
+//             list.push([row, c]);
+//             break;
+//         } else {
+//             break;
+//         }
+//         row++;
+//     }
 
-    row = r - 1, col = c - 1;
-    while (row >= 0 && col >= 0) {
-        if (board[row][col] === 0) {
-            list.push([row, col]);
-        } else if (board[row][col] < 0) {
-            list.push([row, col]);
-            break;  
-        } else {
-            break; 
-        }
-        row--;
-        col--;
-    }
+//     row = r - 1, col = c - 1;
+//     while (row >= 0 && col >= 0) {
+//         if (board[row][col] === 0) {
+//             list.push([row, col]);
+//         } else if (board[row][col] < 0) {
+//             list.push([row, col]);
+//             break;  
+//         } else {
+//             break; 
+//         }
+//         row--;
+//         col--;
+//     }
 
-    row = r - 1, col = c + 1;
-    while (row >= 0 && col < board[row].length) {
-        if (board[row][col] === 0) {
-            list.push([row, col]);
-        } else if (board[row][col] < 0) {
-            list.push([row, col]);
-            break;
-        } else {
-            break;
-        }
-        row--;
-        col++;
-    }
-
-    
-    row = r + 1, col = c - 1;
-    while (row < board.length && col >= 0) {
-        if (board[row][col] === 0) {
-            list.push([row, col]);
-        } else if (board[row][col] < 0) {
-            list.push([row, col]);
-            break;
-        } else {
-            break;
-        }
-        row++;
-        col--;
-    }
+//     row = r - 1, col = c + 1;
+//     while (row >= 0 && col < board[row].length) {
+//         if (board[row][col] === 0) {
+//             list.push([row, col]);
+//         } else if (board[row][col] < 0) {
+//             list.push([row, col]);
+//             break;
+//         } else {
+//             break;
+//         }
+//         row--;
+//         col++;
+//     }
 
     
-    row = r + 1, col = c + 1;
-    while (row < board.length && col < board[row].length) {
-        if (board[row][col] === 0) {
-            list.push([row, col]);
-        } else if (board[row][col] < 0) {
-            list.push([row, col]);
-            break;
-        } else {
-            break;
+//     row = r + 1, col = c - 1;
+//     while (row < board.length && col >= 0) {
+//         if (board[row][col] === 0) {
+//             list.push([row, col]);
+//         } else if (board[row][col] < 0) {
+//             list.push([row, col]);
+//             break;
+//         } else {
+//             break;
+//         }
+//         row++;
+//         col--;
+//     }
+
+    
+//     row = r + 1, col = c + 1;
+//     while (row < board.length && col < board[row].length) {
+//         if (board[row][col] === 0) {
+//             list.push([row, col]);
+//         } else if (board[row][col] < 0) {
+//             list.push([row, col]);
+//             break;
+//         } else {
+//             break;
+//         }
+//         row++;
+//         col++;
+//     }
+
+//     return list;
+// }
+
+export function whiteQueen(r, c, board , color) {
+    let list = [];
+
+    let kingPos =  findKingPosition(board  , 1);
+    const direction = checkPin(kingPos, [c, r], board, 1);
+
+    
+    console.log('test' +direction);
+
+    
+    //  return;
+    if (!direction) {
+        // No pin, calculate all possible moves
+        // Horizontal
+        // Right
+        let col = c + 1;
+        while (col < board[r].length) {
+            if (board[r][col] === 0) {
+                list.push([r, col]);
+            } else if (board[r][col] < 0) {
+                list.push([r, col]);
+                break;
+            } else {
+                break;
+            }
+            col++;
         }
-        row++;
-        col++;
+        // Left
+        col = c - 1;
+        while (col >= 0) {
+            if (board[r][col] === 0) {
+                list.push([r, col]);
+            } else if (board[r][col] < 0) {
+                list.push([r, col]);
+                break;
+            } else {
+                break;
+            }
+            col--;
+        }
+
+        // Vertical
+        // Up
+        let row = r - 1;
+        while (row >= 0) {
+            if (board[row][c] === 0) {
+                list.push([row, c]);
+            } else if (board[row][c] < 0) {
+                list.push([row, c]);
+                break;
+            } else {
+                break;
+            }
+            row--;
+        }
+        // Down
+        row = r + 1;
+        while (row < board.length) {
+            if (board[row][c] === 0) {
+                list.push([row, c]);
+            } else if (board[row][c] < 0) {
+                list.push([row, c]);
+                break;
+            } else {
+                break;
+            }
+            row++;
+        }
+
+        // Diagonal
+        // Top-left
+        row = r - 1, col = c - 1;
+        while (row >= 0 && col >= 0) {
+            if (board[row][col] === 0) {
+                list.push([row, col]);
+            } else if (board[row][col] < 0) {
+                list.push([row, col]);
+                break;
+            } else {
+                break;
+            }
+            row--;
+            col--;
+        }
+        // Top-right
+        row = r - 1, col = c + 1;
+        while (row >= 0 && col < board[row].length) {
+            if (board[row][col] === 0) {
+                list.push([row, col]);
+            } else if (board[row][col] < 0) {
+                list.push([row, col]);
+                break;
+            } else {
+                break;
+            }
+            row--;
+            col++;
+        }
+        // Bottom-left
+        row = r + 1, col = c - 1;
+        while (row < board.length && col >= 0) {
+            if (board[row][col] === 0) {
+                list.push([row, col]);
+            } else if (board[row][col] < 0) {
+                list.push([row, col]);
+                break;
+            } else {
+                break;
+            }
+            row++;
+            col--;
+        }
+        // Bottom-right
+        row = r + 1, col = c + 1;
+        while (row < board.length && col < board[row].length) {
+            if (board[row][col] === 0) {
+                list.push([row, col]);
+                console.log('empty' + [row, col]);
+                
+            } else if (board[row][col] < 0) {
+                list.push([row, col]);
+                console.log('enemy' + [row, col]);
+                break;
+            } else {
+                break;
+            }
+            row++;
+            col++;
+        }
+
+    } else {
+        // If the piece is pinned, only calculate moves along the direction
+        let [dx, dy] = direction;
+        let x = r + dy;
+        let y = c + dx;
+
+        // Loop through the direction until the end of the board or an obstacle
+        while (x >= 0 && x < 8 && y >= 0 && y < 8) {
+            if (board[x][y] === 0) {
+                list.push([x, y]);
+            } else if (board[x][y] < 0) {
+                list.push([x, y]);
+                break;
+            } else {
+                break;
+            }
+
+            x += dy;
+            y += dx;
+        }
     }
 
     return list;
 }
+
 
 
   export   function whiteKing(r, c, board) {

@@ -1,8 +1,8 @@
 import { Room } from "colyseus";
 import GameState from './gameState/GameState.js';
 
-
-import {calculatepieceMove,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,blackBishop,whiteQueen,blackQueen,whiteKing,blackKing,whiteKnight,blackKnight} from '../calculmoves/calculMoves.js';
+import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '../calculmoves/helper.js';
+import {calculatepieceMove,findKingPosition,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,blackBishop,whiteQueen,blackQueen,whiteKing,blackKing,whiteKnight,blackKnight} from '../calculmoves/calculMoves.js';
 
 
 class GameRoom extends Room {
@@ -141,7 +141,7 @@ class GameRoom extends Room {
 
     this.turnTimer = this.clock.setInterval(() => {
       this.timeRemaining[currentPlayer]--;
-      console.log(currentPlayer + ' : time : ' + this.timeRemaining[currentPlayer]);
+      // console.log(currentPlayer + ' : time : ' + this.timeRemaining[currentPlayer]);
       
 
       if (this.timeRemaining[currentPlayer] <= 0) {
