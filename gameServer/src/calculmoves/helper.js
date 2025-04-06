@@ -50,3 +50,69 @@ function isClearBetween(pos1, pos2, board) {
 
     return true;
 }
+
+
+// if there is treat an enemy pieace in the other way of the line 
+
+function findThreatInDirection(piecePos, direction, board, color) {
+
+    let [dx, dy] = direction;
+    
+    let [x, y] = piecePos;
+
+    while (true) {
+        x += dx;
+        y += dy;
+
+        if (x < 0 || x >= 8 || y < 0 || y >= 8) break;
+
+        let target = board[y][x];
+        if (target === 0) continue;
+
+      
+        let Enemy;
+     if (color === 'white') {
+        Enemy = target < 0;
+       } else {
+        Enemy = target > 0;
+    }
+
+        if (!Enemy) break;
+
+        let abs = Math.abs(target);
+        if (
+            (abs === 2 && (dx === 0 || dy === 0)) ||         
+            (abs === 4 && dx !== 0 && dy !== 0) ||           
+            (abs === 5)                                      
+        ) {
+            return true;
+        }
+
+       return true ;
+    }
+
+    return false;
+}
+
+    
+
+function checkPin(kingPosition , piecePosition , board , color){
+
+
+    let direction =isPieceAligned(piecePosition, kingPosition);
+
+    if (!direction) return false;
+
+    if (!isClearBetween(kingPosition, piecePosition, board)) return false;
+
+    if (findThreatInDirection(piecePosition, direction, board, color)) return true;
+
+
+
+    return direction ;
+
+
+
+
+
+}
