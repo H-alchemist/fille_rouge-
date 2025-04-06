@@ -16,3 +16,37 @@ function isPieceAligned(piecePosition, kingPosition) {
     }
 }
 
+// the squares between the king and pieace  is empty
+
+function isClearBetween(pos1, pos2, board) {
+    let [x1, y1] = pos1;
+    
+    let [x2, y2] = pos2;
+
+   
+    let dx = Math.sign(x2 - x1);
+
+    let dy = Math.sign(y2 - y1);
+
+   
+    let x = x1 + dx;
+    let y = y1 + dy;
+
+
+    while (x !== x2 || y !== y2) {
+        
+        if (x <= 0 || x > 8 || y <= 0 || y > 8) {
+            return false; 
+        }
+
+       
+        if (board[y][x] !== 0) {
+            return false;
+        }
+
+        x += dx;
+        y += dy;
+    }
+
+    return true;
+}
