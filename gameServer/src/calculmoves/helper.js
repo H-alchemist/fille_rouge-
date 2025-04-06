@@ -100,7 +100,7 @@ export function findThreatInDirection(piecePos, direction, board, color) {
             return true;
         }
 
-       return true ;
+       return false ;
     }
 
     return false;
@@ -112,7 +112,7 @@ export function checkPin(kingPosition , piecePosition , board , color){
 
 
     let direction =isPieceAligned(piecePosition, kingPosition);
-    console.log(',o//'+direction + '/fromhelper');
+    // console.log(',o//'+direction + '/fromhelper');
     
 
     if (!direction) return false;
