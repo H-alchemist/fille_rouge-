@@ -1,5 +1,3 @@
-
-
 import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '../calculmoves/helper.js';
  
  export function findKingPosition(board, sign) {
@@ -16,7 +14,7 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
 
 
-  export   function calculatepieceMove(r,c,num,board) {
+  export   function calculatepieceMove(r,c,num,board){
 
 
 

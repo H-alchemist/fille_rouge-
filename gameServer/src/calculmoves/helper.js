@@ -73,7 +73,9 @@ export function findThreatInDirection(piecePos, direction, board, color) {
     let [x, y] = piecePos;
 
     while (true) {
+
         x += dx;
+        
         y += dy;
 
         if (x < 0 || x >= 8 || y < 0 || y >= 8) break;
@@ -130,8 +132,6 @@ export function checkPin(kingPosition , piecePosition , board , color){
 
     return direction ;
 
-
-
-
-
 }
+
+
