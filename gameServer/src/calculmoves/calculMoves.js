@@ -121,27 +121,57 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
 
 
-  export   function WhitePawn(r, c , board) {
+//   export   function WhitePawn(r, c , board) {
+//     let list = [];
+
+//     if (r > 0 && board[r - 1][c] === 0) {
+//         list.push([r - 1, c]);
+
+      
+//         if (r === 6 && board[r - 2][c] === 0) {
+//             list.push([r - 2, c]);
+        
+//         }
+//     }
+
+   
+//     if (r > 0 && c > 0 && board[r - 1][c - 1] < 0) {
+//              list.push([r - 1, c - 1]);
+//     }
+
+//    if (r > 0 && c < board[r].length - 1 && board[r - 1][c + 1] < 0) {
+//         list.push([r - 1, c + 1]);
+//     }
+
+//     return list;
+// }
+
+export function WhitePawn(r, c, board) {
     let list = [];
+    const kingPos = findKingPosition(board, 1);
+    const direction = checkPin(kingPos, [c, r], board, 1);
+    // console.log(direction , '  pawn directio,nnnnnnnnnnnnnnnnnnnnnn');
+    
+
+   if (direction && !(direction[0] === 0 && direction[1] === -1)) {
+
+   if (r > 0 && c > 0 && direction[0] === -1 && direction[1] === -1 && board[r - 1][c - 1] < 0) {
+            list.push([r - 1, c - 1]);}
+
+   if (r > 0 && c < 7 && direction[0] === 1 && direction[1] === -1 && board[r - 1][c + 1] < 0) {
+            list.push([r - 1, c + 1]);}
+        return list;
+    }
 
     if (r > 0 && board[r - 1][c] === 0) {
         list.push([r - 1, c]);
 
-      
-        if (r === 6 && board[r - 2][c] === 0) {
-            list.push([r - 2, c]);
-        
-        }
+    if (r === 6 && board[r - 2][c] === 0) { list.push([r - 2, c]); }
     }
-
-   
     if (r > 0 && c > 0 && board[r - 1][c - 1] < 0) {
-             list.push([r - 1, c - 1]);
-    }
-
-   if (r > 0 && c < board[r].length - 1 && board[r - 1][c + 1] < 0) {
-        list.push([r - 1, c + 1]);
-    }
+        list.push([r - 1, c - 1]);}
+    if (r > 0 && c < 7 && board[r - 1][c + 1] < 0) {
+        list.push([r - 1, c + 1]);}
 
     return list;
 }
@@ -149,31 +179,66 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
 
 
-  export   function BlackPawn(r, c, board) {
-    let list = [];
+
+//   export   function BlackPawn(r, c, board) {
+//     let list = [];
 
     
-    if (r < board.length - 1 && board[r + 1][c] === 0) {
-        list.push([r + 1, c]);
+//     if (r < board.length - 1 && board[r + 1][c] === 0) {
+//         list.push([r + 1, c]);
 
    
-        if (r === 1 && board[r + 2][c] === 0) {
+//         if (r === 1 && board[r + 2][c] === 0) {
+//             list.push([r + 2, c]);
+//         }
+//     }
+
+   
+//     if (r < board.length - 1 && c > 0 && board[r + 1][c - 1] > 0) {
+//         list.push([r + 1, c - 1]);
+//     }
+
+   
+//     if (r < board.length - 1 && c < board[r].length - 1 && board[r + 1][c + 1] > 0) {
+//         list.push([r + 1, c + 1]);
+//     }
+
+//     return list;
+// }
+
+export function BlackPawn(r, c, board) {
+    let list = [];
+    const kingPos = findKingPosition(board, -1);
+    const direction = checkPin(kingPos, [c, r], board, -1);
+
+    
+    if (direction && !(direction[0] === 0 && direction[1] === 1)) {
+        
+    if (r < 7 && c > 0 && direction[0] === -1 && direction[1] === 1 && board[r + 1][c - 1] > 0) {
+            list.push([r + 1, c - 1]);}
+    if (r < 7 && c < 7 && direction[0] === 1 && direction[1] === 1 && board[r + 1][c + 1] > 0) {
+            list.push([r + 1, c + 1]);}
+        return list;
+    }
+
+
+    if (r < 7 && board[r + 1][c] === 0) {
+        list.push([r + 1, c]);
+
+    if (r === 1 && board[r + 2][c] === 0) {
             list.push([r + 2, c]);
         }
     }
 
-   
-    if (r < board.length - 1 && c > 0 && board[r + 1][c - 1] > 0) {
-        list.push([r + 1, c - 1]);
-    }
+    if (r < 7 && c > 0 && board[r + 1][c - 1] > 0) {
+        list.push([r + 1, c - 1]);}
 
-   
-    if (r < board.length - 1 && c < board[r].length - 1 && board[r + 1][c + 1] > 0) {
-        list.push([r + 1, c + 1]);
-    }
+    if (r < 7 && c < 7 && board[r + 1][c + 1] > 0) {
+        list.push([r + 1, c + 1]);}
 
     return list;
 }
+
 
 //   export   function whiteRook(r, c, board) {
 
