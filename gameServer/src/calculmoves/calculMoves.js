@@ -14,9 +14,10 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
 
 
-  export   function calculatepieceMove(r,c,num,board){
+  export   function calculatepieceMove(r,c,num,board , isCheck){
 
 
+    let res;
 
 
 
@@ -33,14 +34,48 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
         case 2:
         
              
-            return whiteRook(r,c,board);
+            res = whiteRook(r,c,board);
+            // console.log(isCheck);
+            
+            // console.log(res);
+            
 
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+   
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
+                
                 
         break;
         case -2:
                         
 
-            return blackRook(r,c,board);
+        res = blackRook(r,c,board);
+        // console.log(isCheck);
+        
+        // console.log(res);
+        
+
+        if(isCheck){
+            // console.log('filter');
+            
+         
+            const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+
+
+            res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+         
+            return res ;
+        }
+        return  res;
                 
         break;
         
@@ -53,15 +88,42 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
         case 4:
             //console.log(r +'test'+c,board);
-            
+            res = whiteBishop(r,c,board);
         
-            return whiteBishop(r,c,board);
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+   
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
                 
         break;
-        
         case -4:
         
-            return blackBishop(r,c,board);
+        res = blackBishop(r,c,board);
+        // console.log(isCheck);
+        
+        // console.log(res);
+        
+
+        if(isCheck){
+            // console.log('filter');
+            
+         
+            const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+
+
+            res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+         
+            return res ;
+        }
+        return  res;
                 
         break;
 
@@ -69,13 +131,47 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
             //console.log(r +'test'+c,board);
             
         
-            return whiteQueen(r,c,board);
+            res = whiteQueen(r,c,board);
+            // console.log(isCheck);
+            
+            // console.log(res);
+            
+
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+   
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
                 
         break;
         
         case -5:
         
-            return blackQueen(r,c,board);
+            res = blackQueen(r,c,board);
+            // console.log(isCheck);
+            
+            // console.log(res);
+            
+
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+   
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
                 
         break;
 
@@ -98,13 +194,48 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
             //console.log(r +'test'+c,board);
             
         
-            return whiteKnight(r,c,board);
+            // return whiteKnight(r,c,board);
+            res = whiteKnight(r,c,board);
+            // console.log(isCheck);
+            
+            // console.log(res);
+            
+    
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+    
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
                 
         break;
         
         case -3:
         
-            return blackKnight(r,c,board);
+        res = blackKnight(r,c,board);
+        // console.log(isCheck);
+        
+        // console.log(res);
+        
+
+        if(isCheck){
+            // console.log('filter');
+            
+         
+            const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+
+
+            res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+         
+            return res ;
+        }
+        return  res;
                 
         break;
 

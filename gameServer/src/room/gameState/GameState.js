@@ -7,6 +7,8 @@ const GameState = {
       turn: "white",
       whitePlayerData,  
       blackPlayerData,  
+      isCheck:false,  // to keep the path of check and use it in the next move 
+
       timeControl,     
       timeRemaining: {  
         white: timeControl?.initialTime || 600,
@@ -44,12 +46,14 @@ const GameState = {
 function initializeBoard() {
   const board = [
     [-2, -3, -4, -5, -6, -4, -3, -2],
-    [-1,-1,-1,-1,-1,-1,-1,-1],
+    [-2, 0, 0, 0, 0, 0, 0, 0],
+
+    [0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 3, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [1,1,1,1,1,1,1,1],
+   
     [2, 3, 4, 5, 6, 4, 3, 2]
   ];
 
@@ -57,3 +61,15 @@ function initializeBoard() {
 }
 
 export default GameState;
+
+
+
+
+// [-2, -3, -4, -5, -6, -4, -3, -2],
+//     [-1,-1,-1,-1,-1,-1,-1,-1],
+//     [0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0, 0, 0, 0],
+//     [1,1,1,1,1,1,1,1],
+//     [2, 3, 4, 5, 6, 4, 3, 2]

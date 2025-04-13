@@ -46,7 +46,7 @@ class GameRoom extends Room {
 
       console.log("Received movePiece message:", message);
 
-      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board);
+      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board ,  this.state.isCheck);
 
       // console.log(list);
       client.send("validMoves", {validMoves: list,selectedPiece: {row: message.row,col: message.col,pieceN: message.pieceN}});
@@ -68,7 +68,18 @@ class GameRoom extends Room {
       GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves);
       // console.log(this.state.turn);
        let color = this.state.turn === 'white' ? 'black' : 'white';
-      console.log(check.checkIfLastMovePutKingInCheck(this.state.board,color ));
+       let res =  check.checkIfLastMovePutKingInCheck(this.state.board,color );
+
+       console.log(res);
+       
+
+       if (res) {
+
+        this.state.isCheck = res;
+        
+       }else{
+        this.state.isCheck = false;
+      }
       
       this.switchTurn(this.state);
       // console.log(this.state.turn);
