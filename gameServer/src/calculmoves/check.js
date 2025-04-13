@@ -236,7 +236,7 @@ export function findKingPosition(board, color) {
       newBoard[move[0]][move[1]] = kingValue;
       newBoard[kingPos[0]][kingPos[1]] = 0;
       
-      return !isSquareAttacked(tempBoard, move, color);
+      return !isSquareAttacked(newBoard, move, color);
     });
 
 
@@ -264,7 +264,7 @@ export function getLegalMoves(board, pos, color) {
           kingPos = [newRow, newCol]; 
       } else {
           
-          kingPos = getKingPosition(tempBoard, color);  
+          kingPos = findKingPosition(tempBoard, color);  
       }
       if (!isSquareAttacked(tempBoard, kingPos, color)) {
         legalMoves.push([newRow, newCol]);
@@ -322,7 +322,7 @@ export function getLegalMoves(board, pos, color) {
 
 
   export function hasKingEscapeMoves(board, color) {
-    const kingPos = getKingPosition(board, color);
+    const kingPos = findKingPosition(board, color);
     let is= getKingLegalMoves(board, kingPos, color) 
     return is.length > 0;
   }
@@ -332,7 +332,7 @@ export function getLegalMoves(board, pos, color) {
 
 
 
-export function checkIfLastMovePutKingInCheck(board, opponentColor) {
+export function checkifKingInCheck(board, opponentColor) {
     console.log(  'color ' , opponentColor);
     
     const kingPos = findKingPosition(board, opponentColor);
@@ -374,3 +374,35 @@ export function checkIfLastMovePutKingInCheck(board, opponentColor) {
 
 
 
+
+
+
+  export function processMove(board, from) {
+   
+    // console.log( ' up ', from);
+    
+    const color = from > 0 ? 'white' : 'black';
+    const opponentColor = color === 'white' ? 'black' : 'white';
+    
+    
+    const checkPath = checkifKingInCheck(board, opponentColor);
+    // return checkPath;
+    
+    let gameStatus = {
+      status: 'continue',
+      checkPath: null
+    };
+    
+    if (checkPath) {
+      gameStatus.checkPath = checkPath;
+      
+      if (isCheckmate(board, opponentColor, checkPath)) {
+        gameStatus.status = 'checkmate';
+      } else {
+        gameStatus.status = 'check';
+      }
+    } 
+    
+    return gameStatus;
+  }
+  

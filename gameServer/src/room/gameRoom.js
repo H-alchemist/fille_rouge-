@@ -65,20 +65,28 @@ class GameRoom extends Room {
         
       }
 
+      let pieceC = this.state.board[message.fromRow][message.fromCol];
+
       GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves);
       // console.log(this.state.turn);
        let color = this.state.turn === 'white' ? 'black' : 'white';
-       let res =  check.checkIfLastMovePutKingInCheck(this.state.board,color );
+       let res =  check.processMove(this.state.board,pieceC );
 
        console.log(res);
        
 
-       if (res) {
+       if (res.status==='check') {
 
-        this.state.isCheck = res;
+        this.state.isCheck = res.checkPath;
         
-       }else{
-        this.state.isCheck = false;
+       }else if (res.status==='checkmate') {
+
+        console.log(res);
+        
+
+       
+      }else{
+        this.state.isCheck = null;
       }
       
       this.switchTurn(this.state);
