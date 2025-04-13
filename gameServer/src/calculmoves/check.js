@@ -371,6 +371,15 @@ export function checkifKingInCheck(board, opponentColor) {
 
 
 
+    export function isStalemate(board, color) {
+
+        
+        return getAllPiecesLegalMoves(board, color).length === 0;
+   }
+
+  
+
+
 
 
 
@@ -401,7 +410,11 @@ export function checkifKingInCheck(board, opponentColor) {
       } else {
         gameStatus.status = 'check';
       }
-    } 
+    } else{
+        if (isStalemate(board, opponentColor)) {
+          gameStatus.status = 'stalemate';
+        }
+    }
     
     return gameStatus;
   }
