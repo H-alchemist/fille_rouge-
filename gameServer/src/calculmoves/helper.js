@@ -6,8 +6,8 @@ export function isPieceAligned(piecePosition, kingPosition) {
     let x = kingPosition[0] - piecePosition[0];
     let y = kingPosition[1] - piecePosition[1];
 
-    console.log(x + 'piecePosition');
-    console.log(y + 'kingPosition');
+    //console.log(x + 'piecePosition');
+    //console.log(y + 'kingPosition');
     
 
     if (x === 0) {
@@ -54,8 +54,8 @@ export function isClearBetween(pos1, pos2, board) {
         y += dy;
     }
 
-    console.log(x + 'x');
-    console.log(y + 'y');
+    //console.log(x + 'x');
+    //console.log(y + 'y');
     
 
     return true;
@@ -81,7 +81,7 @@ export function findThreatInDirection(piecePos, direction, board, color) {
         if (x < 0 || x >= 8 || y < 0 || y >= 8) break;
 
         let target = board[y][x];
-        console.log(target + 'target');
+        //console.log(target + 'target');
         
         if (target === 0) continue;
 
@@ -92,7 +92,7 @@ export function findThreatInDirection(piecePos, direction, board, color) {
 
         if (Math.sign(target)== Math.sign(color)){ return false};
 
-        // console.log(Enemy + 'qlnqzjendzjkqe');
+        // //console.log(Enemy + 'qlnqzjendzjkqe');
         let abs = Math.abs(target);
         if (
             (abs === 2 && (dx === 0 || dy === 0)) ||         
@@ -114,7 +114,7 @@ export function checkPin(kingPosition , piecePosition , board , color){
 
 
     let direction =isPieceAligned(piecePosition, kingPosition);
-    // console.log(',o//'+direction + '/fromhelper');
+    // //console.log(',o//'+direction + '/fromhelper');
     
 
     if (!direction) return false;

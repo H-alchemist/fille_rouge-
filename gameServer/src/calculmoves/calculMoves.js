@@ -52,7 +52,7 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
 
         case 4:
-            console.log(r +'test'+c,board);
+            //console.log(r +'test'+c,board);
             
         
             return whiteBishop(r,c,board);
@@ -66,7 +66,7 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
         break;
 
         case 5:
-            console.log(r +'test'+c,board);
+            //console.log(r +'test'+c,board);
             
         
             return whiteQueen(r,c,board);
@@ -80,7 +80,7 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
         break;
 
         case 6:
-            console.log(r +'test'+c,board);
+            //console.log(r +'test'+c,board);
             
         
             return whiteKing(r,c,board);
@@ -95,7 +95,7 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
 
 
         case 3:
-            console.log(r +'test'+c,board);
+            //console.log(r +'test'+c,board);
             
         
             return whiteKnight(r,c,board);
@@ -150,7 +150,7 @@ export function WhitePawn(r, c, board) {
     let list = [];
     const kingPos = findKingPosition(board, 1);
     const direction = checkPin(kingPos, [c, r], board, 1);
-    // console.log(direction , '  pawn directio,nnnnnnnnnnnnnnnnnnnnnn');
+    // //console.log(direction , '  pawn directio,nnnnnnnnnnnnnnnnnnnnnn');
     
 
    if (direction && !(direction[0] === 0 && direction[1] === -1)) {
@@ -643,7 +643,7 @@ export function blackRook(r, c, board) {
 
 //   export   function whiteBishop(r, c, board) {
 //     let list = [];
-//   console.log(list);
+//   //console.log(list);
   
   
 //     let row = r - 1, col = c - 1;
@@ -1162,7 +1162,7 @@ export function blackQueen(r, c, board, color) {
     let kingPos = findKingPosition(board, -1);  
     const direction = checkPin(kingPos, [c, r], board, -1);  
     
-    console.log('test' + direction);
+    //console.log('test' + direction);
 
     if (!direction) {
         
@@ -1285,10 +1285,10 @@ export function blackQueen(r, c, board, color) {
         while (x >= 0 && x < 8 && y >= 0 && y < 8) {
             if (board[x][y] === 0) {
                 list.push([x, y]);
-                console.log('empty' + [x, y]);
+                //console.log('empty' + [x, y]);
             } else if (board[x][y] > 0) { 
                 list.push([x, y]);
-                console.log('enemy' + [x, y]);
+                //console.log('enemy' + [x, y]);
                 break;
             } else {
                 break;
@@ -1306,7 +1306,7 @@ export function blackQueen(r, c, board, color) {
                 list.push([x1, y2]);
             } else if (board[x1][y2] > 0) {  
                 list.push([x1, y2]);
-                console.log('enemy' + [x1, y2]);
+                //console.log('enemy' + [x1, y2]);
                 break;
             } else {
                 break;
@@ -1328,7 +1328,7 @@ export function whiteQueen(r, c, board , color) {
     const direction = checkPin(kingPos, [c, r], board, 1);
 
     
-    console.log('test' +direction);
+    //console.log('test' +direction);
 
     
     //  return;
@@ -1457,10 +1457,10 @@ export function whiteQueen(r, c, board , color) {
         while (x >= 0 && x < 8 && y >= 0 && y < 8) {
             if (board[x][y] === 0) {
                 list.push([x, y]);
-                console.log('empty' + [x, y]);
+                //console.log('empty' + [x, y]);
             } else if (board[x][y] < 0) {
                 list.push([x, y]);
-                console.log('enemy' + [x, y]);
+                //console.log('enemy' + [x, y]);
                 break;
             } else {
                 break;
@@ -1476,10 +1476,10 @@ export function whiteQueen(r, c, board , color) {
         while (x1 >= 0 && x1 < 8 && y2 >= 0 && y2 < 8) {
             if (board[x1][y2] === 0) {
                 list.push([x1, y2]);
-                // console.log('empty' + [x, y]);
+                // //console.log('empty' + [x, y]);
             } else if (board[x1][y2] < 0) {
                 list.push([x1, y2]);
-                console.log('enemy' + [x1, y2]);
+                //console.log('enemy' + [x1, y2]);
                 break;
             } else {
                 break;
