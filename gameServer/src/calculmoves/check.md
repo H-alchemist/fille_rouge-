@@ -12,5 +12,5 @@ findKingPosition()
 
 getPieacePotentialMoves()  to get all the possible moves for a piece regadless of check and pin stuations 
 
-checkIfSquareAttacked()   check if square is attacked by any enemy  piece ( to check the king legal moves)
 
+and checkbetween()  to check if there is no defender between the king and the attacker

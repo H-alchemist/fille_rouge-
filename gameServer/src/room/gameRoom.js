@@ -1,6 +1,9 @@
 import { Room } from "colyseus";
 import GameState from './gameState/GameState.js';
 
+import * as check from '../calculmoves/check.js';
+
+
 import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '../calculmoves/helper.js';
 import {calculatepieceMove,findKingPosition,WhitePawn,BlackPawn,whiteRook,blackRook,whiteBishop,blackBishop,whiteQueen,blackQueen,whiteKing,blackKing,whiteKnight,blackKnight} from '../calculmoves/calculMoves.js';
 
@@ -64,6 +67,8 @@ class GameRoom extends Room {
 
       GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves);
       // console.log(this.state.turn);
+       let color = this.state.turn === 'white' ? 'black' : 'white';
+      console.log(check.checkIfLastMovePutKingInCheck(this.state.board,color ));
       
       this.switchTurn(this.state);
       // console.log(this.state.turn);
