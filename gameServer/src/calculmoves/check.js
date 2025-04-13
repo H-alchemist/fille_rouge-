@@ -200,6 +200,138 @@ export function findKingPosition(board, color) {
 
 
 
+
+
+
+
+  export function isSquareAttacked(board, pos, color) {
+    const opponent = color === 'white' ? 'black' : 'white';
+    
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const piece = board[row][col];
+        if (piece !== 0 && ((opponent === 'white' && piece > 0) || (opponent === 'black' && piece < 0))) {
+          const moves = getpieacePotentialMoves(board, [row, col], opponent);
+          if (moves.some(([r, c]) => r === pos[0] && c === pos[1])) {
+            return true;
+          }
+        }
+      }
+    }
+    
+    return false;
+  }
+
+
+
+  export function getKingLegalMoves(board, kingPos, color) {
+    const poentionalLegalMoves = getpieacePotentialMoves(board, kingPos, color);
+    
+    
+    
+    return poentionalLegalMoves.filter(move => {
+
+      const newBoard = board.map(row => [...row]);
+      const kingValue = board[kingPos[0]][kingPos[1]];
+      newBoard[move[0]][move[1]] = kingValue;
+      newBoard[kingPos[0]][kingPos[1]] = 0;
+      
+      return !isSquareAttacked(tempBoard, move, color);
+    });
+
+
+}
+
+
+
+export function getLegalMoves(board, pos, color) {
+    const [row, col] = pos;
+    const piece = board[row][col];
+    const pseudoLegalMoves = getpieacePotentialMoves(board, pos, color);
+    const legalMoves = [];
+    
+   
+    for (const [newRow, newCol] of pseudoLegalMoves) {
+      const tempBoard = board.map(r => [...r]);
+      
+      tempBoard[newRow][newCol] = piece;
+      tempBoard[row][col] = 0;
+      
+      let kingPos;
+
+      if (piece === (color === 'white' ? 6 : -6)) {
+         
+          kingPos = [newRow, newCol]; 
+      } else {
+          
+          kingPos = getKingPosition(tempBoard, color);  
+      }
+      if (!isSquareAttacked(tempBoard, kingPos, color)) {
+        legalMoves.push([newRow, newCol]);
+      }
+      }
+    
+       return legalMoves;
+  }
+
+
+
+
+  export function getAllPiecesLegalMoves(board, color) {
+    const allMoves = [];
+    
+    for (let row = 0; row < 8; row++) {
+    for (let col = 0; col < 8; col++) {
+         const piece = board[row][col];
+        if (piece !== 0 && ((color === 'white' && piece > 0) || (color === 'black' && piece < 0))) {
+          const moves = getLegalMoves(board, [row, col], color);
+          allMoves.push(...moves.map(move => ({ from: [row, col], to: move })));
+     }
+      }
+    }
+    
+    return allMoves;
+  }
+
+
+
+  export function canBlockorCaptureCheck(board, color, checkPath) {
+
+
+
+    for (let i = 0; i < checkPath.length; i++) {
+        const [x, y] = checkPath[i];
+        
+        for (let row = 0; row < 8; row++) {
+          for (let col = 0; col < 8; col++) {
+            const piece = board[row][col];
+            if (piece !== 0 && ((color === 'white' && piece > 0) || (color === 'black' && piece < 0))) {
+              const moves = getLegalMoves(board, [row, col], color);
+              if (moves.some(([r, c]) => r === x && c === y)) {
+                return true;
+              }
+            }
+          }
+        }
+      }
+      return false;
+    
+
+
+  }
+
+
+  export function hasKingEscapeMoves(board, color) {
+    const kingPos = getKingPosition(board, color);
+    let is= getKingLegalMoves(board, kingPos, color) 
+    return is.length > 0;
+  }
+
+
+
+
+
+
 export function checkIfLastMovePutKingInCheck(board, opponentColor) {
     console.log(  'color ' , opponentColor);
     
@@ -221,3 +353,24 @@ export function checkIfLastMovePutKingInCheck(board, opponentColor) {
     
     return false;
   }
+
+
+
+  
+
+
+
+  export function isCheckmate(board, color, checkPath) {
+  
+    
+    if (hasKingEscapeMoves(board, color)) return false;
+    
+    
+    return !canBlockorCaptureCheck(board, color, checkPath);
+  }
+
+
+
+
+
+
