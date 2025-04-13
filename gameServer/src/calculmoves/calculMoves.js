@@ -1,5 +1,6 @@
 import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '../calculmoves/helper.js';
  
+import * as moves from './check.js'; 
  export function findKingPosition(board, sign) {
     for (let row = 0; row < board.length; row++) {
         for (let col = 0; col < board[row].length; col++) {
@@ -178,13 +179,16 @@ import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '.
         case 6:
             //console.log(r +'test'+c,board);
             
-        
+             let WkingPos = moves.findKingPosition(board,'white');
+             return moves.getKingLegalMoves(board , WkingPos , 'white');
             return whiteKing(r,c,board);
                 
         break;
         
         case -6:
         
+        let BkingPos = moves.findKingPosition(board,'black');
+        return moves.getKingLegalMoves(board , BkingPos , 'black');
             return blackKing(r,c,board);
                 
         break;
