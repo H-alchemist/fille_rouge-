@@ -8,6 +8,10 @@ const GameState = {
       whitePlayerData,  
       blackPlayerData,  
       isCheck:false,  // to keep the path of check and use it in the next move 
+      castling: {
+        white: { kingSide: true, queenSide: true },
+        black: { kingSide: true, queenSide: true }
+      },
 
       timeControl,     
       timeRemaining: {  
@@ -17,12 +21,51 @@ const GameState = {
     };
   },
 
-  updateMatrix(board, from, to , gameMoves) {
+  updateMatrix(board, from, to , gameMoves ,castling) {
+
+    const movingPiece = board[fromRow][fromCol];
+
+    if (Math.abs(movingPiece) === 6){
+
+      if (movingPiece === 6) {
+        castling.white.kingSide = false;
+        castling.white.queenSide = false;
+      } else {
+        castling.black.kingSide = false;
+        castling.black.queenSide = false;
+      }
+
+    }
+    if(Math.abs(movingPiece) === 2){
+      
+      if (movingPiece === 2 && fromCol === 7 && fromRow === 7) {
+        castling.white.kingSide = false;
+        
+      } else if (movingPiece === 2 && fromCol === 7 && fromRow === 0) {
+        
+        castling.white.queenSide = false;
+        
+      } else if (movingPiece === -2 && fromCol === 0 && fromRow === 7) {
+
+        castling.black.kingSide = false;
+        
+
+      } else if (movingPiece === -2 && fromCol === 0 && fromRow === 0) {
+        
+
+        castling.black.queenSide = false;
+        
+
+      } 
+    }
+
+     
+
   
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
 
-    const movingPiece = board[fromRow][fromCol];
+    // const movingPiece = board[fromRow][fromCol];
 
     gameMoves.push({
       from: [fromRow, fromCol],
