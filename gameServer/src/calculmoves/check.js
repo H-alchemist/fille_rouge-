@@ -224,23 +224,7 @@ export function findKingPosition(board, color) {
 
 
 
-  export function getKingLegalMoves(board, kingPos, color) {
-    const poentionalLegalMoves = getpieacePotentialMoves(board, kingPos, color);
-    
-    
-    
-    return poentionalLegalMoves.filter(move => {
-
-      const newBoard = board.map(row => [...row]);
-      const kingValue = board[kingPos[0]][kingPos[1]];
-      newBoard[move[0]][move[1]] = kingValue;
-      newBoard[kingPos[0]][kingPos[1]] = 0;
-      
-      return !isSquareAttacked(newBoard, move, color);
-    });
-
-
-}
+ 
 
 
 
@@ -418,4 +402,214 @@ export function checkifKingInCheck(board, opponentColor) {
     
     return gameStatus;
   }
-  
+
+
+
+//    export function getKingLegalMoves(board, kingPos, color) {
+//     const poentionalLegalMoves = getpieacePotentialMoves(board, kingPos, color);
+    
+    
+    
+//     return poentionalLegalMoves.filter(move => {
+
+//       const newBoard = board.map(row => [...row]);
+//       const kingValue = board[kingPos[0]][kingPos[1]];
+//       newBoard[move[0]][move[1]] = kingValue;
+//       newBoard[kingPos[0]][kingPos[1]] = 0;
+      
+//       return !isSquareAttacked(newBoard, move, color);
+//     });
+
+
+// }
+
+
+
+
+// export function getKingLegalMoves(board, kingPos, color) {
+//     const pseudoLegalMoves = getpieacePotentialMoves(board, kingPos, color);
+
+    
+
+//     console.log('Pseudo-legal moves:', pseudoLegalMoves);
+    
+    
+//     // Filter out moves to squares that are under attack
+//     return pseudoLegalMoves.filter(move => {
+//       // Create a simulated board with the king in the new position
+//       const tempBoard = board.map(row => [...row]);
+//       const kingValue = board[kingPos[0]][kingPos[1]];
+//       tempBoard[move[0]][move[1]] = kingValue;
+//       tempBoard[kingPos[0]][kingPos[1]] = 0;
+      
+//       // Check if the new position would be under attack
+//       return !isSquareAttacked(tempBoard, move, color);
+//     });
+//   }
+
+
+//   export function kingMoves(board, kingPos, color , castling) {
+
+    
+
+//     let pseudoLegalMoves = getKingLegalMoves(board, kingPos, color);
+
+//    console.log(castling.white.kingSide, '&&', color );
+   
+    
+//     if(castling.white.kingSide && color === 'white'){
+
+//       if (board[7][6] === 0 && !isSquareAttacked(board, [7 , 6], color) && pseudoLegalMoves.some(move => move[0] === 7 && move[1] === 5) ) {
+        
+     
+
+
+//          pseudoLegalMoves.push([7 , 6]) ;
+      
+
+//       }
+//     }
+      
+//       if(castling.black.kingSide &&  color === 'black'){
+//     // console.log('castling:', castling.black.kingSide,'color', color);
+
+//         if (board[0][6] === 0 &&  !isSquareAttacked(board, [0 , 6], color) && pseudoLegalMoves.some(move => move[0] === 0 && move[1] === 5))  {
+//        console.log('castling:', castling.black.kingSide,'color', color);
+        
+        
+//        pseudoLegalMoves.push([0 , 6]) ;
+        
+//         console.log(pseudoLegalMoves);
+//      }
+//      }
+
+
+
+
+ 
+//         if(castling.white.queenSide && color === 'white' ){
+
+//     if(!isSquareAttacked(board, [7 , 2], color) &&!isSquareAttacked(board, [7 , 1], color)  && pseudoLegalMoves.includes([7 , 5])){
+//       pseudoLegalMoves.push([7 , 2]) ;
+//       pseudoLegalMoves.push([7 , 1]) ;
+//     }
+//         }
+
+//          if(castling.black.queenSide && color === 'black' ){
+
+
+//      if(!isSquareAttacked(board, [0 , 2], color) &&!isSquareAttacked(board, [0 , 1], color)  && pseudoLegalMoves.includes([0 , 5])){
+//       pseudoLegalMoves.push([0 , 2]) ;
+//       pseudoLegalMoves.push([0 , 1]) ;
+//     }
+
+
+//        }
+
+// return pseudoLegalMoves;
+
+
+
+
+// }
+
+
+
+
+export function getKingLegalMoves(board, kingPos, color) {
+    const pseudoLegalMoves = getPseudoLegalMoves(board, kingPos, color);
+
+    
+
+    console.log('Pseudo-legal moves:', pseudoLegalMoves);
+    
+    
+    // Filter out moves to squares that are under attack
+    return pseudoLegalMoves.filter(move => {
+      // Create a simulated board with the king in the new position
+      const tempBoard = board.map(row => [...row]);
+      const kingValue = board[kingPos[0]][kingPos[1]];
+      tempBoard[move[0]][move[1]] = kingValue;
+      tempBoard[kingPos[0]][kingPos[1]] = 0;
+      
+      // Check if the new position would be under attack
+      return !isSquareAttacked(tempBoard, move, color);
+    });
+  }
+
+
+  export function kingMoves(board, kingPos, color , castling , isCheck) {
+
+    
+
+    let pseudoLegalMoves = getKingLegalMoves(board, kingPos, color);
+
+   
+
+    if(isCheck){
+      return pseudoLegalMoves;
+    }
+    
+    if(castling.white.kingSide && color === 'white'){
+
+      if (board[7][6] === 0 && !isSquareAttacked(board, [7 , 6], color) && pseudoLegalMoves.some(move => move[0] === 7 && move[1] === 5) ) {
+        
+     
+
+
+         pseudoLegalMoves.push([7 , 6]) ;
+      
+
+      }
+    }
+      
+      if(castling.black.kingSide &&  color === 'black'){
+    // console.log('castling:', castling.black.kingSide,'color', color);
+
+        if (board[0][6] === 0 &&  !isSquareAttacked(board, [0 , 6], color) && pseudoLegalMoves.some(move => move[0] === 0 && move[1] === 5))  {
+       console.log('castling:', castling.black.kingSide,'color', color);
+        
+        
+       pseudoLegalMoves.push([0 , 6]) ;
+        
+        console.log(pseudoLegalMoves);
+     }
+     }
+
+
+
+
+ 
+        if(castling.white.queenSide && color === 'white' ){
+
+    if(!isSquareAttacked(board, [7 , 2], color) && !isSquareAttacked(board, [7 , 1], color)  && pseudoLegalMoves.some(move => move[0] === 7 && move[1] === 5)){
+      console.log('castling.white.queenSide');
+      
+      pseudoLegalMoves.push([7 , 2]) ;
+      // pseudoLegalMoves.push([7 , 1]) ;
+    }
+        }
+
+         if(castling.black.queenSide && color === 'black' ){
+
+
+     if(!isSquareAttacked(board, [0 , 2], color) &&!isSquareAttacked(board, [0 , 1], color)  && pseudoLegalMoves.some(move => move[0] === 0 && move[1] === 3)){
+
+      console.log('castling.black.queenSide');
+
+      pseudoLegalMoves.push([0 , 2]) ;
+      // pseudoLegalMoves.push([0 , 1]) ;
+    }
+
+
+       }
+
+return pseudoLegalMoves;
+
+
+
+
+}
+
+
+

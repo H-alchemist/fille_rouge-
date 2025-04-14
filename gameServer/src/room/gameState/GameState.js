@@ -21,14 +21,14 @@ const GameState = {
     };
   },
 
-  updateMatrix(board, from, to , gameMoves ,castling) {
+  updateMatrix(board, from, to , gameMoves ) {
 
     
   
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
 
-    // const movingPiece = board[fromRow][fromCol];
+    const movingPiece = board[fromRow][fromCol];
 
     gameMoves.push({
       from: [fromRow, fromCol],
@@ -52,12 +52,14 @@ const GameState = {
 function initializeBoard() {
   const board = [
     [-2, -3, -4, -5, -6, -4, -3, -2],
-    [-1,-1,-1,-1,-1,-1,-1,-1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [1,1,1,1,1,1,1,1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+
     [2, 3, 4, 5, 6, 4, 3, 2]
   ];
 

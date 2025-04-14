@@ -1,6 +1,6 @@
 import {isPieceAligned , isClearBetween ,findThreatInDirection,checkPin} from '../calculmoves/helper.js';
  
-import * as moves from './check.js'; 
+import * as check from './check.js'; 
  export function findKingPosition(board, sign) {
     for (let row = 0; row < board.length; row++) {
         for (let col = 0; col < board[row].length; col++) {
@@ -15,8 +15,10 @@ import * as moves from './check.js';
 
 
 
-  export   function calculatepieceMove(r,c,num,board , isCheck){
+  export   function calculatepieceMove(r,c,num,board  ,castling , isCheck){
 
+
+    console.log('castling:', castling);
 
     let res;
 
@@ -179,16 +181,17 @@ import * as moves from './check.js';
         case 6:
             //console.log(r +'test'+c,board);
             
-             let WkingPos = moves.findKingPosition(board,'white');
-             return moves.getKingLegalMoves(board , WkingPos , 'white');
+            //  let WkingPos = moves.findKingPosition(board,'white');
+             return check.kingMoves(board , [r,c] , 'white' , castling , isCheck);
             return whiteKing(r,c,board);
                 
         break;
         
         case -6:
         
-        let BkingPos = moves.findKingPosition(board,'black');
-        return moves.getKingLegalMoves(board , BkingPos , 'black');
+        // let BkingPos = moves.findKingPosition(board,'black');
+
+        return check.kingMoves(board , [r,c] , 'black' , castling , isCheck);
             return blackKing(r,c,board);
                 
         break;

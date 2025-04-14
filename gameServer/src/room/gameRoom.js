@@ -46,7 +46,7 @@ class GameRoom extends Room {
 
       console.log("Received movePiece message:", message);
 
-      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board ,  this.state.isCheck);
+      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board ,  this.state.isCheck  ,  this.state.castling);
 
       // console.log(list);
       client.send("validMoves", {validMoves: list,selectedPiece: {row: message.row,col: message.col,pieceN: message.pieceN}});
