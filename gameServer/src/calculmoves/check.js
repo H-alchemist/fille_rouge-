@@ -72,7 +72,10 @@ export function findKingPosition(board, color) {
         
         const direction = color === 'white' ? -1 : 1;
         const startRow = color === 'white' ? 6 : 1;
-        if (board[row + direction][col] === 0) {
+
+        // console.log(row , ' row ' , direction , ' direction ' , startRow , ' startRow ' );
+         
+        if ((row!=0 && row != 7 ) && board[row + direction][col] === 0) {
             moves.push([row + direction, col]);
             
           
@@ -92,7 +95,7 @@ export function findKingPosition(board, color) {
 
         const checkCol = col + wing ;
 
-        if(checkCol >=0 && checkCol < 8 ) {
+        if((row!=0 && row != 7 )  && checkCol >=0 && checkCol < 8 ) {
             let target =   board[row  + direction][checkCol];
             if (target !== 0 && !((color === 'white' && target > 0) || (color === 'black' && target < 0))) {
                 moves.push([row + direction, checkCol]);
@@ -517,7 +520,7 @@ export function checkifKingInCheck(board, opponentColor) {
 
 
 export function getKingLegalMoves(board, kingPos, color) {
-    const pseudoLegalMoves = getPseudoLegalMoves(board, kingPos, color);
+    const pseudoLegalMoves = getpieacePotentialMoves(board, kingPos, color);
 
     
 
@@ -547,7 +550,11 @@ export function getKingLegalMoves(board, kingPos, color) {
    
 
     if(isCheck){
+
+        console.log('isCheck:', color);
+        
       return pseudoLegalMoves;
+
     }
     
     if(castling.white.kingSide && color === 'white'){

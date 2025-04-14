@@ -46,7 +46,7 @@ class GameRoom extends Room {
 
       console.log("Received movePiece message:", message);
 
-      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board ,  this.state.isCheck  ,  this.state.castling);
+      list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board ,   this.state.castling ,this.state.isCheck  );
 
       // console.log(list);
       client.send("validMoves", {validMoves: list,selectedPiece: {row: message.row,col: message.col,pieceN: message.pieceN}});
@@ -73,39 +73,40 @@ class GameRoom extends Room {
         this.state.turn === 'white' ? 'black' : 'white';
        let res =  check.processMove(this.state.board,pieceC );
 
-       console.log(res);
+      //  console.log(res);
        
-
+       console.log('//::' , res , 'res');
+       
        if (res.status==='check') {
-
-        this.state.isCheck = res.checkPath;
+ 
+         this.state.isCheck = res.checkPath;
+         
+        }else if (res.status==='checkmate') {
+ 
+         console.log(res);
+         
+ 
         
-       }else if (res.status==='checkmate') {
-
-        console.log(res);
-        
-
+       }else{
+         this.state.isCheck = null;
+       }
        
-      }else{
-        this.state.isCheck = null;
-      }
-      
-     if (Math.abs(pieceC) == 6 ) {
-          console.log(pieceC , 'pieceC' , color);
-          
-        this.state.castling[color].kingSide = false;
-        this.state.castling[color].queenSide = false;
-        
-      } else if (Math.abs(pieceC)==2) {
-        if (message.fromCol == 7) {
-          this.state.castling[color].kingSide = false;
-          
-        }else if(message.fromCol == 0) {
-          this.state.castling[color].queenSide = false;
-
-        }
-        
-      }
+       if (Math.abs(pieceC) == 6 ) {
+           console.log(pieceC , 'pieceC' , color);
+           
+         this.state.castling[color].kingSide = false;
+         this.state.castling[color].queenSide = false;
+         
+       } else if (Math.abs(pieceC)==2) {
+         if (message.fromCol == 7) {
+           this.state.castling[color].kingSide = false;
+           
+         }else if(message.fromCol == 0) {
+           this.state.castling[color].queenSide = false;
+ 
+         }
+         
+       }
 
 
       this.switchTurn(this.state);
