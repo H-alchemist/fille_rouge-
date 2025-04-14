@@ -23,44 +23,7 @@ const GameState = {
 
   updateMatrix(board, from, to , gameMoves ,castling) {
 
-    const movingPiece = board[fromRow][fromCol];
-
-    if (Math.abs(movingPiece) === 6){
-
-      if (movingPiece === 6) {
-        castling.white.kingSide = false;
-        castling.white.queenSide = false;
-      } else {
-        castling.black.kingSide = false;
-        castling.black.queenSide = false;
-      }
-
-    }
-    if(Math.abs(movingPiece) === 2){
-      
-      if (movingPiece === 2 && fromCol === 7 && fromRow === 7) {
-        castling.white.kingSide = false;
-        
-      } else if (movingPiece === 2 && fromCol === 7 && fromRow === 0) {
-        
-        castling.white.queenSide = false;
-        
-      } else if (movingPiece === -2 && fromCol === 0 && fromRow === 7) {
-
-        castling.black.kingSide = false;
-        
-
-      } else if (movingPiece === -2 && fromCol === 0 && fromRow === 0) {
-        
-
-        castling.black.queenSide = false;
-        
-
-      } 
-    }
-
-     
-
+    
   
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
@@ -88,15 +51,13 @@ const GameState = {
 
 function initializeBoard() {
   const board = [
-    [0, 0, 0, -5, -6,0 , 0,0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 3, 0],
+    [-2, -3, -4, -5, -6, -4, -3, -2],
+    [-1,-1,-1,-1,-1,-1,-1,-1],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-   
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1,1,1,1,1,1,1,1],
     [2, 3, 4, 5, 6, 4, 3, 2]
   ];
 

@@ -66,10 +66,11 @@ class GameRoom extends Room {
       }
 
       let pieceC = this.state.board[message.fromRow][message.fromCol];
+      let color = pieceC > 0 ? 'white' : 'black';
 
       GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves);
       // console.log(this.state.turn);
-       let color = this.state.turn === 'white' ? 'black' : 'white';
+        this.state.turn === 'white' ? 'black' : 'white';
        let res =  check.processMove(this.state.board,pieceC );
 
        console.log(res);
@@ -89,6 +90,24 @@ class GameRoom extends Room {
         this.state.isCheck = null;
       }
       
+     if (Math.abs(pieceC) == 6 ) {
+          console.log(pieceC , 'pieceC' , color);
+          
+        this.state.castling[color].kingSide = false;
+        this.state.castling[color].queenSide = false;
+        
+      } else if (Math.abs(pieceC)==2) {
+        if (message.fromCol == 7) {
+          this.state.castling[color].kingSide = false;
+          
+        }else if(message.fromCol == 0) {
+          this.state.castling[color].queenSide = false;
+
+        }
+        
+      }
+
+
       this.switchTurn(this.state);
       // console.log(this.state.turn);
 
