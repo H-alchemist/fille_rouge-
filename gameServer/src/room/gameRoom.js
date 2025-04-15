@@ -102,12 +102,13 @@ class GameRoom extends Room {
 
       let pieceC = this.state.board[message.fromRow][message.fromCol];
       let color = pieceC > 0 ? 'white' : 'black';
+      let castlingK = true ;
 
-      if (condition) {
-        
+      if (this.state.castling[color].kingSide == false && this.state.castling[color].queenSide == false ){
+        castlingK = false ;
       }
 
-      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves , castling);
+      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves , castlingK);
       // console.log(this.state.turn);
         this.state.turn === 'white' ? 'black' : 'white';
        let res =  check.processMove(this.state.board,pieceC );
