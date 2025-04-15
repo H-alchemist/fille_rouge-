@@ -23,7 +23,7 @@ let gameRoom=null ;
 
 // let RR =Math.floor(Math.random() * 301) + 1200;
 
-// console.log(RR);
+// //console.log(RR);
 
 
 
@@ -52,7 +52,7 @@ async function connectToServer() {
         document.getElementById('gameStatus').textContent = "Connected to server";
         return true;
     } catch (error) {
-        console.error("Could not connect to server:", error);
+        //console.error("Could not connect to server:", error);
         document.getElementById('gameStatus').textContent = "Could not connect to server";
         return false;
     }
@@ -69,7 +69,7 @@ async function joinMatchMaking() {
         room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating:1200,timeControl: "blitz"});
 
         room.onMessage("matchmakingFound",async (message) => {
-            console.log("Matchmaking found:", message.roomId);
+            //console.log("Matchmaking found:", message.roomId);
             
             await joinGameRoom(message.roomId);
 
@@ -84,7 +84,7 @@ async function joinMatchMaking() {
 
         // setupRoomListeners();
     } catch (error) {
-        console.error("Could not create game:", error);
+        //console.error("Could not create game:", error);
         document.getElementById('gameStatus').textContent = "Could not create game";
     }
 }
@@ -99,11 +99,11 @@ async function joinGameRoom(roomId) {
         rating: 1500,   
         accounId: 2425  
     });
-        console.log("Joined game room:", gameRoom);
+        //console.log("Joined game room:", gameRoom);
 
         setupRoomListeners();
     } catch (error) {
-        console.error("Error joining game room:", error);
+        //console.error("Error joining game room:", error);
     }
 }
 
@@ -113,7 +113,7 @@ function setupRoomListeners() {
 
 
     gameRoom.onMessage("playerColor", (message) => {
-        console.log("Received player color:", message);
+        //console.log("Received player color:", message);
         playerColor = message;
         document.getElementById('gameStatus').textContent = `You are playing as ${playerColor}`;
     });
@@ -155,12 +155,13 @@ function setupRoomListeners() {
         const lastMove = message.lastMove;
         renderBoard();
         
-
-        const fromSquare = document.querySelector(`[data-row="${lastMove.from[0]}"][data-col="${lastMove.from[1]}"]`);
-        const toSquare = document.querySelector(`[data-row="${lastMove.to[0]}"][data-col="${lastMove.to[1]}"]`);
+        //  //console.log("Last move:", lastMove);
+         
+        // const fromSquare = document.querySelector(`[data-row="${lastMove.from[0]}"][data-col="${lastMove.from[1]}"]`);
+        // const toSquare = document.querySelector(`[data-row="${lastMove.to[0]}"][data-col="${lastMove.to[1]}"]`);
         
-        if (fromSquare) fromSquare.classList.add('lastMove');
-        if (toSquare) toSquare.classList.add('lastMove');
+        // if (fromSquare) fromSquare.classList.add('lastMove');
+        // if (toSquare) toSquare.classList.add('lastMove');
     });
 
     gameRoom.onMessage("playerLeft", (message) => {
@@ -168,7 +169,7 @@ function setupRoomListeners() {
     });
 
     gameRoom.onError((code, message) => {
-        console.error(`Room error: ${code} - ${message}`);
+        //console.error(`Room error: ${code} - ${message}`);
         document.getElementById('gameStatus').textContent = `Error: ${message}`;
     });
 }
@@ -202,7 +203,7 @@ function handlePieceSelection(row, col, pieceN) {
     }
 
 
-    console.log('handle');
+    //console.log('handle');
     
 
 
@@ -217,7 +218,7 @@ function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
 
     }
 
-    console.log(fromRow, fromCol , toRow , toCol , pieceN);
+    //console.log(fromRow, fromCol , toRow , toCol , pieceN);
     
 
     gameRoom.send("handleMove", { fromRow, fromCol , toRow , toCol , pieceN});
@@ -267,24 +268,24 @@ function renderBoard() {
     
     const allPieces = document.querySelectorAll('.pieceContainer');
     allPieces.forEach(element => {
-        // console.log('elem');
+        // //console.log('elem');
         
         element.addEventListener('click', function() {
             const row = parseInt(element.dataset.row, 10);
             const col = parseInt(element.dataset.col, 10);
             const pieceN = parseInt(element.dataset.content, 10);
             const available = parseInt(element.dataset.available, 10);
-            console.log("available", available);
+            //console.log("available", available);
             
 
             if (start[2] === null || start[2] === 0) {
-                console.log('s');
+                //console.log('s');
                 
                 if (pieceN !== 0) {
                     handlePieceSelection(row, col, pieceN);
                 }
             }else if(pieceN*start[2]>0) {
-                console.log('test');
+                //console.log('test');
 
                 clearSelection();
 
@@ -294,11 +295,24 @@ function renderBoard() {
             
             
             }else if ((start[0] === row && start[1] === col) ) {
-                console.log('3');
+                //console.log('3');
                 
                 clearSelection();
             } else if (available === 1) {
-                console.log('available');
+                //console.log('available');
+            //    updateBoardForPawnPormotion(pieace , from , to);
+
+           const isWhite = start[2] === 1;
+           const shouldPromote = (start[2] === 1 && row === 0) || (start[2] === -1 && row === 7);
+
+           if (shouldPromote && Math.abs)  {
+           console.log('pawn');
+           
+            console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+            
+            updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+            return;
+           }
                 
                 handleMove(start[0], start[1], row, col , pieceN);
             }
@@ -313,6 +327,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     renderBoard();
 });
+
+
 
 
 
@@ -352,7 +368,7 @@ function  removeStylingforlegalMoves(list){
 
     list.forEach(element => {
 
-        console.log(element);
+        //console.log(element);
         
 
         const res = document.querySelector(`[data-row="${element[0]}"][data-col="${element[1]}"]`);
@@ -364,3 +380,86 @@ function  removeStylingforlegalMoves(list){
 }
 
 }
+
+
+
+
+
+const promotionPopup = document.getElementById('promotion-popup');
+
+const pieceImages = {
+  '2': 'https://assets-themes.chess.com/image/ejgfv/150/wr.png',
+  '3': 'https://assets-themes.chess.com/image/ejgfv/150/wn.png',
+  '4': 'https://assets-themes.chess.com/image/ejgfv/150/wb.png',
+  '5': 'https://assets-themes.chess.com/image/ejgfv/150/wq.png',
+  '-2': 'https://assets-themes.chess.com/image/ejgfv/150/br.png',
+  '-3': 'https://assets-themes.chess.com/image/ejgfv/150/bn.png',
+  '-4': 'https://assets-themes.chess.com/image/ejgfv/150/bb.png',
+  '-5': 'https://assets-themes.chess.com/image/ejgfv/150/bq.png',
+};
+
+function showPromotionPopup(row, col, isWhite, callback) {
+  const square = document.querySelector(`[data-row='${row}'][data-col='${col}']`);
+//   //console.log(square);
+  
+  const rect = square.getBoundingClientRect();
+
+  const direction = isWhite ? '' : '-';
+
+  promotionPopup.querySelectorAll('img').forEach(img => {
+    const value = img.dataset.value;
+    img.src = pieceImages[direction + value];
+    img.onclick = () => {
+      promotionPopup.classList.add('hidden');
+      callback(parseInt(direction + value));
+    };
+  });
+
+  promotionPopup.style.left = `${rect.left}px`;
+  promotionPopup.style.top = `${rect.top}px`;
+  promotionPopup.classList.remove('hidden');
+}
+
+
+async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
+
+    //console.log('test' , isWhite);
+    
+   
+      board[from[0]][from[1]] = 0;
+      board[to[0]][to[1]] = piece;
+      
+  
+      renderBoard(); // this re-renders board so popup is shown on nUncaught TypeError: Cannot read properties of null (reading 'getBoundingClientRect')ew square
+  
+    //   setTimeout(() => {
+    //     showPromotionPopup(to[0], to[1], isWhite, (promotedPiece) => {
+    //         promoteTo = promotedPiece;
+    //       board[to[0]][to[1]] = promotedPiece;
+    //       renderBoard(); 
+    //     });
+    //   }, 10);
+
+      const promotedPiece = await new Promise((resolve) => {
+        showPromotionPopup(to[0], to[1], isWhite, resolve);
+      });
+      
+      board[to[0]][to[1]] = promotedPiece;
+      renderBoard();
+
+
+      //console.log("promote", from[0], from[1] , to[0] , to[1] , piece , promotedPiece);
+      
+
+      gameRoom.send("promote",  {
+        fromRow: from[0],
+        fromCol: from[1],
+        toRow: to[0],
+        toCol: to[1],
+        piece: piece,
+        promoteTo: promotedPiece
+      });
+      renderBoard();
+    } 
+  
+  

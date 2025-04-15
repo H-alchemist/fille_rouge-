@@ -26,12 +26,38 @@ import * as check from './check.js';
 
     switch (num) {
         case 1:
-            return WhitePawn(r,c , board);
+            res = WhitePawn(r,c,board);
+
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+   
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
             
             break;
         case -1:
-        
-            return BlackPawn(r,c,board);
+             
+            res = BlackPawn(r,c,board);
+
+            if(isCheck){
+                // console.log('filter');
+                
+             
+                const isCheckSet = new Set(isCheck.map(move => `${move[0]},${move[1]}`));
+    
+   
+                res = res.filter(move => isCheckSet.has(`${move[0]},${move[1]}`));
+             
+                return res ;
+            }
+            return  res;
                 
             break;
         case 2:

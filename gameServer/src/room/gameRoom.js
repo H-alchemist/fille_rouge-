@@ -54,9 +54,46 @@ class GameRoom extends Room {
 
     });
 
+    this.onMessage("promote", (client, message) => {
+
+        console.log(`Received "promote" from :`, message);
+        
+
+      GameState.updateMatrixPromote(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol], message.promoteTo , this.state.gameMoves);
+     
+      let res =  check.processMove(this.state.board,message.promoteTo );
+
+      console.log('from promo' , res , 'res');
+       
+      if (res.status==='check') {
+
+        this.state.isCheck = res.checkPath;
+        
+       }else if (res.status==='checkmate') {
+
+        console.log(res);
+        
+
+       
+      }else{
+        this.state.isCheck = null;
+      }
+
+
+      this.switchTurn(this.state);
+      // console.log(this.state.turn);
+
+      // console.log(this.state.board);
+      
+      this.broadcast("boardUpdate", this.state);
+      
+
+    });
+
     this.onMessage("handleMove", (client, message) => {
 
-      // console.log("Received movePiece message:", message);
+
+      console.log("promote: eeeeeeeeeeeeeeeeeeeee");
       const exists = list.find(item => item[0] === message.toRow && item[1] === message.toCol) !== undefined;
 
       if (exists==undefined) {

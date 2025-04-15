@@ -9,8 +9,8 @@ const GameState = {
       blackPlayerData,  
       isCheck:false,  // to keep the path of check and use it in the next move 
       castling: {
-        white: { kingSide: true, queenSide: true },
-        black: { kingSide: true, queenSide: true }
+        white: { kingSide: false, queenSide: false },
+        black: { kingSide: false, queenSide: false }
       },
 
       timeControl,     
@@ -19,6 +19,39 @@ const GameState = {
         black: timeControl?.initialTime || 600
       }
     };
+  },
+
+  updateMatrixPromote(board, from, to , pieace , gameMoves) {
+
+    const [fromRow, fromCol] = from;
+    const [toRow, toCol] = to;
+    const movingPiece = pieace;
+
+   
+     
+    
+      
+     
+
+    gameMoves.push({
+      from: [fromRow, fromCol],
+      to: [toRow, toCol],
+      piece: board[fromRow][fromCol],
+      pormoted : pieace
+    });
+    
+    
+    // Move the piece
+    board[toRow][toCol] = pieace;
+    board[fromRow][fromCol] = 0;
+
+    // console.log("Matrix after update:", board);
+    // console.log("////////////////////////////////////");
+    
+    return ;
+
+
+  
   },
 
   updateMatrix(board, from, to , gameMoves) {
@@ -123,9 +156,9 @@ function initializeBoard() {
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, -1, 0, 0, 0, 0],
-    [0, -1, 0, 0, 0, 0, 0, 0],
+    [0, -1, 0, 0, 0, 2, 0, 0],
 
-    [0, 0, 0, 0, 2,0, 0, 6]
+    [0, 0, 0, 0, 0,0, 0, 6]
   ];
 
   return board;
