@@ -81,9 +81,7 @@ class GameRoom extends Room {
 
 
       this.switchTurn(this.state);
-      // console.log(this.state.turn);
-
-      // console.log(this.state.board);
+      
       
       this.broadcast("boardUpdate", this.state);
       
