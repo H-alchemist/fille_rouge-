@@ -556,9 +556,14 @@ export function getKingLegalMoves(board, kingPos, color) {
       return pseudoLegalMoves;
 
     }
+
+    console.log(castling.white.kingSide , '&&', color );
+    
     
     if(castling.white.kingSide && color === 'white'){
 
+        console.log('inside white castling');
+        
       if (board[7][6] === 0 && !isSquareAttacked(board, [7 , 6], color) && pseudoLegalMoves.some(move => move[0] === 7 && move[1] === 5) ) {
         
      
@@ -570,11 +575,17 @@ export function getKingLegalMoves(board, kingPos, color) {
       }
     }
       
+    console.log(castling.white.kingSide , '&&', color );
+    console.log(pseudoLegalMoves);
+    
       if(castling.black.kingSide &&  color === 'black'){
-    // console.log('castling:', castling.black.kingSide,'color', color);
 
+    // console.log('castling:', castling.black.kingSide,'color', color);
+ console.log('inside white castling');
         if (board[0][6] === 0 &&  !isSquareAttacked(board, [0 , 6], color) && pseudoLegalMoves.some(move => move[0] === 0 && move[1] === 5))  {
-       console.log('castling:', castling.black.kingSide,'color', color);
+           
+       
+            console.log('castling:', castling.black.kingSide,'color', color);
         
         
        pseudoLegalMoves.push([0 , 6]) ;

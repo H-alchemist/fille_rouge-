@@ -54,14 +54,14 @@ const GameState = {
   
   },
 
-  updateMatrix(board, from, to , gameMoves) {
+  updateMatrix(board, from, to , gameMoves , castling) {
   
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
 
     const movingPiece = board[fromRow][fromCol];
 
-    if ((Math.abs(movingPiece) === 6) &&(toCol == 6 || toCol == 2 ) ) {
+    if ( castling &&(Math.abs(movingPiece) === 6) &&(toCol == 6 || toCol == 2 ) ) {
 
       if (movingPiece === 6) {
         if (toCol === 6) {

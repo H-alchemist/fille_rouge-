@@ -92,8 +92,6 @@ class GameRoom extends Room {
 
     this.onMessage("handleMove", (client, message) => {
 
-
-      console.log("promote: eeeeeeeeeeeeeeeeeeeee");
       const exists = list.find(item => item[0] === message.toRow && item[1] === message.toCol) !== undefined;
 
       if (exists==undefined) {
@@ -105,7 +103,11 @@ class GameRoom extends Room {
       let pieceC = this.state.board[message.fromRow][message.fromCol];
       let color = pieceC > 0 ? 'white' : 'black';
 
-      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves);
+      if (condition) {
+        
+      }
+
+      GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves , castling);
       // console.log(this.state.turn);
         this.state.turn === 'white' ? 'black' : 'white';
        let res =  check.processMove(this.state.board,pieceC );
