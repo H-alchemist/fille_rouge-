@@ -47,7 +47,7 @@ const pieceMap = {
 
 async function connectToServer() {
     try {
-        client = new Colyseus.Client('ws://localhost:3001');
+        client = new Colyseus.Client('ws://192.168.9.72:3001');
         // await client.getAvailableRooms();
         document.getElementById('gameStatus').textContent = "Connected to server";
         return true;
@@ -75,6 +75,27 @@ async function joinMatchMaking() {
 
             
         });
+
+        // gameOver
+
+        room.onMessage("gameOver",async () => {
+            
+
+            console.log("Game Over:");
+            
+        });
+
+        room.onMessage("already_in_queue",async (message) => {
+            //console.log("Matchmaking found:", message.roomId);
+            
+            playerColor = message;
+            document.getElementById('gameStatus').textContent = `already_in_queue`;
+
+            
+        });
+
+
+        
        
         room.onMessage("removed", (message) => {
             document.getElementById('gameStatus').textContent = "sorry we didnt find any opponent in your level ";
@@ -145,6 +166,12 @@ function setupRoomListeners() {
 
         clearSelection();
         document.getElementById('gameStatus').textContent = message.reason;
+    });
+
+
+    gameRoom.onMessage("null", (message) => {
+        //console.log("Game Over:", message.winner);
+        document.getElementById('gameStatus').textContent = `Game Over: ${message.winner}`;
     });
 
     gameRoom.onMessage("boardUpdate", (message) => {

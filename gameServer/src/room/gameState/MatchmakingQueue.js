@@ -18,6 +18,16 @@ export class MatchmakingQueue {
 
   async addToQueue(client, options) {
     const {  name, rating, timeControl , accounId} = options;
+
+    const alreadyInQueue = this.queue.some(entry => entry.accounId === accounId);
+
+    if (alreadyInQueue) {
+      client.send("already_in_queue", {
+        status: "Player is already in the queue",
+        timeControl
+      });
+      return;
+    }
     
     const obj = {client,
       accounId,name,rating: rating || 1200,

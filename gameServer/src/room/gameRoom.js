@@ -26,6 +26,17 @@ class GameRoom extends Room {
 
     let list =null;
 
+    this.gameState = {
+
+      state : null ,
+
+      winner  :null ,
+
+      loser : null 
+
+
+    } ;
+
     this.whitePlayer = null;
     this.blackPlayer = null;
     
@@ -43,8 +54,21 @@ class GameRoom extends Room {
 
       // console.log(`Received "selectPiece" from ${client.sessionId}:`, message);
 
+     
+       console.log(this.gameState.state , 'from gameRoom');
+      
+   
+    if (this.gameState.state !=null){
 
-      console.log("Received movePiece message:", message);
+
+         
+      client.send("null", {message: this.gameState.winner});
+
+      return;
+
+      
+    }
+      // console.log("Received movePiece message:", message);
 
       list = calculatepieceMove(message.row,message.col, message.pieceN , this.state.board ,   this.state.castling ,this.state.isCheck  );
 
@@ -56,7 +80,7 @@ class GameRoom extends Room {
 
     this.onMessage("promote", (client, message) => {
 
-        console.log(`Received "promote" from :`, message);
+        // console.log(`Received "promote" from :`, message);
         
 
       GameState.updateMatrixPromote(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol], message.promoteTo , this.state.gameMoves);
@@ -71,7 +95,14 @@ class GameRoom extends Room {
         
        }else if (res.status==='checkmate') {
 
-        console.log(res);
+        // console.log(res);
+        console.log('checkmate');
+        
+
+        this.gameState.state = 'checkmate';
+
+
+        this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
         
 
        
@@ -121,7 +152,16 @@ class GameRoom extends Room {
          
         }else if (res.status==='checkmate') {
  
-         console.log(res);
+        //  console.log(res);
+        console.log('checkmate');
+        
+
+        this.gameState.state = 'checkmate';
+
+
+        this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
+
+        //  this.disconnect();
          
  
         
@@ -130,7 +170,7 @@ class GameRoom extends Room {
        }
        
        if (Math.abs(pieceC) == 6 ) {
-           console.log(pieceC , 'pieceC' , color);
+          //  console.log(pieceC , 'pieceC' , color);
            
          this.state.castling[color].kingSide = false;
          this.state.castling[color].queenSide = false;
@@ -164,6 +204,18 @@ class GameRoom extends Room {
       this.startTurnTimer();
       // console.log("Turn switched to:", gameState.turn);
       return gameState;
+    }
+
+    endGame(result) {
+
+      console.log("Game ended with result:", result);
+      
+      
+      this.broadcast("gameOver");
+
+
+
+
     }
 
     onJoin(client, options) {
