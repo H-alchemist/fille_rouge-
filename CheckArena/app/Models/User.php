@@ -46,4 +46,21 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    public function whiteParties()
+{
+    return $this->hasMany(Partie::class, 'whitePlayer');
+}
+
+public function blackParties()
+{
+    return $this->hasMany(Partie::class, 'blackPlayer');
+}
+
+public function parties()
+{
+    return $this->whiteParties->merge($this->blackParties);
+}
+
 }

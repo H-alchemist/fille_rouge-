@@ -6,5 +6,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chat extends Model
 {
-    //
+    
+
+
+
+    public function partie()
+{
+    return $this->belongsTo(Partie::class);
+}
+
+public function messages()
+{
+    return $this->hasMany(Message::class);
+}
+
 }
