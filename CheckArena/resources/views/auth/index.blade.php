@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('app')
 
 @section('title', 'Authentication')
 
@@ -17,7 +17,7 @@
     
     <!-- Login Form -->
     <div id="login-form">
-      <form class="space-y-5" action="{{ route('login') }}" method="POST">
+      <form class="space-y-5" action="" method="POST">
         @csrf
         <div>
           <label for="login-email" class="block font-medium mb-1">Email</label>
@@ -36,7 +36,7 @@
             <input type="checkbox" id="remember-me" name="remember" class="w-4 h-4 cursor-pointer">
             <label for="remember-me">Remember me</label>
           </div>
-          <a href="{{ route('password.request') }}" class="text-blue-400 hover:underline transition">Forgot password?</a>
+          <a href="" class="text-blue-400 hover:underline transition">Forgot password?</a>
         </div>
         
         <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded font-semibold transition">
@@ -51,10 +51,10 @@
       </div>
       
       <div class="flex gap-3">
-        <a href="{{ route('social.login', 'google') }}" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
+        <a href="" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
           <span class="font-bold">G</span> Google
         </a>
-        <a href="{{ route('social.login', 'facebook') }}" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
+        <a href="" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
           <span class="font-bold">f</span> Facebook
         </a>
       </div>
@@ -66,7 +66,7 @@
     
     <!-- Register Form -->
     <div id="register-form" class="hidden">
-      <form class="space-y-5" action="{{ route('register') }}" method="POST">
+      <form class="space-y-5" action="" method="POST">
         @csrf
         <div>
           <label for="register-username" class="block font-medium mb-1">Username</label>
@@ -95,7 +95,7 @@
         
         <div class="flex items-center gap-2 text-sm">
           <input type="checkbox" id="agree-terms" name="terms" class="w-4 h-4 cursor-pointer" required>
-          <label for="agree-terms">I agree to the <a href="{{ route('terms') }}" class="text-blue-400 hover:underline transition">Terms of Service</a> and <a href="{{ route('privacy') }}" class="text-blue-400 hover:underline transition">Privacy Policy</a></label>
+          <label for="agree-terms">I agree to the <a href="" class="text-blue-400 hover:underline transition">Terms of Service</a> and <a href="" class="text-blue-400 hover:underline transition">Privacy Policy</a></label>
         </div>
         
         <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded font-semibold transition">
@@ -110,12 +110,10 @@
       </div>
       
       <div class="flex gap-3">
-        <a href="{{ route('social.login', 'google') }}" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
+        <a href="" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
           <span class="font-bold">G</span> Google
         </a>
-        <a href="{{ route('social.login', 'facebook') }}" class="flex-1 flex justify-center items-center gap-2 py-3 bg-gray-700 hover:bg-gray-600 border border-gray-600 rounded transition">
-          <span class="font-bold">f</span> Facebook
-        </a>
+        
       </div>
       
       <div class="text-center mt-6 text-gray-400 text-sm">
