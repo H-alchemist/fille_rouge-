@@ -8,23 +8,16 @@ class Partie extends Model
 {
 
 
+    protected $table = 'parties';
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    protected $fillable = [
+        'whitePlayer',
+        'blackPlayer',
+        'winner',
+        'loser',
+        'partieStatus',
+        'timeControl',
+    ];
 
     public function whitePlayer()
 {
