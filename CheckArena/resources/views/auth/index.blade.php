@@ -1,3 +1,5 @@
+
+
 @extends('app')
 
 @section('title', 'Authentication')
@@ -16,12 +18,12 @@
     </div>
     
     <!-- Login Form -->
-    <div id="login-form">
+    <div id="login-form" class="{{ $title == 'login' ? '' : 'hidden' }}">
       <form class="space-y-5" action="/login" method="POST">
         @csrf
         <div>
           <label for="login-email" class="block font-medium mb-1">Email</label>
-          <input type="email" id="login-email" name="email" placeholder="your@email.com" 
+          <input type="email" id="login-email" name="email" value="" placeholder="your@email.com" 
                  class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
         </div>
         
@@ -65,39 +67,41 @@
     </div>
     
     <!-- Register Form -->
-    <div id="register-form" class="hidden">
+    <div id="register-form" class="{{ $title == 'register' ? '' : 'hidden' }}">
       <form class="space-y-5" action="/register" method="POST">
         @csrf
         <div>
-          <label for="register-username" class="block font-medium mb-1">Username</label>
-          <input type="text" id="register-username" name="username" placeholder="ChessMaster42" 
-                 class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
+            <label for="register-username" class="block font-medium mb-1">Username</label>
+            <input type="text" id="register-username" name="username" value="{{ old('username') }}" placeholder="ChessMaster42"
+                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
+            @error('username') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
-        
+    
         <div>
-          <label for="register-email" class="block font-medium mb-1">Email</label>
-          <input type="email" id="register-email" name="email" placeholder="your@email.com" 
-                 class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
+            <label for="register-email" class="block font-medium mb-1">Email</label>
+            <input type="email" id="register-email" name="email" value="{{ old('email') }}" placeholder="your@email.com"
+                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
+            @error('email') <p class="text-red-500">{{ $message }}</p> @enderror
         </div>
-        
+    
         <div>
-          <label for="register-password" class="block font-medium mb-1">Password</label>
-          <input type="password" id="register-password" name="password" placeholder="••••••••" 
-                 class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
-          <p class="text-red-500 text-sm mt-1">Password must be at least 8 characters</p>
+            <label for="register-password" class="block font-medium mb-1">Password</label>
+            <input type="password" id="register-password" name="password" placeholder="••••••••"
+                   class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
+            @error('password') <p class="text-red-500">{{ $message }}</p> @enderror
+            
         </div>
-        
-       
-        
+    
         <div class="flex items-center gap-2 text-sm">
-          <input type="checkbox" id="agree-terms" name="terms" class="w-4 h-4 cursor-pointer" required>
-          <label for="agree-terms">I agree to the <a href="" class="text-blue-400 hover:underline transition">Terms of Service</a> and <a href="" class="text-blue-400 hover:underline transition">Privacy Policy</a></label>
+            <input type="checkbox" id="agree-terms" name="terms" class="w-4 h-4 cursor-pointer" required>
+            <label for="agree-terms">I agree to the <a href="" class="text-blue-400 hover:underline transition">Terms of Service</a> and <a href="" class="text-blue-400 hover:underline transition">Privacy Policy</a></label>
         </div>
-        
+    
         <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded font-semibold transition">
-          Create Account
+            Create Account
         </button>
-      </form>
+    </form>
+    
       
       <div class="flex items-center my-6">
         <div class="flex-1 border-t border-gray-700"></div>

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -11,7 +11,13 @@ class AuthController extends Controller
     
 
     public function index(){
-        return view('auth.index');
+        if (auth()->check()) {
+            return  redirect('/');
+        }
+        
+        return view('auth.index' , [
+            'title' => 'register'
+        ]);
     }
 
     public function logIn(Request $request){
@@ -36,19 +42,36 @@ class AuthController extends Controller
 
         // return $request ;
         
-         $validated = $request->validate([
-            'userName' => 'required|min:4|max:255',
+        $rules = [
+            'username' => 'required|min:4|max:255',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|min:6|max:255'
-        ]);
-      
+        ];
+    
+        // Create a validator instance
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            // Redirect back with validation errors and old input
+            return redirect()->back()
+                             ->withErrors($validator)   // Pass the validation errors
+                             ->withInput()              // Preserve the old input
+                             ->with('title', 'register'); // Pass the title for the view
+        }
+
+        $validated = $validator->validated();
         $validated['password'] = bcrypt($validated['password']);
-        
-        User::create([
-            'userName' => $validated['userName'],
+
+        // return $validated['username'];
+       
+        $user =User::create([
+            'username' => $validated['username'],
             'email' => $validated['email'],
             'password' => $validated['password']
         ]);
+  
+        auth()->login($user);
+
+
         return redirect('/');
 
 

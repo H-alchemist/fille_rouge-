@@ -4,7 +4,7 @@
       CheckArena
     </a>
     <div class="flex gap-5">
-      <a href="('play') }}" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Play</a>
+      <a href="/home" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Play</a>
       <a href="('puzzles') }}" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Puzzles</a>
       <a href="('learn') }}" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Learn</a>
       <a href="('community') }}" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Community</a>
