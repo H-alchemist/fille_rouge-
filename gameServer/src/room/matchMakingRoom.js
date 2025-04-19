@@ -11,7 +11,7 @@ class MatchmakingRoom extends Room {
   }
 
   onJoin(client, options) {
-    // console.log(`Matchmaking room joined by client: ${client.id}`);
+    console.log(`Matchmaking room joined by client: ${client.id}`);
 
     this.matchmakingQueue.addToQueue(client, options);
 

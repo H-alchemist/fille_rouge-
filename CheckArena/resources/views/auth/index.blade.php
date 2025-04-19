@@ -17,7 +17,7 @@
     
     <!-- Login Form -->
     <div id="login-form">
-      <form class="space-y-5" action="" method="POST">
+      <form class="space-y-5" action="/login" method="POST">
         @csrf
         <div>
           <label for="login-email" class="block font-medium mb-1">Email</label>
@@ -66,7 +66,7 @@
     
     <!-- Register Form -->
     <div id="register-form" class="hidden">
-      <form class="space-y-5" action="" method="POST">
+      <form class="space-y-5" action="/register" method="POST">
         @csrf
         <div>
           <label for="register-username" class="block font-medium mb-1">Username</label>
@@ -87,11 +87,7 @@
           <p class="text-red-500 text-sm mt-1">Password must be at least 8 characters</p>
         </div>
         
-        <div>
-          <label for="register-confirm" class="block font-medium mb-1">Confirm Password</label>
-          <input type="password" id="register-confirm" name="password_confirmation" placeholder="••••••••" 
-                 class="w-full px-4 py-3 bg-gray-900 border border-gray-700 rounded focus:border-blue-400 focus:outline-none transition" required>
-        </div>
+       
         
         <div class="flex items-center gap-2 text-sm">
           <input type="checkbox" id="agree-terms" name="terms" class="w-4 h-4 cursor-pointer" required>

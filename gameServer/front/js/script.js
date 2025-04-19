@@ -47,7 +47,7 @@ const pieceMap = {
 
 async function connectToServer() {
     try {
-        client = new Colyseus.Client('ws://192.168.9.72:3001');
+        client = new Colyseus.Client('ws://localhost:3001');
         // await client.getAvailableRooms();
         document.getElementById('gameStatus').textContent = "Connected to server";
         return true;

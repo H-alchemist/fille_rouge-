@@ -20,6 +20,15 @@ return new class extends Migration
             $table->string('partieStatus');
             $table->string('timeControl');
             $table->timestamps();
+
+
+
+            $table->foreign('whitePlayer')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('blackPlayer')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('winner')->references('id')->on('users')->onDelete('set null');
+            $table->foreign('loser')->references('id')->on('users')->onDelete('set null');
+
+
         });
     }
 
