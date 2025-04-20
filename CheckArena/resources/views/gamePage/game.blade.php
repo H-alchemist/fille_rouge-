@@ -107,7 +107,34 @@
             </div>
         </section>
         
-      
+        <section class="w-[20%] h-[100%] bg-[#1e1e1e] flex flex-col gap-[2%] rounded max-[1100px]:w-[50%] max-[1100px]:h-[500px]">
+            <div class="bg-[#2a2a2a] h-[90px] w-full rounded-t p-4 flex flex-col justify-center border-b border-[#333]">
+                <div class="text-lg font-semibold mb-1 h-auto w-auto">Blitz Chess</div>
+                <div class="flex items-center h-auto w-auto">
+                    <div class="w-5 h-5 mr-1 bg-blue-500 rounded-full flex items-center justify-center text-xs">⏱</div>
+                    <div class="text-sm text-gray-400 h-auto w-auto">5+1 • Rated</div>
+                </div>
+            </div>
+
+            <div class="bg-[#1e1e1e] h-[500px] w-[100%] rounded-b flex flex-col">
+                <div class="flex-1 overflow-y-auto p-4">
+                    <div class="mb-4 py-1 h-auto w-full">
+                        <span class="font-semibold mr-2 h-auto w-auto block mb-1">MagnusCarlsen:</span>
+                        <span class="h-auto w-auto">gl hf</span>
+                    </div>
+                    <div class="mb-4 py-1 h-auto w-full">
+                        <span class="font-semibold mr-2 h-auto w-auto block mb-1">Hikaru:</span>
+                        <span class="h-auto w-auto">you too</span>
+                    </div>
+                </div>
+                <div class="h-[50px] w-full flex p-2.5 border-t border-[#333]">
+                    <input type="text" placeholder="Type a message..." class="w-[75%] px-1 border-none rounded bg-[#2a2a2a] text-white mr-2 h-[80%]">
+                    <button class="bg-blue-500 border-none text-white  py-0 px-1 rounded cursor-pointer h-[90%] w-[20%] hover:bg-blue-600">
+                        Send
+                    </button>
+                </div>
+            </div>
+        </section>
     </div>
     
     
