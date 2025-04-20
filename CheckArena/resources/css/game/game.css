@@ -1,0 +1,72 @@
+.pieceContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+   
+  }
+  
+  .pieceContainer img, .piece {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+    cursor: pointer;
+  }
+  
+  .selected {
+    filter: blur(0.3px);
+    background-color: rgba(0, 0, 255, 0.2);
+  }
+  
+  .legalSquare {
+    -webkit-box-shadow: inset -1px 9px 18px 0px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: inset -1px 9px 18px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset -1px 9px 18px 0px rgba(0, 0, 0, 0.75);
+  }
+  
+  /* Preserve the last move highlighting from original styles */
+  .lastMove {
+    background-color: rgba(173, 216, 230, 0.5) !important;
+  }
+  
+  /* Alternative way to indicate legal moves if the shadow doesn't look good with the background image */
+  .legalSquare::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 255, 0, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+
+
+
+  .promotion-popup {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border: 2px solid #666;
+    border-radius: 5px;
+    padding: 4px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+    z-index: 1000;
+  }
+  
+  .promotion-popup img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+  }
+  
+  .hidden {
+    display: none;
+  }
+
+  
+
+  

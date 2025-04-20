@@ -11,8 +11,10 @@
         <section class="w-[73%] h-[100%]  flex justify-center items-center  max-[1100px]:w-full">
             <div class="w-[60%] h-9/10  flex flex-col relative">
                 <div class="w-full h-auto aspect-square relative mx-auto">
-                    <div class="chess-board relative bg-[url('https://images.chesscomfiles.com/chess-themes/boards/icy_sea/200.png')] bg-no-repeat bg-cover m-auto grid grid-cols-8 grid-rows-8 w-[90%] aspect-square border-2 border-black rounded">
-                        <!-- Chess board squares will be generated here -->
+                    <div class="chess-board relative bg-[url('https://images.chesscomfiles.com/chess-themes/boards/icy_sea/200.png')] bg-no-repeat bg-cover m-auto grid grid-cols-8 grid-rows-8 w-[90%] aspect-square border-2 border-black rounded" id=board>
+                        <div class="absolute inset-0 pointer-events-none z-0">
+                        <svg class="numLett" viewBox="0 0 100 100" class="coordinates"><text x="0.75" y="3.5" font-size="2.8" class="coordinate-light">8</text><text x="0.75" y="15.75" font-size="2.8" class="coordinate-dark">7</text><text x="0.75" y="28.25" font-size="2.8" class="coordinate-light">6</text><text x="0.75" y="40.75" font-size="2.8" class="coordinate-dark">5</text><text x="0.75" y="53.25" font-size="2.8" class="coordinate-light">4</text><text x="0.75" y="65.75" font-size="2.8" class="coordinate-dark">3</text><text x="0.75" y="78.25" font-size="2.8" class="coordinate-light">2</text><text x="0.75" y="90.75" font-size="2.8" class="coordinate-dark">1</text><text x="10" y="99" font-size="2.8" class="coordinate-dark">a</text><text x="22.5" y="99" font-size="2.8" class="coordinate-light">b</text><text x="35" y="99" font-size="2.8" class="coordinate-dark">c</text><text x="47.5" y="99" font-size="2.8" class="coordinate-light">d</text><text x="60" y="99" font-size="2.8" class="coordinate-dark">e</text><text x="72.5" y="99" font-size="2.8" class="coordinate-light">f</text><text x="85" y="99" font-size="2.8" class="coordinate-dark">g</text><text x="97.5" y="99" font-size="2.8" class="coordinate-light">h</text></svg>
+                    </div>
                     </div>
                 </div>
             </div>
@@ -138,7 +140,7 @@
     </div>
 
     @push('scripts')
-    @vite('resources/js/game.js')
+    @vite('resources/js/game/game.js')
     @endpush
     
     
