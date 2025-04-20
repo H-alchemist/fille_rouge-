@@ -93,7 +93,7 @@ async function joinMatchMaking() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2400 ,rating:1200,timeControl: "blitz"});
+        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2400 ,rating:1200,timeControl: 5});
 
         room.onMessage("matchmakingFound",async (message) => {
             console.log("Matchmaking found:", message.roomId);
@@ -138,7 +138,7 @@ async function joinMatchMaking() {
     // renderBoard();
 }
 
-document.getElementById('gameStatus').addEventListener('click', joinMatchMaking);
+document.getElementById('startGame').addEventListener('click', joinMatchMaking);
 
 
 async function joinGameRoom(roomId) {
@@ -175,6 +175,11 @@ function setupRoomListeners() {
     
 
     gameRoom.onMessage("gameStart", (message) => {
+        document.getElementById('gameStatus').textContent = "Game started!";
+        let op = playerColor === "white" ? message.blackPlayerData : message.whitePlayerData;
+        gameStart(op);
+        console.log(message);
+        
         board = message.board;
         isMyTurn = playerColor === message.turn;
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
@@ -609,3 +614,95 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
     } 
   
   
+
+
+
+    function gameStart(op){
+
+
+        document.getElementById('startGameContainer').classList.add('hidden');
+        document.getElementById('game_moves').classList.remove('hidden');
+        document.getElementById('game_buttons').classList.remove('hidden');
+        document.getElementById('infoContainer').classList.remove('h-[95%]');
+
+        document.getElementById('infoContainer').classList.add('h-[500px]');
+
+        document.getElementById('apponent_name').textContent = op.name;
+
+        document.getElementById('apponent_rating').textContent = op.rating;
+
+
+     
+        showNotification('Game start');
+
+
+
+
+    }
+
+    function showNotification(message, duration = 3000) {
+        const bar = document.getElementById('notificationBar');
+        const msg = document.getElementById('notificationMessage');
+
+        msg.textContent = message;
+        bar.style.top = '0';
+
+        setTimeout(() => {
+            bar.style.top = '-100px';
+        }, duration);
+    }
+
+
+    function SetUpTimer(time){
+
+        document.getElementById('apponent_time').textContent = time.op;
+        document.getElementById('My_time').textContent = time.me;
+
+
+
+    }
+
+    let myTime = 0;
+let opponentTime = 0;
+let currentTurn = 'white'; // or 'black'
+let timerInterval;
+
+function SetUpTimer(time, myColor = 'white') {
+    myTime = toSeconds(time.me);
+    opponentTime = toSeconds(time.op);
+    currentTurn = 'white'; // start with white's turn or set dynamically
+
+    updateTimerDisplay();
+
+    if (timerInterval) clearInterval(timerInterval);
+
+    timerInterval = setInterval(() => {
+        if (currentTurn === myColor) {
+            if (myTime > 0) myTime--;
+        } else {
+            if (opponentTime > 0) opponentTime--;
+        }
+
+        updateTimerDisplay();
+    }, 1000);
+}
+
+function toSeconds(timeStr) {
+    const [minutes, seconds] = timeStr.split(':').map(Number);
+    return minutes * 60 + seconds;
+}
+
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60).toString().padStart(1, '0');
+    const s = (seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+function updateTimerDisplay() {
+    document.getElementById('My_time').textContent = formatTime(myTime);
+    document.getElementById('apponent_time').textContent = formatTime(opponentTime);
+}
+
+function switchTurn() {
+    currentTurn = currentTurn === 'white' ? 'black' : 'white';
+}

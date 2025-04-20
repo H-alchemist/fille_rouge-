@@ -1,7 +1,9 @@
 
-// import {addStylingforlegalMoves, removeStylingforlegalMoves } from './helper.js';
 
-// Game state
+
+  console.log("working");
+  
+
 let board = [
     [-2, -3, -4, -5, -6, -4, -3, -2],
     [-1,-1,-1,-1,-1,-1,-1,-1],
@@ -94,7 +96,7 @@ async function joinMatchMaking() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating:1200,timeControl: "blitz"});
+        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating:1200,timeControl: 5});
 
         room.onMessage("matchmakingFound",async (message) => {
             //console.log("Matchmaking found:", message.roomId);
@@ -180,6 +182,8 @@ function setupRoomListeners() {
         isMyTurn = playerColor === message.turn;
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
         renderBoard();
+        console.log("after");
+        
     });
 
     gameRoom.onMessage("validMoves", (message) => {
@@ -292,13 +296,16 @@ function renderBoard() {
     boardElement.innerHTML = playerColor=== "white" ? whiteBoard : blackBoard;
 
     
-    for (let row = 7; row < 0; row--) {
-        for (let col = 7; col < 0; col--) {
+    for (let row = 7; row >= 0; row--) {
+        for (let col = 7; col >= 0; col--) {
             const sq = document.createElement('div');
             sq.classList.add('pieceContainer');
             
-            sq.style.gridColumn = col + 1;
-            sq.style.gridRow = row + 1;
+            // Adjust grid positions
+            const gridRow = playerColor === "white" ? row + 1 : 7 - row + 1;
+            const gridCol = playerColor === "white" ? col + 1 : 7 - col + 1;
+            sq.style.gridColumn = gridCol;
+            sq.style.gridRow = gridRow;
             
             sq.dataset.row = row;
             sq.dataset.col = col;
@@ -307,9 +314,7 @@ function renderBoard() {
             
             const pieceNum = board[row][col];
             if (pieceNum !== 0) {
-                const piece = pieceMap[pieceNum];
-                sq.dataset.available = 0;
-                
+                const piece = pieceMap[pieceNum]; // Assuming pieceMap maps numbers to piece images
                 const img = document.createElement('img');
                 img.src = piece;
                 img.alt = piece;
@@ -320,6 +325,7 @@ function renderBoard() {
             boardElement.appendChild(sq);
         }
     }
+    
     
     
     const allPieces = document.querySelectorAll('.pieceContainer');

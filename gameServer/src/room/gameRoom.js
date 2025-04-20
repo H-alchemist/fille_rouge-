@@ -242,6 +242,9 @@ class GameRoom extends Room {
           this.state.blackPlayer = client.sessionId;
           this.state.blackPlayerData = { ...options };
           client.send("playerColor", "black");
+
+          console.log(this.state.blackPlayerData);
+          
   
           this.broadcast("gameStart", this.state);
           this.startTurnTimer();

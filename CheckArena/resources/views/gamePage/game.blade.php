@@ -26,72 +26,33 @@
                     </div>
                 </div>
             </div>
-
-            <div class="w-[36%] h-[95%] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[1100px]:h-[500px]">
+            {{-- h-[500px] --}}
+            <div id="infoContainer" class="w-[36%] h-[95%] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[1100px]:h-[300px]">
                 <div class="h-auto w-full">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
                         <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
                             M
                         </div>
                         <div class="flex flex-col justify-center h-full w-auto">
-                            <span class="font-bold text-base text-white">MagnusCarlsen</span>
-                            <span class="text-gray-400 text-sm">2863</span>
+                            <span id="apponent_name" class="font-bold text-base text-white">MagnusCarlsen</span>
+                            <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
                         </div>
-                        <div class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
-                            4:23
+                        <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
+                            00:00
                         </div>
                     </div>
                 </div>
                 
-                <div class="flex-1 bg-[#2a2a2a] rounded shadow-[0px_0px_2px_1px_#2980b9] p-2.5 overflow-y-auto h-full w-full ">
+                <div id="game_moves" class="flex-1 bg-[#2a2a2a] rounded shadow-[0px_0px_2px_1px_#2980b9] p-2.5 overflow-y-auto h-[400px] w-full hidden ">
                     <div class="flex mb-2 h-auto w-full">
                         <span class="text-gray-400 mr-2.5 w-6 h-auto">1.</span>
                         <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">e4</span>
                         <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">e5</span>
                     </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">2.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Nf3</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Nc6</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">3.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Bb5</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">a6</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">4.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Ba4</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Nf6</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">5.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">O-O</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Be7</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">6.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Re1</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">b5</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">7.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">Bb3</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">d6</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">8.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">c3</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">O-O</span>
-                    </div>
-                    <div class="flex mb-2 h-auto w-full">
-                        <span class="text-gray-400 mr-2.5 w-6 h-auto">9.</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">h3</span>
-                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded bg-blue-500 text-white h-auto w-auto hover:bg-[#333]">Na5</span>
-                    </div>
+                   
                 </div>
                 
-                <div class="flex justify-evenly gap-2.5 mt-0.5 h-6">
+                <div id="game_buttons" class="  flex justify-evenly gap-2.5 mt-0.5 h-6 hidden">
                     <button class="flex items-center justify-center bg-red-500 text-white cursor-pointer rounded py-4 px-4 text-sm h-full w-[40%]">
                         Resign
                     </button>
@@ -99,6 +60,14 @@
                         Offer Draw
                     </button>
                 </div>
+                <div id='startGameContainer' class=" bg-[#2a2a2a] rounded shadow-[0px_0px_2px_1px_#2980b9] p-2.5 overflow-y-auto h-90px  w-full  ">
+                     <button id="startGame" class="rounded bg-blue-500 text-white py-2 px-4 text-sm h-full w-full hover:bg-blue-900 pointer">
+
+                        create game
+
+                     </button>
+                </div>
+
                 
                 <div class="h-auto w-full">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
@@ -109,8 +78,8 @@
                             <span class="font-bold text-base text-white">Hikaru</span>
                             <span class="text-gray-400 text-sm">2775</span>
                         </div>
-                        <div class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
-                            3:51
+                        <div id="My_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
+                            00:00
                         </div>
                     </div>
                 </div>
@@ -153,6 +122,23 @@
         <img data-value="3" src="" alt="Knight" />
       </div>
       
+
+
+      <div id="notificationBar" style="
+    position: fixed;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    padding: 1rem;
+    font-weight: bold;
+    transition: top 0.4s ease;
+    z-index: 9999;
+">
+    <span id="notificationMessage"></span>
+</div>
 
 
 

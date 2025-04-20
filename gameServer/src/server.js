@@ -22,5 +22,5 @@ gameServer.define("matchMaking_room", MatchmakingRoom);
 gameServer.define("game_room", GameRoom);
 
 server.listen(3001, () => {
-  console.log("Colyseus server running on ws://localhost:3000");
+  console.log("Colyseus server running on ws://localhost:3001");
 });
