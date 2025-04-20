@@ -136,6 +136,10 @@
             </div>
         </section>
     </div>
+
+    @push('scripts')
+    @vite('resources/js/game.js')
+    @endpush
     
     
 @endsection
