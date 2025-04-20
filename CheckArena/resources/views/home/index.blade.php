@@ -7,7 +7,7 @@
   
   <aside class="w-72 bg-gray-800 border-r border-gray-700 p-5 flex flex-col">
     <div class="w-64 h-64 mb-5">
-      <img src="board.png" alt="Chess board in starting position" class="w-full h-full object-contain">
+      <img src="storage/board.png" alt="Chess board in starting position" class="w-full h-full object-contain">
     </div>
 
     
@@ -76,5 +76,49 @@
     </section>
 
     
-  
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+      @php
+        $features = [
+          ['icon' => '♟', 'title' => 'Custom Positions', 'desc' => 'Set up any board position and play from there with our easy-to-use board editor.'],
+          ['icon' => '⏱️', 'title' => 'Flexible Time Controls', 'desc' => 'Create games with any time settings from lightning-fast bullet to thoughtful classical.'],
+          ['icon' => '🎮', 'title' => 'Chess Variants', 'desc' => 'Play traditional chess or try exciting variants like Chess960, Crazyhouse, and more.'],
+          ['icon' => '🔗', 'title' => 'Shareable Links', 'desc' => 'Generate a unique link to invite anyone to play your custom-created game.']
+        ];
+      @endphp
+
+      @foreach ($features as $feature)
+        <div class="bg-gray-800 rounded-lg p-5 text-center transition-transform hover:-translate-y-1">
+          <div class="text-3xl mb-4 text-blue-400">{{ $feature['icon'] }}</div>
+          <h3 class="text-lg mb-3">{{ $feature['title'] }}</h3>
+          <p class="text-sm text-gray-400">{{ $feature['desc'] }}</p>
+        </div>
+      @endforeach
+    </section>
+    <section class="bg-gray-800 rounded-lg p-6 mb-10">
+      <div class="flex justify-between items-center mb-5">
+        <h2 class="text-2xl text-blue-400">Creative Openings</h2>
+        <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        @php
+          $openings = [
+            ['name' => 'The Vienna Gambit', 'desc' => 'An aggressive opening that sacrifices a pawn for rapid development and attacking chances.', 'moves' => '1. e4 e5 2. Nc3 Nf6 3. f4'],
+            ['name' => 'The Elephant Gambit', 'desc' => 'A surprising counterattack that challenges White\'s center control from the very beginning.', 'moves' => '1. e4 e5 2. Nf3 d5'],
+            ['name' => 'The Halloween Gambit', 'desc' => 'A tricky opening where White sacrifices a knight for a strong pawn center and attacking chances.', 'moves' => '1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Nxe5'],
+            ['name' => 'The Stafford Gambit', 'desc' => 'A dangerous trap-filled gambit that can lead to quick victories with creative tactical play.', 'moves' => '1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6']
+          ];
+        @endphp
+
+        @foreach ($openings as $opening)
+          <div class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md">
+            <h3 class="text-lg mb-2 font-bold text-white">{{ $opening['name'] }}</h3>
+            <p class="text-sm text-gray-300 mb-2">{{ $opening['desc'] }}</p>
+            <div class="text-xs text-blue-300 font-mono">{{ $opening['moves'] }}</div>
+          </div>
+        @endforeach
+      </div>
+    </section>
+  </main>
+</div>
 @endsection
