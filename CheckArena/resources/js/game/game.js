@@ -2,16 +2,14 @@
 // import {addStylingforlegalMoves, removeStylingforlegalMoves } from './helper.js';
 
 // Game state
-let board = [
-    [1, 0, 0, 0, 0, 0, 0, -6],
-    [0, -2, 0, -5, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 0, 5, 0, 0, 0, 0],
-    [0, 0, 0, 0, 6, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
+let board = [[-2, -3, -4, -5, -6, -4, -3, -2],
+[-1,-1,-1,-1,-1,-1,-1,-1],
+[0, 0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 0, 0],
+[1,1,1,1,1,1,1,1],
+[2,3,4,5,6,4,3,2]];
 
 let start = [null, null, null];
 let end = [null, null, null];
@@ -367,6 +365,8 @@ function renderBoard() {
             console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
             
             updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+            console.log('sdqd');
+            
             return;
            }
                 
@@ -436,8 +436,6 @@ function  removeStylingforlegalMoves(list){
 }
 
 }
-
-
 
 
 
