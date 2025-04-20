@@ -146,6 +146,16 @@
             </div>
         </section>
     </div>
+    <div id="promotion-popup" class="promotion-popup hidden">
+        <img data-value="5" src="" alt="Queen" />
+        <img data-value="2" src="" alt="Rook" />
+        <img data-value="4" src="" alt="Bishop" />
+        <img data-value="3" src="" alt="Knight" />
+      </div>
+      
+
+
+
 
     @push('scripts')
     @vite('resources/js/game/game.js')

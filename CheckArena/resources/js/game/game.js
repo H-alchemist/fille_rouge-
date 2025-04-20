@@ -13,7 +13,7 @@ let board = [[-2, -3, -4, -5, -6, -4, -3, -2],
 
 let start = [null, null, null];
 let end = [null, null, null];
-let playerColor = null;
+let playerColor = 'white';
 let isMyTurn = false;
 var client = null;
 var room = null;
@@ -284,19 +284,116 @@ function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
 
 
 
+// function renderBoard() {
+//     const boardElement = document.getElementById('board');
+//     // boardElement.innerHTML = '';
+    
+//     boardElement.innerHTML = playerColor=== "white" ? whiteBoard : blackBoard;
+    
+//     for (let row = 0; row < 8; row++) {
+//         for (let col = 0; col < 8; col++) {
+//             const sq = document.createElement('div');
+//             sq.classList.add('pieceContainer');
+            
+//             sq.style.gridColumn = col + 1;
+//             sq.style.gridRow = row + 1;
+            
+//             sq.dataset.row = row;
+//             sq.dataset.col = col;
+//             sq.dataset.content = board[row][col];
+//             sq.dataset.available = 0;
+            
+//             const pieceNum = board[row][col];
+//             if (pieceNum !== 0) {
+//                 const piece = pieceMap[pieceNum];
+//                 sq.dataset.available = 0;
+                
+//                 const img = document.createElement('img');
+//                 img.src = piece;
+//                 img.alt = piece;
+//                 img.classList.add('piece');
+//                 sq.appendChild(img);
+//             }
+            
+//             boardElement.appendChild(sq);
+//         }
+//     }
+    
+    
+//     const allPieces = document.querySelectorAll('.pieceContainer');
+//     allPieces.forEach(element => {
+//         // //console.log('elem');
+        
+//         element.addEventListener('click', function() {
+//             const row = parseInt(element.dataset.row, 10);
+//             const col = parseInt(element.dataset.col, 10);
+//             const pieceN = parseInt(element.dataset.content, 10);
+//             const available = parseInt(element.dataset.available, 10);
+//             //console.log("available", available);
+            
+
+//             if (start[2] === null || start[2] === 0) {
+//                 //console.log('s');
+                
+//                 if (pieceN !== 0) {
+//                     handlePieceSelection(row, col, pieceN);
+//                 }
+//             }else if(pieceN*start[2]>0) {
+//                 //console.log('test');
+
+//                 clearSelection();
+
+//                 if (pieceN !== 0) {
+//                     handlePieceSelection(row, col, pieceN);
+//                 }
+            
+            
+//             }else if ((start[0] === row && start[1] === col) ) {
+//                 //console.log('3');
+                
+//                 clearSelection();
+//             } else if (available === 1) {
+//                 //console.log('available');
+//             //    updateBoardForPawnPormotion(pieace , from , to);
+
+//            const isWhite = start[2] === 1;
+//            const shouldPromote = (start[2] === 1 && row === 0) || (start[2] === -1 && row === 7);
+
+//            if (shouldPromote && Math.abs)  {
+//            console.log('pawn');
+           
+//             console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+            
+//             updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+//             console.log('sdqd');
+            
+//             return;
+//            }
+                
+//                 handleMove(start[0], start[1], row, col , pieceN);
+//             }
+//         });
+//     });
+// }
+
 function renderBoard() {
     const boardElement = document.getElementById('board');
-    // boardElement.innerHTML = '';
+    boardElement.innerHTML = '';
     
     boardElement.innerHTML = playerColor=== "white" ? whiteBoard : blackBoard;
+
+
     
-    for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 8; col++) {
+    for (let row = 7; row >= 0; row--) {
+        for (let col = 7; col >= 0; col--) {
             const sq = document.createElement('div');
             sq.classList.add('pieceContainer');
             
-            sq.style.gridColumn = col + 1;
-            sq.style.gridRow = row + 1;
+            // Adjust grid positions
+            const gridRow = playerColor === "white" ? row + 1 : 7 - row + 1;
+            const gridCol = playerColor === "white" ? col + 1 : 7 - col + 1;
+            sq.style.gridColumn = gridCol;
+            sq.style.gridRow = gridRow;
             
             sq.dataset.row = row;
             sq.dataset.col = col;
@@ -305,9 +402,7 @@ function renderBoard() {
             
             const pieceNum = board[row][col];
             if (pieceNum !== 0) {
-                const piece = pieceMap[pieceNum];
-                sq.dataset.available = 0;
-                
+                const piece = pieceMap[pieceNum]; // Assuming pieceMap maps numbers to piece images
                 const img = document.createElement('img');
                 img.src = piece;
                 img.alt = piece;
@@ -365,8 +460,6 @@ function renderBoard() {
             console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
             
             updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
-            console.log('sdqd');
-            
             return;
            }
                 
@@ -375,7 +468,6 @@ function renderBoard() {
         });
     });
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     // document.getElementById('createGame').addEventListener('click', joinMatchMaking);
