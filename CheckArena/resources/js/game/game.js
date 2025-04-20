@@ -3,7 +3,7 @@
 
 // Game state
 let board = [
-    [0, 0, 0, 0, 0, 0, 0, -6],
+    [1, 0, 0, 0, 0, 0, 0, -6],
     [0, -2, 0, -5, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -52,24 +52,24 @@ async function connectToServer() {
         document.getElementById('gameStatus').textContent = "Connected to server";
         return true;
     } catch (error) {
-        //console.error("Could not connect to server:", error);
+        console.error("Could not connect to server:", error);
         document.getElementById('gameStatus').textContent = "Could not connect to server";
         return false;
     }
 }
 
-// Create a new game
+
 async function joinMatchMaking() {
     if (!client) {
         const connected = await connectToServer();
-        if (!connected) return;
+        // if (!connected) return;
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2425 ,rating:1200,timeControl: "blitz"});
+        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2400 ,rating:1200,timeControl: "blitz"});
 
         room.onMessage("matchmakingFound",async (message) => {
-            //console.log("Matchmaking found:", message.roomId);
+            console.log("Matchmaking found:", message.roomId);
             
             await joinGameRoom(message.roomId);
 
@@ -101,13 +101,14 @@ async function joinMatchMaking() {
             document.getElementById('gameStatus').textContent = "sorry we didnt find any opponent in your level ";
             
         });
-        // document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
+        document.getElementById('gameStatus').textContent = `Game created! ID: ${room.id}`;
 
-        // setupRoomListeners();
+        setupRoomListeners();
     } catch (error) {
-        //console.error("Could not create game:", error);
+        console.error("Could not create game:", error);
         document.getElementById('gameStatus').textContent = "Could not create game";
     }
+    // renderBoard();
 }
 
 

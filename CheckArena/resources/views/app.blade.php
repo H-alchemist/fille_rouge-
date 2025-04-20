@@ -6,6 +6,10 @@
   <title>CheckArena - @yield('title')</title>
   {{-- <link rel="stylesheet" href="css/app.css"> --}}
   @vite(['resources/css/app.css', 'resources/js/app.js'])
+  <head>
+    @stack('styles')
+</head>
+
 </head>
 <body class="bg-gray-900 text-white min-h-screen flex flex-col">
   @include('partials.header')

@@ -1,12 +1,18 @@
 @extends('app')
 
 @section('title', 'CheckArena - Play Online Chess')
+@push('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/colyseus.js@0.16.3/dist/colyseus.js"></script>
+@endpush
 
 @push('styles')
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+    
+    @vite('resources/css/game/game.css')
 @endpush
 
 @section('content')
+  <div id="gameStatus" onclick="joinMatchMaking()" class="text-xl">none</div>
     <div class="h-[calc(100%-70px)] w-[94%] ml-[-10px] block min-[1100px]:flex min-[1100px]:flex-row-reverse items-center gap-[2%] pt-5 ">
         <section class="w-[73%] h-[100%]  flex justify-center items-center  max-[1100px]:w-full">
             <div class="w-[60%] h-9/10  flex flex-col relative">
