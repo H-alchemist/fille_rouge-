@@ -3,15 +3,15 @@
 
 // Game state
 let board = [
-    [0, 0, 0, 0, 0, 0, 0, -6],
-    [0, -2, 0, -5, 0, 0, 0, 0],
+    [-2, -3, -4, -5, -6, -4, -3, -2],
+    [-1,-1,-1,-1,-1,-1,-1,-1],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 2, 0, 5, 0, 0, 0, 0],
-    [0, 0, 0, 0, 6, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0]
-];
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1,1,1,1,1,1,1,1],
+    [2, 3, 4, 5, 6, 4, 3, 2]
+  ];
 
 let start = [null, null, null];
 let end = [null, null, null];
@@ -24,6 +24,34 @@ let gameRoom=null ;
 // let RR =Math.floor(Math.random() * 301) + 1200;
 
 // //console.log(RR);
+
+const blackBoard = `<div class="absolute inset-0 pointer-events-none z-0">
+    <svg id="coordinates" class="numLett" viewBox="0 0 100 100" class="coordinates">
+        <text class="coordinate" id="row1" x="0.75" y="3.5" font-size="2.8">1</text>
+        <text class="coordinate" id="row2" x="0.75" y="15.75" font-size="2.8">2</text>
+        <text class="coordinate" id="row3" x="0.75" y="28.25" font-size="2.8">3</text>
+        <text class="coordinate" id="row4" x="0.75" y="40.75" font-size="2.8">4</text>
+        <text class="coordinate" id="row5" x="0.75" y="53.25" font-size="2.8">5</text>
+        <text class="coordinate" id="row6" x="0.75" y="65.75" font-size="2.8">6</text>
+        <text class="coordinate" id="row7" x="0.75" y="78.25" font-size="2.8">7</text>
+        <text class="coordinate" id="row8" x="0.75" y="90.75" font-size="2.8">8</text>
+        
+        <text class="coordinate" id="colA" x="10" y="99" font-size="2.8">h</text>
+        <text class="coordinate" id="colB" x="22.5" y="99" font-size="2.8">g</text>
+        <text class="coordinate" id="colC" x="35" y="99" font-size="2.8">f</text>
+        <text class="coordinate" id="colD" x="47.5" y="99" font-size="2.8">e</text>
+        <text class="coordinate" id="colE" x="60" y="99" font-size="2.8">d</text>
+        <text class="coordinate" id="colF" x="72.5" y="99" font-size="2.8">c</text>
+        <text class="coordinate" id="colG" x="85" y="99" font-size="2.8">b</text>
+        <text class="coordinate" id="colH" x="97.5" y="99" font-size="2.8">a</text>
+    </svg>
+</div>`; 
+
+
+const whiteBoard = ` <div class="absolute inset-0 pointer-events-none z-0">
+                        <svg class="numLett" viewBox="0 0 100 100" class="coordinates"><text x="0.75" y="3.5" font-size="2.8" class="coordinate-light">8</text><text x="0.75" y="15.75" font-size="2.8" class="coordinate-dark">7</text><text x="0.75" y="28.25" font-size="2.8" class="coordinate-light">6</text><text x="0.75" y="40.75" font-size="2.8" class="coordinate-dark">5</text><text x="0.75" y="53.25" font-size="2.8" class="coordinate-light">4</text><text x="0.75" y="65.75" font-size="2.8" class="coordinate-dark">3</text><text x="0.75" y="78.25" font-size="2.8" class="coordinate-light">2</text><text x="0.75" y="90.75" font-size="2.8" class="coordinate-dark">1</text><text x="10" y="99" font-size="2.8" class="coordinate-dark">a</text><text x="22.5" y="99" font-size="2.8" class="coordinate-light">b</text><text x="35" y="99" font-size="2.8" class="coordinate-dark">c</text><text x="47.5" y="99" font-size="2.8" class="coordinate-light">d</text><text x="60" y="99" font-size="2.8" class="coordinate-dark">e</text><text x="72.5" y="99" font-size="2.8" class="coordinate-light">f</text><text x="85" y="99" font-size="2.8" class="coordinate-dark">g</text><text x="97.5" y="99" font-size="2.8" class="coordinate-light">h</text></svg>
+                    </div>` ;
+
 
 
 
@@ -121,7 +149,7 @@ async function joinGameRoom(roomId) {
         accounId: 2425  
     });
         //console.log("Joined game room:", gameRoom);
-
+        
         setupRoomListeners();
     } catch (error) {
         //console.error("Error joining game room:", error);
@@ -137,6 +165,7 @@ function setupRoomListeners() {
         //console.log("Received player color:", message);
         playerColor = message;
         document.getElementById('gameStatus').textContent = `You are playing as ${playerColor}`;
+        renderBoard();
     });
 
     gameRoom.onMessage("waitingForOpponent", (message) => {
@@ -260,11 +289,11 @@ function renderBoard() {
     const boardElement = document.querySelector('.board');
     boardElement.innerHTML = '';
     
-    boardElement.innerHTML = '<svg class="numLett" viewBox="0 0 100 100" class="coordinates"><text x="0.75" y="3.5" font-size="2.8" class="coordinate-light">8</text><text x="0.75" y="15.75" font-size="2.8" class="coordinate-dark">7</text><text x="0.75" y="28.25" font-size="2.8" class="coordinate-light">6</text><text x="0.75" y="40.75" font-size="2.8" class="coordinate-dark">5</text><text x="0.75" y="53.25" font-size="2.8" class="coordinate-light">4</text><text x="0.75" y="65.75" font-size="2.8" class="coordinate-dark">3</text><text x="0.75" y="78.25" font-size="2.8" class="coordinate-light">2</text><text x="0.75" y="90.75" font-size="2.8" class="coordinate-dark">1</text><text x="10" y="99" font-size="2.8" class="coordinate-dark">a</text><text x="22.5" y="99" font-size="2.8" class="coordinate-light">b</text><text x="35" y="99" font-size="2.8" class="coordinate-dark">c</text><text x="47.5" y="99" font-size="2.8" class="coordinate-light">d</text><text x="60" y="99" font-size="2.8" class="coordinate-dark">e</text><text x="72.5" y="99" font-size="2.8" class="coordinate-light">f</text><text x="85" y="99" font-size="2.8" class="coordinate-dark">g</text><text x="97.5" y="99" font-size="2.8" class="coordinate-light">h</text></svg>';
- 
+    boardElement.innerHTML = playerColor=== "white" ? whiteBoard : blackBoard;
+
     
-    for (let row = 0; row < 8; row++) {
-        for (let col = 0; col < 8; col++) {
+    for (let row = 7; row < 0; row--) {
+        for (let col = 7; col < 0; col--) {
             const sq = document.createElement('div');
             sq.classList.add('pieceContainer');
             

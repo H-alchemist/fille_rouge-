@@ -12,7 +12,9 @@
 @endpush
 
 @section('content')
-  <div id="gameStatus" onclick="joinMatchMaking()" class="text-xl">none</div>
+
+  <div id="gameStatus"  class="text-xl">none</div>
+
     <div class="h-[calc(100%-70px)] w-[94%] ml-[-10px] block min-[1100px]:flex min-[1100px]:flex-row-reverse items-center gap-[2%] pt-5 ">
         <section class="w-[73%] h-[100%]  flex justify-center items-center  max-[1100px]:w-full">
             <div class="w-[60%] h-9/10  flex flex-col relative">
