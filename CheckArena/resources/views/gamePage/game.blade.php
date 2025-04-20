@@ -50,6 +50,13 @@
                         <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">e5</span>
                     </div>
                    
+                </div> <div id="game_moves" class="flex-1 bg-[#2a2a2a] rounded shadow-[0px_0px_2px_1px_#2980b9] p-2.5 overflow-y-auto h-[400px] w-full hidden ">
+                    <div class="flex mb-2 h-auto w-full">
+                        <span class="text-gray-400 mr-2.5 w-6 h-auto">1.</span>
+                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">e4</span>
+                        <span class="mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]">e5</span>
+                    </div>
+                   
                 </div>
                 
                 <div id="game_buttons" class="  flex justify-evenly gap-2.5 mt-0.5 h-6 hidden">

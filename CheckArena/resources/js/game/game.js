@@ -171,14 +171,30 @@ function setupRoomListeners() {
         document.getElementById('gameStatus').textContent = "Waiting for opponent...";
     });
 
-   
+   gameRoom.onMessage("newMove", (message) => {
+
+    console.log(message);
+    
+
+
+
+   })
     
 
     gameRoom.onMessage("gameStart", (message) => {
         document.getElementById('gameStatus').textContent = "Game started!";
         let op = playerColor === "white" ? message.blackPlayerData : message.whitePlayerData;
         gameStart(op);
-        console.log(message);
+
+        let opT = playerColor === "white" ? message.timeRemaining.black: message.timeRemaining.white;
+        let meT = playerColor === "white" ? message.timeRemaining.white : message.timeRemaining.black;
+
+        // console.log(opT , 'opT' , meT);
+        
+
+        SetUpTimer({ op: opT, me: meT }, message.turn);
+
+        // console.log(message);
         
         board = message.board;
         isMyTurn = playerColor === message.turn;
@@ -210,9 +226,19 @@ function setupRoomListeners() {
     gameRoom.onMessage("boardUpdate", (message) => {
         board = message.board;
         isMyTurn = playerColor === message.turn;
+        // console.log(playerColor);
+        
+        let opT = playerColor === "white" ? message.timeRemaining.black: message.timeRemaining.white;
+        let meT = playerColor === "white" ? message.timeRemaining.white : message.timeRemaining.black;
+
+        // console.log(opT , 'opT' , meT);
+        
+
+        SetUpTimer({ op: opT, me: meT }, message.turn);
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
         
-        const lastMove = message.lastMove;
+        // const lastMove = message.lastMove;
+
         renderBoard();
         
         //  //console.log("Last move:", lastMove);
@@ -288,98 +314,6 @@ function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
 
 
 
-
-// function renderBoard() {
-//     const boardElement = document.getElementById('board');
-//     // boardElement.innerHTML = '';
-    
-//     boardElement.innerHTML = playerColor=== "white" ? whiteBoard : blackBoard;
-    
-//     for (let row = 0; row < 8; row++) {
-//         for (let col = 0; col < 8; col++) {
-//             const sq = document.createElement('div');
-//             sq.classList.add('pieceContainer');
-            
-//             sq.style.gridColumn = col + 1;
-//             sq.style.gridRow = row + 1;
-            
-//             sq.dataset.row = row;
-//             sq.dataset.col = col;
-//             sq.dataset.content = board[row][col];
-//             sq.dataset.available = 0;
-            
-//             const pieceNum = board[row][col];
-//             if (pieceNum !== 0) {
-//                 const piece = pieceMap[pieceNum];
-//                 sq.dataset.available = 0;
-                
-//                 const img = document.createElement('img');
-//                 img.src = piece;
-//                 img.alt = piece;
-//                 img.classList.add('piece');
-//                 sq.appendChild(img);
-//             }
-            
-//             boardElement.appendChild(sq);
-//         }
-//     }
-    
-    
-//     const allPieces = document.querySelectorAll('.pieceContainer');
-//     allPieces.forEach(element => {
-//         // //console.log('elem');
-        
-//         element.addEventListener('click', function() {
-//             const row = parseInt(element.dataset.row, 10);
-//             const col = parseInt(element.dataset.col, 10);
-//             const pieceN = parseInt(element.dataset.content, 10);
-//             const available = parseInt(element.dataset.available, 10);
-//             //console.log("available", available);
-            
-
-//             if (start[2] === null || start[2] === 0) {
-//                 //console.log('s');
-                
-//                 if (pieceN !== 0) {
-//                     handlePieceSelection(row, col, pieceN);
-//                 }
-//             }else if(pieceN*start[2]>0) {
-//                 //console.log('test');
-
-//                 clearSelection();
-
-//                 if (pieceN !== 0) {
-//                     handlePieceSelection(row, col, pieceN);
-//                 }
-            
-            
-//             }else if ((start[0] === row && start[1] === col) ) {
-//                 //console.log('3');
-                
-//                 clearSelection();
-//             } else if (available === 1) {
-//                 //console.log('available');
-//             //    updateBoardForPawnPormotion(pieace , from , to);
-
-//            const isWhite = start[2] === 1;
-//            const shouldPromote = (start[2] === 1 && row === 0) || (start[2] === -1 && row === 7);
-
-//            if (shouldPromote && Math.abs)  {
-//            console.log('pawn');
-           
-//             console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
-            
-//             updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
-//             console.log('sdqd');
-            
-//             return;
-//            }
-                
-//                 handleMove(start[0], start[1], row, col , pieceN);
-//             }
-//         });
-//     });
-// }
 
 function renderBoard() {
     const boardElement = document.getElementById('board');
@@ -460,9 +394,9 @@ function renderBoard() {
            const shouldPromote = (start[2] === 1 && row === 0) || (start[2] === -1 && row === 7);
 
            if (shouldPromote && Math.abs)  {
-           console.log('pawn');
+        //    console.log('pawn');updateTimerDisplay
            
-            console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+            // console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
             
             updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
             return;
@@ -653,56 +587,47 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
     }
 
 
-    function SetUpTimer(time){
-
-        document.getElementById('apponent_time').textContent = time.op;
-        document.getElementById('My_time').textContent = time.me;
-
-
-
-    }
-
+   
     let myTime = 0;
-let opponentTime = 0;
-let currentTurn = 'white'; // or 'black'
-let timerInterval;
-
-function SetUpTimer(time, myColor = 'white') {
-    myTime = toSeconds(time.me);
-    opponentTime = toSeconds(time.op);
-    currentTurn = 'white'; // start with white's turn or set dynamically
-
-    updateTimerDisplay();
-
-    if (timerInterval) clearInterval(timerInterval);
-
-    timerInterval = setInterval(() => {
-        if (currentTurn === myColor) {
-            if (myTime > 0) myTime--;
-        } else {
-            if (opponentTime > 0) opponentTime--;
-        }
-
+    let opponentTime = 0;
+    let currentTurn = 'white';
+    let myColor = 'white';
+    let timerInterval;
+    
+    function SetUpTimer(time, color) {
+        myTime = time.me;
+        opponentTime = time.op;
+         // or set dynamically if needed
+        console.log();
+        
+    
         updateTimerDisplay();
-    }, 1000);
-}
-
-function toSeconds(timeStr) {
-    const [minutes, seconds] = timeStr.split(':').map(Number);
-    return minutes * 60 + seconds;
-}
-
-function formatTime(seconds) {
-    const m = Math.floor(seconds / 60).toString().padStart(1, '0');
-    const s = (seconds % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
-}
-
-function updateTimerDisplay() {
-    document.getElementById('My_time').textContent = formatTime(myTime);
-    document.getElementById('apponent_time').textContent = formatTime(opponentTime);
-}
-
-function switchTurn() {
-    currentTurn = currentTurn === 'white' ? 'black' : 'white';
-}
+    
+        if (timerInterval) clearInterval(timerInterval);
+    
+        timerInterval = setInterval(() => {
+            if (playerColor === color && myTime > 0) {
+                myTime--;
+            } else if (playerColor !== color && opponentTime > 0) {
+                opponentTime--;
+            }
+    
+            updateTimerDisplay();
+        }, 1000);
+    }
+    
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+    
+    function updateTimerDisplay() {
+        document.getElementById('My_time').textContent = formatTime(myTime);
+        document.getElementById('apponent_time').textContent = formatTime(opponentTime);
+    }
+    
+    function switchTurn() {
+        currentTurn = currentTurn === 'white' ? 'black' : 'white';
+    }
+    

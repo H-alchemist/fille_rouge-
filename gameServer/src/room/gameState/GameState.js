@@ -15,8 +15,8 @@ const GameState = {
 
       timeControl,     
       timeRemaining: {  
-        white: timeControl?.initialTime || 600,
-        black: timeControl?.initialTime || 600
+        white: timeControl * 60 || 600,
+        black: timeControl * 60 || 600
       }
     };
   },
@@ -132,6 +132,9 @@ const GameState = {
       to: [toRow, toCol],
       piece: movingPiece
     });
+    
+
+    console.log(gameMoves[gameMoves.length - 1].from);
     
 
     // Move the piece

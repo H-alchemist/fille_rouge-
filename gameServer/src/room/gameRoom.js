@@ -13,10 +13,10 @@ class GameRoom extends Room {
     
     
     this.turnTimer = null;
-    this.timeRemaining = {
-      white: options.timeControl?.initialTime || 600,
-      black: options.timeControl?.initialTime || 600,
-    };
+    // this.timeRemaining= {
+    //   white: options.timeControl * 60 ,
+    //   black: options.timeControl * 60 ,
+    // };
 
     
    
@@ -139,6 +139,9 @@ class GameRoom extends Room {
 
       GameState.updateMatrix(this.state.board, [message.fromRow, message.fromCol], [message.toRow, message.toCol] , this.state.gameMoves , castlingK);
       // console.log(this.state.turn);
+
+
+
         this.state.turn === 'white' ? 'black' : 'white';
        let res =  check.processMove(this.state.board,pieceC );
 
@@ -191,6 +194,10 @@ class GameRoom extends Room {
       // console.log(this.state.turn);
 
       // console.log(this.state.board);
+      // console.log(this.state.timeRemaining);
+
+      this.broadcast("newMove", {from :[message.fromRow, message.fromCol], to :[message.toRow, message.toCol] , p: pieceC , color: color});
+      
       
       this.broadcast("boardUpdate", this.state);
   
@@ -277,17 +284,22 @@ class GameRoom extends Room {
     const currentPlayer = this.state.turn;
 
     this.turnTimer = this.clock.setInterval(() => {
-      this.timeRemaining[currentPlayer]--;
+      // console.log(this.timeRemaining[currentPlayer]);
+      // console.log(this.state);
+      
+      
+      this.state.timeRemaining[currentPlayer]--;
+
       // console.log(currentPlayer + ' : time : ' + this.timeRemaining[currentPlayer]);
       
 
-      if (this.timeRemaining[currentPlayer] <= 0) {
+      if (this.state.timeRemaining[currentPlayer] <= 0) {
         this.handleTurnTimeout();
       } else {
-        this.broadcast('updateTime', {
-          player: currentPlayer,
-          timeRemaining: this.timeRemaining[currentPlayer],
-        });
+        // this.broadcast('updateTime', {
+        //   player: currentPlayer,
+        //   timeRemaining: this.timeRemaining[currentPlayer],
+        // });
       }
     }, 1000);
   }
