@@ -81,11 +81,33 @@
                     </div>
                 </div>
                 
-               
+                <div class="flex justify-evenly gap-2.5 mt-0.5 h-6">
+                    <button class="flex items-center justify-center bg-red-500 text-white cursor-pointer rounded py-4 px-4 text-sm h-full w-[40%]">
+                        Resign
+                    </button>
+                    <button class="flex items-center justify-center bg-transparent border border-blue-500 text-white cursor-pointer rounded py-4 px-4 text-sm h-full w-[40%] hover:bg-[#2a2a2a]">
+                        Offer Draw
+                    </button>
+                </div>
+                
+                <div class="h-auto w-full">
+                    <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
+                        <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
+                            H
+                        </div>
+                        <div class="flex flex-col justify-center h-full w-auto">
+                            <span class="font-bold text-base text-white">Hikaru</span>
+                            <span class="text-gray-400 text-sm">2775</span>
+                        </div>
+                        <div class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
+                            3:51
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         
-       
+      
     </div>
     
     
