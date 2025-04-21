@@ -103,7 +103,7 @@
             </div>
 
             <div class="bg-[#1e1e1e] h-[500px] w-[100%] rounded-b flex flex-col">
-                <div class="flex-1 overflow-y-auto p-4">
+                <div id="chatContainer" class="flex-1 overflow-y-auto p-4">
                     <div class="mb-4 py-1 h-auto w-full">
                         <span class="font-semibold mr-2 h-auto w-auto block mb-1">MagnusCarlsen:</span>
                         <span class="h-auto w-auto">gl hf</span>
@@ -114,8 +114,8 @@
                     </div>
                 </div>
                 <div class="h-[50px] w-full flex p-2.5 border-t border-[#333]">
-                    <input type="text" placeholder="Type a message..." class="w-[75%] px-1 border-none rounded bg-[#2a2a2a] text-white mr-2 h-[80%]">
-                    <button class="bg-blue-500 border-none text-white  py-0 px-1 rounded cursor-pointer h-[90%] w-[20%] hover:bg-blue-600">
+                    <input  id="chatInput" type="text" placeholder="Type a message..." class="w-[75%] px-1 border-none rounded bg-[#2a2a2a] text-white mr-2 h-[80%]">
+                    <button id="chatButton" class="bg-blue-500 border-none text-white  py-0 px-1 rounded cursor-pointer h-[90%] w-[20%] hover:bg-blue-600">
                         Send
                     </button>
                 </div>

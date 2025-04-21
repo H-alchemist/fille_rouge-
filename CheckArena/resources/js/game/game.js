@@ -1,6 +1,6 @@
 
 // import {addStylingforlegalMoves, removeStylingforlegalMoves } from './helper.js';
-
+localStorage.setItem('name'  , "hamza");    
 // Game state
 let board = [[-2, -3, -4, -5, -6, -4, -3, -2],
 [-1,-1,-1,-1,-1,-1,-1,-1],
@@ -93,7 +93,7 @@ async function joinMatchMaking() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name: "hamza" ,accounId : 2400 ,rating:1200,timeControl: 5});
+        room = await client.joinOrCreate("matchMaking_room", {name:Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200  ,accounId : Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200 ,rating:1200,timeControl: 5});
 
         room.onMessage("matchmakingFound",async (message) => {
             console.log("Matchmaking found:", message.roomId);
@@ -158,6 +158,9 @@ async function joinGameRoom(roomId) {
 
 function setupRoomListeners() {
 
+    gameRoom.onMessage("chat", ({ sender, message }) => {
+        appendChatMessage(sender, message);
+    });
 
 
 
@@ -306,6 +309,7 @@ function handleMove(fromRow, fromCol , toRow , toCol , pieceN) {
     }
 
     //console.log(fromRow, fromCol , toRow , toCol , pieceN);
+   
     
 
     gameRoom.send("handleMove", { fromRow, fromCol , toRow , toCol , pieceN});
@@ -713,3 +717,46 @@ function appendMove(notation, color) {
     container.scrollTop = container.scrollHeight;
 }
 
+
+
+
+//////////:chat 
+
+const input = document.getElementById("chatInput");
+const sendBtn = document.getElementById("chatButton");
+
+sendBtn.addEventListener("click", sendMessage);
+
+function sendMessage() {
+   
+   
+    const text = input.value.trim();
+    if (!text) return;
+    console.log(text);
+    gameRoom.send("chat", {
+        name: localStorage.getItem('name'), // make sure this is available
+        message: text
+    });
+
+    input.value = "";
+}
+function appendChatMessage(sender, message) {
+    const container = document.getElementById("chatContainer");
+
+    const msgDiv = document.createElement("div");
+    msgDiv.className = "mb-4 py-1 h-auto w-full";
+
+    const senderSpan = document.createElement("span");
+    senderSpan.className = "font-semibold mr-2 h-auto w-auto block mb-1";
+    senderSpan.textContent = sender + ":";
+
+    const messageSpan = document.createElement("span");
+    messageSpan.className = "h-auto w-auto";
+    messageSpan.textContent = message;
+
+    msgDiv.appendChild(senderSpan);
+    msgDiv.appendChild(messageSpan);
+
+    container.appendChild(msgDiv);
+    container.scrollTop = container.scrollHeight; 
+}
