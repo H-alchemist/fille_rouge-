@@ -171,14 +171,15 @@ function setupRoomListeners() {
         document.getElementById('gameStatus').textContent = "Waiting for opponent...";
     });
 
-   gameRoom.onMessage("newMove", (message) => {
-
-    console.log(message);
-    
-
-
-
-   })
+   
+    gameRoom.onMessage("newMove", (message) => {
+       
+         console.log(message);
+         
+        const notation = displayMove(message.from, message.to, message.p , message.color); 
+        console.log(notation);
+        appendMove(notation, message.color);
+    });
     
 
     gameRoom.onMessage("gameStart", (message) => {
@@ -586,7 +587,7 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
         }, duration);
     }
 
-
+  ///////////// TIMER SETUP
    
     let myTime = 0;
     let opponentTime = 0;
@@ -631,3 +632,84 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
         currentTurn = currentTurn === 'white' ? 'black' : 'white';
     }
     
+
+/////////// MOVES DISPLAY 
+
+
+    let moveIndex = 0;
+let currentRow = null;
+
+function displayMove(from, to, piece , color) {
+
+
+
+    const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    const ranks = [8, 7, 6, 5, 4, 3, 2, 1];
+
+    const pieceIcons = {
+        white: {
+            1: "♙", // pawn
+            3: "♘", // knight
+            4: "♗", // bishop
+            2: "♖", // rook
+            5: "♕", // queen
+            6: "♔", // king
+        },
+        black: {
+            '-1': "♟︎",
+            '-4': "♞",
+            '-3': "♝",
+            '-2': "♜",
+            '-5': "♛",
+            '-6': "♚",
+        },
+    };
+    
+    const fromSquare = files[from[1]] + ranks[from[0]];
+    const toSquare = files[to[1]] + ranks[to[0]];
+    console.log(color , ' dv ' , piece );
+    
+    const icon = pieceIcons[color][piece];
+    
+    console.log(icon);
+
+    return     icon+ `<span class='text-white'>${toSquare}>${fromSquare}</span>` ; 
+}
+
+
+function appendMove(notation, color) {
+    const container = document.getElementById("game_moves");
+
+    console.log('notation');
+    
+
+    if (color === "white") {
+        moveIndex++;
+        currentRow = document.createElement("div");
+        currentRow.className = "flex mb-2 h-auto w-full";
+
+        const moveNumber = document.createElement("span");
+        moveNumber.className = "text-gray-400 mr-2.5 w-6 h-auto";
+        moveNumber.textContent = `${moveIndex}.`;
+
+        const whiteMove = document.createElement("span");
+        whiteMove.className = "chess-icon-white mr-2.5 text- cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]";
+        whiteMove.innerHTML = notation;
+
+        currentRow.appendChild(moveNumber);
+        currentRow.appendChild(whiteMove);
+        container.appendChild(currentRow);
+    } else {
+        const blackMove = document.createElement("span");
+        blackMove.className = "chess-icon-black  mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]";
+        blackMove.innerHTML = notation;
+
+        if (currentRow) {
+            currentRow.appendChild(blackMove);
+        }
+    }
+
+    // Auto-scroll to bottom
+    container.scrollTop = container.scrollHeight;
+}
+

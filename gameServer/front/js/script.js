@@ -182,7 +182,7 @@ function setupRoomListeners() {
         isMyTurn = playerColor === message.turn;
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
         renderBoard();
-        console.log("after");
+        // console.log("after");
         
     });
 
@@ -228,10 +228,26 @@ function setupRoomListeners() {
         document.getElementById('gameStatus').textContent = `Opponent (${message.color}) left the game`;
     });
 
+
+    gameRoom.onMessage("newMove", (message) => {
+       
+        
+        const notation = displayMove(message.from, message.to, message.piece , message.color); 
+        console.log(notation);
+        appendMove(notation, message.color);
+    });
+    
+
     gameRoom.onError((code, message) => {
         //console.error(`Room error: ${code} - ${message}`);
         document.getElementById('gameStatus').textContent = `Error: ${message}`;
     });
+
+
+    
+
+
+
 }
 
 function clearSelection() {
@@ -368,9 +384,9 @@ function renderBoard() {
            const shouldPromote = (start[2] === 1 && row === 0) || (start[2] === -1 && row === 7);
 
            if (shouldPromote && Math.abs)  {
-           console.log('pawn');
+        //    console.log('pawn');
            
-            console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
+            // console.log(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
             
             updateBoardForPawnPormotion(start[2] ,[ start[0], start[1]],[ row, col] ,isWhite);
             return;
@@ -525,3 +541,79 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
     } 
   
   
+
+
+
+    let moveIndex = 0;
+let currentRow = null;
+
+function displayMove(from, to, piece , color) {
+
+    const files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+    const ranks = [8, 7, 6, 5, 4, 3, 2, 1];
+
+    const pieceIcons = {
+        white: {
+            1: "♙", 
+            2: "♘", 
+            3: "♗", 
+            4: "♖", 
+            5: "♕", 
+            6: "♔", 
+        },
+        black: {
+            1: "♟︎",
+            2: "♞",
+            3: "♝",
+            4: "♜",
+            5: "♛",
+            6: "♚",
+        },
+    };
+    
+    const fromSquare = files[from[1]] + ranks[from[0]];
+    const toSquare = files[to[1]] + ranks[to[0]];
+    const icon = pieceIcons[color][piece];
+    
+    console.log(icon);
+
+    return fromSquare + icon  + toSquare; // Example: e2e4
+}
+
+
+function appendMove(notation, color) {
+    const container = document.getElementById("game_moves");
+
+    console.log('notation');
+    
+
+    if (color === "white") {
+        moveIndex++;
+        currentRow = document.createElement("div");
+        currentRow.className = "flex mb-2 h-auto w-full";
+
+        const moveNumber = document.createElement("span");
+        moveNumber.className = "text-gray-400 mr-2.5 w-6 h-auto";
+        moveNumber.textContent = `${moveIndex}.`;
+
+        const whiteMove = document.createElement("span");
+        whiteMove.className = "mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]";
+        whiteMove.textContent = notation;
+
+        currentRow.appendChild(moveNumber);
+        currentRow.appendChild(whiteMove);
+        container.appendChild(currentRow);
+    } else {
+        const blackMove = document.createElement("span");
+        blackMove.className = "mr-2.5 cursor-pointer py-0.5 px-1.5 rounded h-auto w-auto hover:bg-[#333]";
+        blackMove.textContent = notation;
+
+        if (currentRow) {
+            currentRow.appendChild(blackMove);
+        }
+    }
+
+    // Auto-scroll to bottom
+    container.scrollTop = container.scrollHeight;
+}
+
