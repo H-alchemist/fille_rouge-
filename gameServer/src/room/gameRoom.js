@@ -94,6 +94,8 @@ class GameRoom extends Room {
       if (res.status==='check') {
 
         this.state.isCheck = res.checkPath;
+        this.broadcast("check", color);
+
         
        }else if (res.status==='checkmate') {
 
@@ -164,10 +166,13 @@ class GameRoom extends Room {
  
          this.state.isCheck = res.checkPath;
          
+        //  this.broadcast("check", pieceC);
+
         }else if (res.status==='checkmate') {
  
         //  console.log(res);
         // console.log('checkmate');
+
         
 
         this.gameState.state = 'checkmate';
@@ -211,6 +216,9 @@ class GameRoom extends Room {
       
       
       this.broadcast("boardUpdate", this.state);
+      if (res.status==='check') {
+      this.broadcast("check", pieceC);
+      }
   
     });
 

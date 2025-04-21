@@ -163,6 +163,18 @@ function setupRoomListeners() {
     });
 
 
+    gameRoom.onMessage("check", (pieceC) => {
+        
+        let kingSing = pieceC > 0 ? -6 : 6;
+         const king= document.querySelector(`[data-content="${kingSing}"]`);
+         console.log(king);
+         
+         king.classList.add('checkStyle');
+         console.log(king);
+
+    });
+
+
 
     gameRoom.onMessage("playerColor", (message) => {
         //console.log("Received player color:", message);

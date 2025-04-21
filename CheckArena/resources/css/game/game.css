@@ -90,3 +90,9 @@
   }
 
   
+  .checkStyle {
+    background-color: #f47b6d; 
+    box-shadow: 0 0 10px 3px #e74c3c;
+    animation: pulseCheck 1s infinite;
+    z-index: 5;
+  }
