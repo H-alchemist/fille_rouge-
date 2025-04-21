@@ -151,6 +151,14 @@ async function joinGameRoom(roomId) {
 }
 
 function setupRoomListeners() {
+    gameRoom.onMessage("resign", (message) => {
+        console.log("Game Over:", message.winner);
+        showGameOver(message);
+        SetUpTimer( false , false , false ) ;
+        console.log("Game Over: up ", message.winner );
+        
+        
+    });
 
     gameRoom.onMessage("gameOver", (message) => {
         console.log("Game Over:", message.winner);
@@ -160,6 +168,13 @@ function setupRoomListeners() {
         
         
     });
+
+
+    gameRoom.onMessage("checkmateWinner", (message ) => {
+        console.log("wwwwwwwwwwwwwwwwwwwwwww", message);
+        
+    });
+
 
     gameRoom.onMessage("chat", ({ sender, message }) => {
         appendChatMessage(sender, message);
@@ -820,3 +835,15 @@ function showGameOver(reasonText) {
     document.getElementById("gameOverPopup").classList.remove("show");
   });
   
+
+  ////////// resign function
+
+
+
+  function resignFromGame() {
+    console.log('resign');
+    
+    gameRoom.send("resign" , playerColor);
+  }
+
+  document.getElementById("resignBtn").addEventListener("click", resignFromGame);

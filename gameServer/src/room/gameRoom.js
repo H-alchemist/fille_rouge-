@@ -57,7 +57,7 @@ class GameRoom extends Room {
       // console.log(`Received "selectPiece" from ${client.sessionId}:`, message);
 
      
-       console.log(this.gameState.state , 'from gameRoom');
+      //  console.log(this.gameState.state , 'from gameRoom');
       
    
     if (this.gameState.state !=null){
@@ -89,7 +89,7 @@ class GameRoom extends Room {
      
       let res =  check.processMove(this.state.board,message.promoteTo );
 
-      console.log('from promo' , res , 'res');
+      // console.log('from promo' , res , 'res');
        
       if (res.status==='check') {
 
@@ -125,7 +125,7 @@ class GameRoom extends Room {
 
     });
     this.onMessage('chat' , (client, message) => {
-     console.log(message.name , 'message.name');
+    //  console.log(message.name , 'message.name');
  
       this.chat.push({
         sender: message.name,
@@ -134,6 +134,43 @@ class GameRoom extends Room {
       this.broadcast("chat", {sender: message.name, message: message.message});
 
     })
+    this.onMessage('resign' , (client, message) => {
+
+      console.log(message , 'message.nameRR');
+      
+
+
+      if (message === 'white') {
+        this.gameState.loser = 'white';
+        this.gameState.winner = 'black';
+      } else {
+        this.gameState.loser = 'black';
+        this.gameState.winner = 'white';
+      }
+
+      this.gameState.state = 'resign';
+
+      this.state.turn = message==='white' ? 'black' : 'white'; 
+
+      console.log(this.state.turn );
+      
+
+      this.endGame('resign');
+      this.clearTurnTimer();
+
+      
+
+     
+     })
+
+     this.onMessage('offerDraw' , (client, message) => {
+     
+     })
+
+
+
+
+
     this.onMessage("handleMove", (client, message) => {
 
       const exists = list.find(item => item[0] === message.toRow && item[1] === message.toCol) !== undefined;
@@ -160,39 +197,8 @@ class GameRoom extends Room {
         this.state.turn === 'white' ? 'black' : 'white';
        let res =  check.processMove(this.state.board,pieceC );
 
-      //  console.log(res);
-       
-      //  console.log('//::' , res , 'res');
-       
-      //  if (res.status==='check') {
- 
-      //    this.state.isCheck = res.checkPath;
-         
-      //   //  this.broadcast("check", pieceC);
+     
 
-      //   }else if (res.status==='checkmate') {
- 
-      //   //  console.log(res);
-      //   // console.log('checkmate');
-
-        
-
-      //   this.gameState.state = 'checkmate';
-
-
-
-      //   this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
-      //   this.endGame('checkmate');
-      //   this.clearTurnTimer();
-
-
-      //   //  this.disconnect();
-         
- 
-        
-      //  }else{
-      //    this.state.isCheck = null;
-      //  }
        
        if (Math.abs(pieceC) == 6 ) {
           //  console.log(pieceC , 'pieceC' , color);
@@ -241,10 +247,14 @@ class GameRoom extends Room {
         this.gameState.state = 'checkmate';
 
 
-
-        this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
+  
         this.endGame('checkmate');
         this.clearTurnTimer();
+        // this.broadcast("checkmateWinner", this.state.turn);
+
+        this.gameState.winner= this.state.turn === 'white' ? 'black' : 'white';
+        this.gameState.loser = this.state.turn ;
+        this.gameState.state= 'checkmate';
 
 
         //  this.disconnect();
@@ -253,11 +263,17 @@ class GameRoom extends Room {
         
        }else if (res.status==='stalemate') {
         console.log('stalmate from st');
+       
+        this.gameState.state= 'stalemate';
+
+
         
-        this.gameState.state = 'stalemate';
         this.endGame('stalemate');
         this.clearTurnTimer();
 
+        
+        
+     
 
        }
        
@@ -304,7 +320,7 @@ class GameRoom extends Room {
           this.state.blackPlayerData = { ...options };
           client.send("playerColor", "black");
 
-          console.log(this.state.blackPlayerData);
+          // console.log(this.state.blackPlayerData);
           
   
           this.broadcast("gameStart", this.state);
@@ -315,11 +331,13 @@ class GameRoom extends Room {
 
   endGame(result) {
 
-    console.log("Game ended with result:" , result);
+    // console.log("Game ended with result:" , result);
 
     const currentPlayer = this.state.turn;
+    console.log("currentPlayer", currentPlayer);
+    
     this.clearTurnTimer();
-    console.log(`${currentPlayer}'s turn has timed out.`);
+    // console.log(`${currentPlayer}'s turn has timed out.`);
    this.broadcast("gameOver", { winner: currentPlayer === 'white' ? 'black' : 'white'  , cause : result});
 
     
