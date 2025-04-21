@@ -232,17 +232,7 @@ class GameRoom extends Room {
       return gameState;
     }
 
-    endGame(result) {
-
-      console.log("Game ended with result:", result);
-      
-      
-      this.broadcast("gameOver");
-
-
-
-
-    }
+   
 
     onJoin(client, options) {
       // console.log(options);
@@ -278,6 +268,23 @@ class GameRoom extends Room {
       }
   }
 
+  endGame(result) {
+
+    console.log("Game ended with result:" , result);
+
+    const currentPlayer = this.state.turn;
+    this.clearTurnTimer();
+    console.log(`${currentPlayer}'s turn has timed out.`);
+   this.broadcast("gameOver", { winner: currentPlayer === 'white' ? 'black' : 'white' });
+
+    
+    
+   setTimeout(() => {
+    this.disconnect();
+  }, 3000);
+}
+
+
   onLeave(client) {
     // console.log(`Player ${client.sessionId} left.`);
 
@@ -291,7 +298,7 @@ class GameRoom extends Room {
   }
 
   onDispose() {
-    console.log(this.state.gameMoves);
+    this.broadcast("onDispose");
     
   }
 
@@ -330,9 +337,13 @@ class GameRoom extends Room {
   }
 
   handleTurnTimeout() {
-    const currentPlayer = this.state.turn;
+
+    // this.disconnect();
+    this.endGame(this.state.turn);
+    // const currentPlayer = this.state.turn;
+    // this.clearTurnTimer();
     // console.log(`${currentPlayer}'s turn has timed out.`);
-    this.switchTurn();
+    //  this.broadcast("gameOver", { winner: currentPlayer === 'white' ? 'black' : 'white' });
   }
 
 

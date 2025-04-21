@@ -93,7 +93,7 @@ async function joinMatchMaking() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name:Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200  ,accounId : Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200 ,rating:1200,timeControl: 5});
+        room = await client.joinOrCreate("matchMaking_room", {name:Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200  ,accounId : Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200 ,rating:1200,timeControl: 0.1});
 
         room.onMessage("matchmakingFound",async (message) => {
             console.log("Matchmaking found:", message.roomId);
@@ -157,6 +157,11 @@ async function joinGameRoom(roomId) {
 }
 
 function setupRoomListeners() {
+
+    gameRoom.onMessage("gameOver", (message) => {
+        console.log("Game Over:", message);
+        // document.getElementById('gameStatus').textContent = "Game Over";
+    });
 
     gameRoom.onMessage("chat", ({ sender, message }) => {
         appendChatMessage(sender, message);

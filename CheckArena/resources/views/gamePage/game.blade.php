@@ -148,6 +148,18 @@
 </div>
 
 
+<div id="gameOverPopup" class="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+    <div class="bg-[#1e1e1e] text-white rounded-xl p-6 w-[90%] max-w-md shadow-lg text-center">
+      <h2 id="gameOverTitle" class="text-2xl font-bold mb-2">Game Over</h2>
+      <p id="gameOverReason" class="text-gray-400 text-lg mb-4">Reason goes here...</p>
+      <button id="closeGameOverPopup" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
+        Close
+      </button>
+    </div>
+  </div>
+  
+
+
 
 
     @push('scripts')

@@ -96,3 +96,13 @@
     animation: pulseCheck 1s infinite;
     z-index: 5;
   }
+
+
+  #gameOverPopup {
+    transition: all 0.3s ease;
+  }
+  
+  #gameOverPopup.show {
+    display: flex;
+  }
+  
