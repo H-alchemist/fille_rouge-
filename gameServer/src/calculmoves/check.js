@@ -402,7 +402,8 @@ export function checkifKingInCheck(board, opponentColor) {
           gameStatus.status = 'stalemate';
         }
     }
-    
+     console.log('gameStatus', gameStatus);
+     
     return gameStatus;
   }
 

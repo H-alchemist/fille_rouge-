@@ -93,7 +93,7 @@ async function joinMatchMaking() {
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name:Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200  ,accounId : Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200 ,rating:1200,timeControl: 0.1});
+        room = await client.joinOrCreate("matchMaking_room", {name:Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200  ,accounId : Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200 ,rating:1200,timeControl: 1});
 
         room.onMessage("matchmakingFound",async (message) => {
             console.log("Matchmaking found:", message.roomId);
@@ -105,13 +105,7 @@ async function joinMatchMaking() {
 
         // gameOver
 
-        room.onMessage("gameOver",async () => {
-            
-
-            console.log("Game Over:");
-            
-        });
-
+        
         room.onMessage("already_in_queue",async (message) => {
             //console.log("Matchmaking found:", message.roomId);
             
@@ -159,8 +153,12 @@ async function joinGameRoom(roomId) {
 function setupRoomListeners() {
 
     gameRoom.onMessage("gameOver", (message) => {
-        console.log("Game Over:", message);
-        // document.getElementById('gameStatus').textContent = "Game Over";
+        console.log("Game Over:", message.winner);
+        showGameOver(message);
+        SetUpTimer( false , false , false ) ;
+        console.log("Game Over: up ", message.winner );
+        
+        
     });
 
     gameRoom.onMessage("chat", ({ sender, message }) => {
@@ -169,6 +167,17 @@ function setupRoomListeners() {
 
 
     gameRoom.onMessage("check", (pieceC) => {
+        
+        let kingSing = pieceC > 0 ? -6 : 6;
+         const king= document.querySelector(`[data-content="${kingSing}"]`);
+         console.log(king);
+         
+         king.classList.add('checkStyle');
+         console.log(king);
+
+    });
+
+    gameRoom.onMessage("checkmate", (pieceC) => {
         
         let kingSing = pieceC > 0 ? -6 : 6;
          const king= document.querySelector(`[data-content="${kingSing}"]`);
@@ -213,7 +222,7 @@ function setupRoomListeners() {
         // console.log(opT , 'opT' , meT);
         
 
-        SetUpTimer({ op: opT, me: meT }, message.turn);
+        SetUpTimer({ op: opT, me: meT }, message.turn , true);
 
         // console.log(message);
         
@@ -255,7 +264,9 @@ function setupRoomListeners() {
         // console.log(opT , 'opT' , meT);
         
 
-        SetUpTimer({ op: opT, me: meT }, message.turn);
+        SetUpTimer({ op: opT, me: meT }, message.turn , true);
+        console.log("Game Over: down ", message.winner );
+
         document.getElementById('gameStatus').textContent = isMyTurn ? "Your turn" : "Opponent's turn";
         
         // const lastMove = message.lastMove;
@@ -616,7 +627,14 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
     let myColor = 'white';
     let timerInterval;
     
-    function SetUpTimer(time, color) {
+    function SetUpTimer(time, color, going) {
+        if (!going){ 
+
+            clearInterval(timerInterval);
+            
+            return;
+
+        }
         myTime = time.me;
         opponentTime = time.op;
          // or set dynamically if needed
@@ -649,9 +667,7 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
         document.getElementById('apponent_time').textContent = formatTime(opponentTime);
     }
     
-    function switchTurn() {
-        currentTurn = currentTurn === 'white' ? 'black' : 'white';
-    }
+   
     
 
 /////////// MOVES DISPLAY 
@@ -777,3 +793,30 @@ function appendChatMessage(sender, message) {
     container.appendChild(msgDiv);
     container.scrollTop = container.scrollHeight; 
 }
+
+
+///////////: show game over pop up
+
+
+
+function showGameOver(reasonText) {
+    const popup = document.getElementById("gameOverPopup");
+    const title = document.getElementById("gameOverTitle");
+    const reason = document.getElementById("gameOverReason");
+
+    if (reasonText.cause == 'stalemate') {
+        title.textContent = "Game Over : " + reasonText.cause;
+         reason.textContent ="Draw"  ;
+        
+    }else{
+  
+    title.textContent = "Game Over : " + reasonText.cause;
+    reason.textContent ="Winner :" +  reasonText.winner  ;
+    }
+    popup.classList.add("show");
+  }
+  
+  document.getElementById("closeGameOverPopup").addEventListener("click", () => {
+    document.getElementById("gameOverPopup").classList.remove("show");
+  });
+  

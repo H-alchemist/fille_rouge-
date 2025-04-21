@@ -100,13 +100,15 @@ class GameRoom extends Room {
        }else if (res.status==='checkmate') {
 
         // console.log(res);
-        console.log('checkmate');
+        // console.log('checkmate');
         
 
         this.gameState.state = 'checkmate';
 
 
         this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
+
+        this.endGame('checkmate');
         
 
        
@@ -162,31 +164,35 @@ class GameRoom extends Room {
        
       //  console.log('//::' , res , 'res');
        
-       if (res.status==='check') {
+      //  if (res.status==='check') {
  
-         this.state.isCheck = res.checkPath;
+      //    this.state.isCheck = res.checkPath;
          
-        //  this.broadcast("check", pieceC);
+      //   //  this.broadcast("check", pieceC);
 
-        }else if (res.status==='checkmate') {
+      //   }else if (res.status==='checkmate') {
  
-        //  console.log(res);
-        // console.log('checkmate');
+      //   //  console.log(res);
+      //   // console.log('checkmate');
 
         
 
-        this.gameState.state = 'checkmate';
+      //   this.gameState.state = 'checkmate';
 
 
-        this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
 
-        //  this.disconnect();
+      //   this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
+      //   this.endGame('checkmate');
+      //   this.clearTurnTimer();
+
+
+      //   //  this.disconnect();
          
  
         
-       }else{
-         this.state.isCheck = null;
-       }
+      //  }else{
+      //    this.state.isCheck = null;
+      //  }
        
        if (Math.abs(pieceC) == 6 ) {
           //  console.log(pieceC , 'pieceC' , color);
@@ -219,6 +225,45 @@ class GameRoom extends Room {
       if (res.status==='check') {
       this.broadcast("check", pieceC);
       }
+      if (res.status==='check') {
+ 
+         this.state.isCheck = res.checkPath;
+         
+        //  this.broadcast("check", pieceC);
+
+        }else if (res.status==='checkmate') {
+ 
+        //  console.log(res);
+        // console.log('checkmate');
+
+        
+
+        this.gameState.state = 'checkmate';
+
+
+
+        this.gameState.winner = this.state.turn === 'white' ? 'black' : 'white';
+        this.endGame('checkmate');
+        this.clearTurnTimer();
+
+
+        //  this.disconnect();
+         
+ 
+        
+       }else if (res.status==='stalemate') {
+        console.log('stalmate from st');
+        
+        this.gameState.state = 'stalemate';
+        this.endGame('stalemate');
+        this.clearTurnTimer();
+
+
+       }
+       
+       else{
+         this.state.isCheck = null;
+       }
   
     });
 
@@ -275,7 +320,7 @@ class GameRoom extends Room {
     const currentPlayer = this.state.turn;
     this.clearTurnTimer();
     console.log(`${currentPlayer}'s turn has timed out.`);
-   this.broadcast("gameOver", { winner: currentPlayer === 'white' ? 'black' : 'white' });
+   this.broadcast("gameOver", { winner: currentPlayer === 'white' ? 'black' : 'white'  , cause : result});
 
     
     
@@ -339,7 +384,7 @@ class GameRoom extends Room {
   handleTurnTimeout() {
 
     // this.disconnect();
-    this.endGame(this.state.turn);
+    this.endGame( 'timeout');
     // const currentPlayer = this.state.turn;
     // this.clearTurnTimer();
     // console.log(`${currentPlayer}'s turn has timed out.`);
