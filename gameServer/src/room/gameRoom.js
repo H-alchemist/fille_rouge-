@@ -26,6 +26,8 @@ class GameRoom extends Room {
 
     let list =null;
 
+    this.chat=[];
+
     this.gameState = {
 
       state : null ,
@@ -118,7 +120,16 @@ class GameRoom extends Room {
       
 
     });
+    this.onMessage('chat' , (client, message) => {
+     console.log(message.name , 'message.name');
+ 
+      this.chat.push({
+        sender: message.name,
+        message: message.message,
+      });
+      this.broadcast("chat", {sender: message.name, message: message.message});
 
+    })
     this.onMessage("handleMove", (client, message) => {
 
       const exists = list.find(item => item[0] === message.toRow && item[1] === message.toCol) !== undefined;
@@ -147,7 +158,7 @@ class GameRoom extends Room {
 
       //  console.log(res);
        
-       console.log('//::' , res , 'res');
+      //  console.log('//::' , res , 'res');
        
        if (res.status==='check') {
  
@@ -156,7 +167,7 @@ class GameRoom extends Room {
         }else if (res.status==='checkmate') {
  
         //  console.log(res);
-        console.log('checkmate');
+        // console.log('checkmate');
         
 
         this.gameState.state = 'checkmate';
