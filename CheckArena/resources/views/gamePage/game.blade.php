@@ -203,8 +203,10 @@
     @push('scripts')
 <script>
 
+    let Pname =  @json($playerName);
+
     const playerInfo = {
-        name: "{{ $playerName }}",
+        name: Pname ,
         id: {{$playerId}},
         rating: {{$playerElo}}
     };

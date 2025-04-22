@@ -18,8 +18,8 @@
     </div>
     
     <!-- Login Form -->
-    <div id="login-form" class="{{ $title == 'login' ? '' : 'hidden' }}">
-      <form class="space-y-5" action="/login" method="POST">
+    <div id="login-form" class="{{ $title == 'userLogin' ? '' : 'hidden' }}">
+      <form class="space-y-5" action="/userLogin" method="POST">
         @csrf
         <div>
           <label for="login-email" class="block font-medium mb-1">Email</label>
@@ -67,8 +67,8 @@
     </div>
     
     <!-- Register Form -->
-    <div id="register-form" class="{{ $title == 'register' ? '' : 'hidden' }}">
-      <form class="space-y-5" action="/register" method="POST">
+    <div id="register-form" class="{{ $title == 'userRegister' ? '' : 'hidden' }}">
+      <form class="space-y-5" action="/userRegister" method="POST">
         @csrf
         <div>
             <label for="register-username" class="block font-medium mb-1">Username</label>

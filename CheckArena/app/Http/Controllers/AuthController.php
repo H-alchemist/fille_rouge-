@@ -16,7 +16,7 @@ class AuthController extends Controller
         }
         
         return view('auth.index' , [
-            'title' => 'register'
+            'title' => 'userLogin'
         ]);
     }
 
@@ -55,7 +55,7 @@ class AuthController extends Controller
             return redirect()->back()
                              ->withErrors($validator)   // Pass the validation errors
                              ->withInput()              // Preserve the old input
-                             ->with('title', 'register'); // Pass the title for the view
+                             ->with('title', 'userRegister'); // Pass the title for the view
         }
 
         $validated = $validator->validated();
@@ -81,5 +81,11 @@ class AuthController extends Controller
 
 
     
+    }
+
+
+    public function logout(){
+        auth()->logout();
+        return redirect('/login');
     }
 }

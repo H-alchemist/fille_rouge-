@@ -12,7 +12,7 @@ class GameController extends Controller
 
 
         return view('gamePage.game' , [
-            'playerName' =>  $username  , 
+            'playerName' =>  Auth::user()->username  , 
             'playerElo' => Auth::user()->profile->elo ,
             'playerId' => Auth::user()->id ,
 

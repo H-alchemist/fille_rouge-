@@ -1,6 +1,6 @@
 
 // import {addStylingforlegalMoves, removeStylingforlegalMoves } from './helper.js';
-// const Player = JSON.parse(localStorage.getItem('playerInfo'));
+const Player = JSON.parse(localStorage.getItem('playerInfo'));
 
 // Game state
 let board = [[-2, -3, -4, -5, -6, -4, -3, -2],

@@ -10,6 +10,13 @@
     </div>
 
     <div class="auth-buttons">
-      <a href="#" class=" px-4 py-2 rounded font-semibold transition-colors cursor-pointer bg-blue-700 text-white hover:bg-blue-900">Sign Up</a>
-       </div>
+
+    
+      @if (!auth()->check())
+      <a href="/auth" class="px-4 py-2 rounded font-semibold transition-colors cursor-pointer bg-blue-700 text-white hover:bg-blue-900">Sign Up</a>
+  @else
+      <a href="/logout" class="px-4 py-2 rounded font-semibold transition-colors cursor-pointer bg-blue-700 text-white hover:bg-blue-900">Log Out</a>
+  @endif
+     
+    </div>
   </header>
