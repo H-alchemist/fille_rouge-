@@ -27,17 +27,17 @@
                 </div>
             </div>
             {{-- h-[500px] --}}
-            <div id="infoContainer" class="w-[36%] h-[95%] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[1100px]:h-[300px]">
+            <div id="infoContainer" class="w-[36%] min-h-[300px] max-h-[500px] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[750px]:w-[30%]">
                 <div class="h-auto w-full">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
                         <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
                             M
                         </div>
                         <div class="flex flex-col justify-center h-full w-auto">
-                            <span id="apponent_name" class="font-bold text-base text-white">MagnusCarlsen</span>
+                            <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
                             <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
                         </div>
-                        <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
+                        <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm">
                             00:00
                         </div>
                     </div>

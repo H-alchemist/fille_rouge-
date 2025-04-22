@@ -833,6 +833,7 @@ function showGameOver(reasonText) {
   
   document.getElementById("closeGameOverPopup").addEventListener("click", () => {
     document.getElementById("gameOverPopup").classList.remove("show");
+    window.location.reload();
   });
   
 

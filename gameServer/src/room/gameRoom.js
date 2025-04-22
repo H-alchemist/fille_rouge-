@@ -150,9 +150,8 @@ class GameRoom extends Room {
 
       this.gameState.state = 'resign';
 
-      this.state.turn = message==='white' ? 'black' : 'white'; 
-
-      console.log(this.state.turn );
+      this.state.turn = message;
+      console.log( 'turn ' , this.state.turn );
       
 
       this.endGame('resign');
