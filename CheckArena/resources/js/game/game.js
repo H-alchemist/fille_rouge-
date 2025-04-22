@@ -1,6 +1,7 @@
 
 // import {addStylingforlegalMoves, removeStylingforlegalMoves } from './helper.js';
-localStorage.setItem('name'  , "hamza");    
+// const Player = JSON.parse(localStorage.getItem('playerInfo'));
+
 // Game state
 let board = [[-2, -3, -4, -5, -6, -4, -3, -2],
 [-1,-1,-1,-1,-1,-1,-1,-1],
@@ -86,14 +87,14 @@ async function connectToServer() {
 }
 
 
-async function joinMatchMaking() {
+async function joinMatchMaking(timeC) {
     if (!client) {
         const connected = await connectToServer();
         // if (!connected) return;
     }
     
     try {
-        room = await client.joinOrCreate("matchMaking_room", {name:Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200  ,accounId : Math.floor(Math.random() * (1250 - 1200 + 1)) + 1200 ,rating:1200,timeControl: 1});
+        room = await client.joinOrCreate("matchMaking_room", {name:Player.name ,accounId : Player.id ,rating:Player.rating ,timeControl: timeC});
 
         room.onMessage("matchmakingFound",async (message) => {
             console.log("Matchmaking found:", message.roomId);
@@ -132,7 +133,19 @@ async function joinMatchMaking() {
     // renderBoard();
 }
 
-document.getElementById('startGame').addEventListener('click', joinMatchMaking);
+document.getElementById('startGame').addEventListener('click', function (){
+
+    document.getElementById('createGamePopup').classList.remove('hidden');
+
+});
+
+  document.querySelectorAll("#createGamePopup button[data-time]").forEach(button => {
+    button.addEventListener("click", async (e) => {
+      const time = parseInt(e.target.dataset.time);
+      await joinMatchMaking(time);
+      document.getElementById("createGamePopup").classList.add("hidden");
+    });
+  });
 
 
 async function joinGameRoom(roomId) {
@@ -610,8 +623,11 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
         document.getElementById('infoContainer').classList.add('h-[500px]');
 
         document.getElementById('apponent_name').textContent = op.name;
+        document.getElementById('apponent_nameFull').textContent = op.name;
+
 
         document.getElementById('apponent_rating').textContent = op.rating;
+        document.getElementById('apponent_ratingFull').textContent = op.rating;
 
 
      
@@ -621,6 +637,8 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
 
 
     }
+
+
 
     function showNotification(message, duration = 3000) {
         const bar = document.getElementById('notificationBar');
@@ -848,3 +866,7 @@ function showGameOver(reasonText) {
   }
 
   document.getElementById("resignBtn").addEventListener("click", resignFromGame);
+  
+  document.getElementById("cancelPopUp").addEventListener("click", function (){
+    document.getElementById("createGamePopup").classList.add("hidden");
+  });

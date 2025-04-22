@@ -68,6 +68,11 @@ class AuthController extends Controller
             'email' => $validated['email'],
             'password' => $validated['password']
         ]);
+// return $user;
+        $profile = $user->profile()->create([
+            'elo' => 1000 ,
+            'user_id' => $user->id
+        ]);
   
         auth()->login($user);
 

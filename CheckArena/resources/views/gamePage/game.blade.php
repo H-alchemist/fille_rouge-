@@ -64,8 +64,8 @@
                             M
                         </div>
                         <div class="flex flex-col justify-center h-full w-auto">
-                            <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
-                            <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
+                            <span id="apponent_nameFull" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
+                            <span id="apponent_ratingFull" class="text-gray-400 text-sm">2863</span>
                         </div>
                         <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
                             00:00
@@ -182,10 +182,37 @@
 
 
 
+  <div id="createGamePopup" class="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50  bg-black/60 hidden">
+    <div class="w-[30%] bg-[#1e1e1e] p-6 rounded shadow-lg flex flex-col gap-4">
+        <button data-time="1" class="bg-gray-800 text-white p-2 rounded hover:bg-gray-700">Bullet: 1 min</button>
+        <button data-time="3" class="bg-gray-800 text-white p-2 rounded hover:bg-gray-700">Blitz: 3 min</button>
+        <button data-time="10" class="bg-gray-800 text-white p-2 rounded hover:bg-gray-700">Rapid: 10 min</button>
+        <button data-time="15" class="bg-gray-800 text-white p-2 rounded hover:bg-gray-700">Classic: 15 min</button>
+
+        <button id="cancelPopUp" class="m-4 bg-red-800 rounded"> cancel</button>
+    </div>
+    
+   
+  </div>
+
 
     @push('scripts')
     @vite('resources/js/game/game.js')
     @endpush
+
+    @push('scripts')
+<script>
+
+    const playerInfo = {
+        name: "{{ $playerName }}",
+        id: {{$playerId}},
+        rating: {{$playerElo}}
+    };
+
+    localStorage.setItem('playerInfo', JSON.stringify(playerInfo));
+</script>
+@endpush
+
     
     
 @endsection

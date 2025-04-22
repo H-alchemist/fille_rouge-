@@ -48,6 +48,12 @@ class User extends Authenticatable
     }
 
 
+    public function profile()
+{
+    return $this->hasOne(Profile::class);
+}
+
+
     public function whiteParties()
 {
     return $this->hasMany(Partie::class, 'whitePlayer');
