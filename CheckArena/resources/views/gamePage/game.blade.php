@@ -15,9 +15,25 @@
 
   <div id="gameStatus"  class="text-xl">none</div>
 
-    <div class="h-[calc(100%-70px)] w-[94%] ml-[-10px] block min-[1100px]:flex min-[1100px]:flex-row-reverse items-center gap-[2%] pt-5 ">
-        <section class="w-[73%] h-[100%]  flex justify-center items-center  max-[1100px]:w-full">
-            <div class="w-[60%] h-9/10  flex flex-col relative">
+    <div class="h-[calc(100%-70px)] w-[94%] ml-[-10px] block min-[1100px]:flex min-[1100px]:flex-row-reverse items-center gap-[2%] pt-5 max-[750px]:w-full ">
+        <section class="w-[73%] h-[100%] mb-2   flex justify-center items-center  max-[1100px]:w-full  max-[750px]:w-full  max-[750px]:flex-col">
+            <div class="  h-auto w-[64%] -mt-6  min-[750px]:hidden">
+                <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
+                        M
+                    </div>
+                    <div class="flex flex-col justify-center h-full w-auto">
+                        <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
+                        <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
+                    </div>
+                    <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
+                        00:00
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="w-[60%] h-9/10 mb-3 flex flex-col relative max-[750px]:w-[80%]  max-[400px]:w-[100%]"> 
                 <div class="w-full h-auto aspect-square relative mx-auto">
                     <div class="chess-board relative bg-[url('https://images.chesscomfiles.com/chess-themes/boards/icy_sea/200.png')] bg-no-repeat bg-cover m-auto grid grid-cols-8 grid-rows-8 w-[90%] aspect-square border-2 border-black rounded" id=board>
                         <div class="absolute inset-0 pointer-events-none z-0">
@@ -26,9 +42,23 @@
                     </div>
                 </div>
             </div>
+            <div class="  h-auto w-[64%] -mt-12  min-[750px]:hidden">
+                <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
+                    <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
+                        M
+                    </div>
+                    <div class="flex flex-col justify-center h-full w-auto">
+                        <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
+                        <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
+                    </div>
+                    <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
+                        00:00
+                    </div>
+                </div>
+            </div>
             {{-- h-[500px] --}}
-            <div id="infoContainer" class="w-[36%] min-h-[300px] max-h-[500px] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[750px]:w-[30%]">
-                <div class="h-auto w-full">
+            <div id="infoContainer" class="mb-3 w-[36%] min-h-[300px] max-h-[500px] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[750px]:min-h-[80px]  max-[750px]:min-h-[40px] max-[750px]:max-h-[150px] max-[750px]:w-[70%]  ">
+                <div class="h-auto w-full max-[750px]:hidden">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
                         <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
                             M
@@ -37,13 +67,15 @@
                             <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
                             <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
                         </div>
-                        <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm">
+                        <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
                             00:00
                         </div>
                     </div>
                 </div>
+
                 
-                <div id="game_moves" class="flex-1 bg-[#2a2a2a] rounded shadow-[0px_0px_2px_1px_#2980b9] p-2.5 overflow-y-auto h-[400px] w-full hidden ">
+                
+                <div id="game_moves" class="flex-1 bg-[#2a2a2a] rounded shadow-[0px_0px_2px_1px_#2980b9] p-2.5 overflow-y-auto h-[400px] w-full hidden  max-[750px]:h-[150px]">
                     
                    
                 </div> 
@@ -65,7 +97,7 @@
                 </div>
 
                 
-                <div class="h-auto w-full">
+                <div class="h-auto w-full max-[750px]:hidden">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
                         <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
                             H
@@ -82,7 +114,7 @@
             </div>
         </section>
         
-        <section class="w-[20%] h-[100%] bg-[#1e1e1e] flex flex-col gap-[2%] rounded max-[1100px]:w-[50%] max-[1100px]:h-[500px]">
+        <section class="w-[20%] h-[100%] bg-[#1e1e1e] flex flex-col gap-[2%] rounded max-[1100px]:w-[50%] max-[1100px]:h-[500px] max-[1100px]:w-[100%]">
             <div class="bg-[#2a2a2a] h-[90px] w-full rounded-t p-4 flex flex-col justify-center border-b border-[#333]">
                 <div class="text-lg font-semibold mb-1 h-auto w-auto">Blitz Chess</div>
                 <div class="flex items-center h-auto w-auto">
