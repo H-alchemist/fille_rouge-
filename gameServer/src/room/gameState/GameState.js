@@ -54,7 +54,7 @@ const GameState = {
   
   },
 
-  updateMatrix(board, from, to , gameMoves , castling) {
+  updateMatrix(board, from, to , gameMoves , castling)  {
   
     const [fromRow, fromCol] = from;
     const [toRow, toCol] = to;
@@ -151,14 +151,15 @@ const GameState = {
 
 
 function initializeBoard() {
-  const board =  [[-6, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 5, 5, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 6, 0, 0]];
+  const board =  [
+    [-2, -3, -4, -5, -6, -4, -3, -2],
+    [-1,-1,-1,-1,-1,-1,-1,-1],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1,1,1,1,1,1,1,1],
+    [2, 3, 4, 5, 6, 4, 3, 2]];
 
   return board;
 }
