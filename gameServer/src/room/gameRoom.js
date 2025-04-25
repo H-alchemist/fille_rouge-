@@ -1,6 +1,8 @@
 import { Room } from "colyseus";
 import GameState from './gameState/GameState.js';
 
+import { sendToLaravel } from "../../utils/sendToLaravel.js";
+
 import * as check from '../calculmoves/check.js';
 
 
@@ -328,9 +330,10 @@ class GameRoom extends Room {
       }
   }
 
-  endGame(result) {
+  async endGame(result) {
 
     // console.log("Game ended with result:" , result);
+    await sendToLaravel({ name: "Hamza", score: 42 });
 
     const currentPlayer = this.state.turn;
     console.log("currentPlayer", currentPlayer);
