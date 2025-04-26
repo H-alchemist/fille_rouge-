@@ -48,21 +48,65 @@ class SavePatrieServices{
 
         ///////////////// moves 
 
-        $dataM = [];
-$moveNumber = 1;
+//         $dataM = [];
+// $moveNumber = 1;
 
-foreach ($allData['state']['gameMoves'] as $move) {
-    $dataM[] = [
-        'partie_id' => $partie->id, // You will get it after inserting the Partie
-        'from_position' => implode(',', $move['from']), // example "6,7"
-        'to_position' => implode(',', $move['to']),     // example "5,7"
-        'piece_number' => $move['piece'], 
-        'moveNumber' => $moveNumber++,
-        'timestamp' => now(),
-    ];
+// foreach ($allData['state']['gameMoves'] as $move) {
+//     $dataM[] = [
+//         'partie_id' => $partie->id, // You will get it after inserting the Partie
+//         'from_position' => implode(',', $move['from']), // example "6,7"
+//         'to_position' => implode(',', $move['to']),     // example "5,7"
+//         'piece_number' => $move['piece'], 
+//         'moveNumber' => $moveNumber++,
+//         'timestamp' => now(),
+//     ];
+// }
+
+//   Move::insert($dataM);
+
+
+if (!empty($allData['state']['gameMoves'])) {
+    $dataM = [];
+    $moveNumber = 1;
+
+    foreach ($allData['state']['gameMoves'] as $move) {
+        $dataM[] = [
+            'partie_id' => $partie->id, // You got it after inserting Partie
+            'from_position' => implode(',', $move['from']), // example: "6,7"
+            'to_position' => implode(',', $move['to']),     // example: "5,7"
+            'piece_number' => $move['piece'], 
+            'moveNumber' => $moveNumber++,
+            'timestamp' => now(),
+        ];
+    }
+
+    Move::insert($dataM);
 }
 
-  Move::insert($dataM);
+
+
+
+$dataC = [];
+
+if (!empty($allData['chat'])) {
+    $dataC = [];
+
+    foreach ($allData['chat'] as $index => $chat) {
+        
+        $dataC[] = [
+            'partie_id' => $partie->id, // you already inserted Partie and got $partieId
+            'sender_id' => $senderId,
+            'messegeNumber' => $index + 1,
+            'content' => $chat['message'],
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+    }
+
+    Message::insert($dataC);
+}
+
+
 
 
 

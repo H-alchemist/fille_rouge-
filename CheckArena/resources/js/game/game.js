@@ -188,13 +188,15 @@ function setupRoomListeners() {
     });
 
 
-    gameRoom.onMessage("checkmateWinner", (message ) => {
-        console.log("wwwwwwwwwwwwwwwwwwwwwww", message);
+    // gameRoom.onMessage("checkmateWinner", (message ) => {
+    //     console.log("wwwwwwwwwwwwwwwwwwwwwww", message);
         
-    });
+    // });
 
 
     gameRoom.onMessage("chat", ({ sender, message }) => {
+        
+        
         appendChatMessage(sender, message);
     });
 
@@ -811,9 +813,11 @@ function sendMessage() {
    
     const text = input.value.trim();
     if (!text) return;
-    console.log(text);
+    // console.log(localStorage.getItem('name') , ' chat  sending' , text );
     gameRoom.send("chat", {
-        name: localStorage.getItem('name'), // make sure this is available
+
+
+        name: Player.name, 
         message: text
     });
 
@@ -828,6 +832,7 @@ function appendChatMessage(sender, message) {
     const senderSpan = document.createElement("span");
     senderSpan.className = "font-semibold mr-2 h-auto w-auto block mb-1";
     senderSpan.textContent = sender + ":";
+    
 
     const messageSpan = document.createElement("span");
     messageSpan.className = "h-auto w-auto";

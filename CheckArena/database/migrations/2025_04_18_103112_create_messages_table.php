@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('partie_id');
-            $table->unsignedBigInteger('sender_id');
-            $table->integer('messegeNumber');
+            $table->unsignedBigInteger('sender_name');
+            $table->integer('messege_umber');
             $table->text('content');
             $table->timestamps();
     
