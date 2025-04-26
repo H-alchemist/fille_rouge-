@@ -48,8 +48,8 @@
                         M
                     </div>
                     <div class="flex flex-col justify-center h-full w-auto">
-                        <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">Hikaru</span>
-                        <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
+                        <span id="My_name" class="font-bold text-base text-white max-[750px]:text-xs">Hikaru</span>
+                        <span id="My_rating" class="text-gray-400 text-sm">2863</span>
                     </div>
                     <div id="My_time-short" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
                         00:00
@@ -127,7 +127,7 @@
                 <div id="chatContainer" class="flex-1 overflow-y-auto p-4">
                     <div class="mb-4 py-1 h-auto w-full">
                         <span class="font-semibold mr-2 h-auto w-auto block mb-1">System :</span>
-                        <span class="h-auto w-auto">gmae started</span>
+                        <span class="h-auto w-auto">game started</span>
                     </div>
                     
                 </div>

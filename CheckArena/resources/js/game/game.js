@@ -14,6 +14,8 @@ let board = [[-2, -3, -4, -5, -6, -4, -3, -2],
 [1,1,1,1,1,1,1,1],
 [2,3,4,5,6,4,3,2]];
 
+let onGoing = false;
+
 let start = [null, null, null];
 let end = [null, null, null];
 let playerColor = 'white';
@@ -245,6 +247,8 @@ function setupRoomListeners() {
         document.getElementById('gameStatus').textContent = "Game started!";
         let op = playerColor === "white" ? message.blackPlayerData : message.whitePlayerData;
         gameStart(op);
+
+        onGoing= true;
 
         let opT = playerColor === "white" ? message.timeRemaining.black: message.timeRemaining.white;
         let meT = playerColor === "white" ? message.timeRemaining.white : message.timeRemaining.black;
@@ -635,6 +639,8 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
      
         showNotification('Game start');
 
+       
+
 
 
 
@@ -876,3 +882,14 @@ function showGameOver(reasonText) {
   document.getElementById("cancelPopUp").addEventListener("click", function (){
     document.getElementById("createGamePopup").classList.add("hidden");
   });
+
+
+  window.addEventListener('beforeunload', function (e) {
+      console.log('onGoing');
+    
+    if (onGoing) {
+        e.preventDefault(); 
+        
+    }
+    
+});
