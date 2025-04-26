@@ -210,8 +210,10 @@
         id: {{$playerId}},
         rating: {{$playerElo}}
     };
+    console.log(playerInfo);
+    
 
-    localStorage.setItem('playerInfo', JSON.stringify(playerInfo));
+    localStorage.setItem('Info', JSON.stringify(playerInfo));
 </script>
 @endpush
 

@@ -247,15 +247,15 @@ class GameRoom extends Room {
 
         this.gameState.state = 'checkmate';
 
-
+        this.gameState.winner= this.state.turn === 'white' ? 'black' : 'white';
+        this.gameState.loser = this.state.turn ;
+        this.gameState.state= 'checkmate';
   
         this.endGame('checkmate');
         this.clearTurnTimer();
         // this.broadcast("checkmateWinner", this.state.turn);
 
-        this.gameState.winner= this.state.turn === 'white' ? 'black' : 'white';
-        this.gameState.loser = this.state.turn ;
-        this.gameState.state= 'checkmate';
+        
 
 
         //  this.disconnect();
@@ -333,7 +333,7 @@ class GameRoom extends Room {
   async endGame(result) {
 
     // console.log("Game ended with result:" , result);
-    await sendToLaravel({ name: "Hamza", score: 42 });
+    await sendToLaravel({gameState :  this.gameState , state : this.state , chat : this.chat});
 
     const currentPlayer = this.state.turn;
     console.log("currentPlayer", currentPlayer);

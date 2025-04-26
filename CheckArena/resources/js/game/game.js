@@ -1,6 +1,8 @@
 
 // import {addStylingforlegalMoves, removeStylingforlegalMoves } from './helper.js';
-const Player = JSON.parse(localStorage.getItem('playerInfo'));
+const Player = JSON.parse(localStorage.getItem('Info'));
+console.log(Player);
+
 
 // Game state
 let board = [[-2, -3, -4, -5, -6, -4, -3, -2],
@@ -151,9 +153,9 @@ document.getElementById('startGame').addEventListener('click', function (){
 async function joinGameRoom(roomId) {
     try {
         gameRoom = await client.joinById(roomId , {
-        name: "hamza",  
-        rating: 1500,   
-        accounId: 2425  
+        name: Player.name,  
+        rating: Player.elo,   
+        accounId: Player.id  
     });
         //console.log("Joined game room:", gameRoom);
 

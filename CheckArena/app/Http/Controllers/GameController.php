@@ -10,6 +10,13 @@ class GameController extends Controller
     
     public function index(){
 
+//         return [
+//             'playerName' =>  Auth::user()->username  , 
+//             'playerElo' => Auth::user()->profile->elo ,
+//             'playerId' => Auth::user()->id ,
+
+//         ]
+// ;
 
         return view('gamePage.game' , [
             'playerName' =>  Auth::user()->username  , 
@@ -17,6 +24,15 @@ class GameController extends Controller
             'playerId' => Auth::user()->id ,
 
         ]);
+
+    }
+
+
+    public function storeGame(){
+
+
+
+
 
     }
     

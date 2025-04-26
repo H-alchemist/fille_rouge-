@@ -34,9 +34,6 @@ public function moves()
     return $this->hasMany(Move::class);
 }
 
-public function chat()
-{
-    return $this->hasOne(Chat::class);
-}
+
 
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('moves', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('partie_id'); // Foreign key to partie
+            $table->unsignedBigInteger('partie_id'); 
             $table->string('fromPosition');
             $table->string('toPosition');
             $table->integer('pieceNumber');

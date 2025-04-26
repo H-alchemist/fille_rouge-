@@ -10,16 +10,16 @@ class Message extends Model
     protected $table = 'messages';
 
     protected $fillable = [
-        'chat_id',
+        'partie_id',
         'content',
         'sender_id',
         'created_at',
     ];
 
 
-    public function chat()
+    public function partie()
 {
-    return $this->belongsTo(Chat::class);
+    return $this->belongsTo(Partie::class);
 }
 
 }
