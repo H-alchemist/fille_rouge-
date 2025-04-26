@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('moves', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('partie_id'); 
-            $table->string('fromPosition');
-            $table->string('toPosition');
-            $table->integer('pieceNumber');
+            $table->string('from_position');
+            $table->string('to_position');
+            $table->integer('piece_number');
+            $table->integer('moveNumber');
             $table->dateTime('timestamp');
             $table->timestamps();
     

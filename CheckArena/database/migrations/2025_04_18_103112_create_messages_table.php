@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('partie_id');
             $table->unsignedBigInteger('sender_id');
+            $table->integer('messegeNumber');
             $table->text('content');
             $table->timestamps();
     

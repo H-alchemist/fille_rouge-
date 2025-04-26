@@ -179,6 +179,7 @@ function setupRoomListeners() {
 
     gameRoom.onMessage("gameOver", (message) => {
         console.log("Game Over:", message.winner);
+        onGoing= false ;
         showGameOver(message);
         SetUpTimer( false , false , false ) ;
         console.log("Game Over: up ", message.winner );

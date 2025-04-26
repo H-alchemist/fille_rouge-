@@ -332,7 +332,7 @@ class GameRoom extends Room {
 
   async endGame(result) {
 
-    // console.log("Game ended with result:" , result);
+    
     await sendToLaravel({gameState :  this.gameState , state : this.state , chat : this.chat});
 
     const currentPlayer = this.state.turn;

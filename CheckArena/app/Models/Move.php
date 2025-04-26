@@ -10,9 +10,9 @@ class Move extends Model
 
     protected $fillable = [
         'partie_id',
-        'fromPosition',
-        'toPosition',
-        'pieceNumber',
+        'from_position',
+        'to_position',
+        'piece_number',
         'timestamp',
     ];
 
