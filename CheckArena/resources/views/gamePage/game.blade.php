@@ -26,7 +26,7 @@
                         <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
                         <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
                     </div>
-                    <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
+                    <div id="apponent_time-short" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
                         00:00
                     </div>
                 </div>
@@ -48,10 +48,10 @@
                         M
                     </div>
                     <div class="flex flex-col justify-center h-full w-auto">
-                        <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
+                        <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">Hikaru</span>
                         <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
                     </div>
-                    <div id="apponent_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
+                    <div id="My_time-short" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
                         00:00
                     </div>
                 </div>
@@ -126,13 +126,10 @@
             <div class="bg-[#1e1e1e] h-[500px] w-[100%] rounded-b flex flex-col">
                 <div id="chatContainer" class="flex-1 overflow-y-auto p-4">
                     <div class="mb-4 py-1 h-auto w-full">
-                        <span class="font-semibold mr-2 h-auto w-auto block mb-1">MagnusCarlsen:</span>
-                        <span class="h-auto w-auto">gl hf</span>
+                        <span class="font-semibold mr-2 h-auto w-auto block mb-1">System :</span>
+                        <span class="h-auto w-auto">gmae started</span>
                     </div>
-                    <div class="mb-4 py-1 h-auto w-full">
-                        <span class="font-semibold mr-2 h-auto w-auto block mb-1">Hikaru:</span>
-                        <span class="h-auto w-auto">you too</span>
-                    </div>
+                    
                 </div>
                 <div class="h-[50px] w-full flex p-2.5 border-t border-[#333]">
                     <input  id="chatInput" type="text" placeholder="Type a message..." class="w-[75%] px-1 border-none rounded bg-[#2a2a2a] text-white mr-2 h-[80%]">

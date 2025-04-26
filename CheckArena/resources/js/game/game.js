@@ -700,6 +700,10 @@ async  function updateBoardForPawnPormotion(piece, from, to , isWhite) {
     function updateTimerDisplay() {
         document.getElementById('My_time').textContent = formatTime(myTime);
         document.getElementById('apponent_time').textContent = formatTime(opponentTime);
+
+        document.getElementById('My_time-short').textContent = formatTime(myTime);
+
+        document.getElementById('apponent_time-short').textContent = formatTime(opponentTime);
     }
     
    
