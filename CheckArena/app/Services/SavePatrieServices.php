@@ -95,13 +95,16 @@ if (!empty($allData['chat'])) {
         
         $dataC[] = [
             'partie_id' => $partie->id, // you already inserted Partie and got $partieId
-            'sender_id' => $senderId,
-            'messegeNumber' => $index + 1,
+            'sender_name' => $chat['sender'],
+            'messege_number' => $index + 1,
             'content' => $chat['message'],
             'created_at' => now(),
             'updated_at' => now(),
         ];
     }
+
+
+    Log::info("dataC" , $dataC);
 
     Message::insert($dataC);
 }
