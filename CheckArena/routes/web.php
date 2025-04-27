@@ -16,6 +16,10 @@ Route::get('/logout', ['App\Http\Controllers\AuthController', 'logout']);
 Route::get('/',['App\Http\Controllers\HomeController', 'index']);
 
 
+Route::get('/dash',['App\Http\Controllers\DashController', 'index']);
+
+
+
 
 Route::middleware('auth:sanctum')->get('/play', [App\Http\Controllers\GameController::class, 'index']);
 
