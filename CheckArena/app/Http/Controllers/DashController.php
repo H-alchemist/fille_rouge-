@@ -11,6 +11,6 @@ class DashController extends Controller
 
     public function index()
     {
-        return view('dash/dashboard');
+        return view('dash/history');
     }
 }
