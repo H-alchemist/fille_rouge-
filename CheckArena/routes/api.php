@@ -19,3 +19,6 @@ Route::post('/partie', [PartieDataController::class, 'savePartieData']);
 
 
 Route::get('/getHistory/{id}/{num}', [DashController::class, 'fetchingData']);
+
+Route::post('/filterdData', [DashController::class, 'filterdData']);
+

@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
    
 
-    fetchHistory(1); // Load history on page load
+    fetchHistory(0); // Load history on page load
 });
 
 
@@ -15,16 +15,20 @@ document.addEventListener('DOMContentLoaded', function () {
             .then(data => {
                
                 renderGameHistory(data);
-                // Loop over the fetched game data (data.res is the array of games)
+                paginBtn(data);
+
+                
                 data.res
             }).catch(error => console.error('Error fetching history:', error));
   }
 
 function renderGameHistory(data) {
     let gamesHistory = document.getElementById('tableH');
+
+    gamesHistory.innerHTML='';
     
     
-    console.log(data.res);
+    console.log(data.num.num);
     
     data.res.forEach(game => {
         const gameItem = document.createElement('div');
@@ -77,23 +81,54 @@ function renderGameHistory(data) {
    
 
 
-function paginBtn(btNnum){
+function paginBtn(data){
 
-
+   console.log(data.num);
+   
+    
     let btn = document.getElementById('pagine') ; 
+    btn.innerHTML= '' ;  
+    
+    console.log('from pagine');
 
-
-    for (let index = 0; index < array.length; index++) {
+    for (let index = 0; index < data.num; index++) {
        
         let button = document.createElement('button');
-        button.classList.add('w-9 h-9 flex justify-center items-center rounded border border-[#333] bg-[#4ca9f5] text-white cursor-pointer transition-all');
-        button.textContent = index;
-        btn.insertAdjacentElement( )
+        button.classList.add(
+            'paginBtn',
+            'w-9',
+            'h-9',
+            'flex',
+            'justify-center',
+            'items-center',
+            'rounded',
+            'border',
+            'border-[#333]',
+            'bg-[#4ca9f5]',
+            'text-white',
+            'cursor-pointer',
+            'transition-all'
+          );    
+          
+          button.textContent = index+1;
+          button.dataset.index = index;
+
+
+        button.addEventListener('click', function(e) {
+            let page = e.currentTarget.dataset.index;
+            console.log(page);
+            fetchHistory(page);
+        });
+       
+
+
+    
+        btn.appendChild(button);
+
+
+
     }
 
-
-    `<div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] bg-[#4ca9f5] text-white cursor-pointer transition-all"></div>`
-
-
+    
 
 }

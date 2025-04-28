@@ -8,16 +8,16 @@
         <div class="profile-summary flex min-[768px]:flex-col max-[768px]:flex-row max-[768px]:justify-between max-[768px]:items-center gap-2.5 pb-5 border-b border-[#333] mb-5">
             <div class="profile-info flex items-center gap-4">
                 <div class="w-20 h-20 rounded-full bg-[#444] flex justify-center items-center text-3xl font-bold text-white max-[768px]:w-10 max-[768px]:h-10">
-                    {{ substr(Auth::user()->name, 0, 1) }}
+                    {{-- {{ substr(Auth::user()->name, 0, 1) }} --}}
                 </div>
                 <div>
-                    <div class="text-lg font-bold">{{ Auth::user()->name }}</div>
-                    <div class="text-sm text-gray-400">Member since {{ Auth::user()->created_at->format('M Y') }}</div>
+                    {{-- <div class="text-lg font-bold">{{ Auth::user()->name }}</div> --}}
+                    {{-- <div class="text-sm text-gray-400">Member since {{ Auth::user()->created_at->format('M Y') }}</div> --}}
                 </div>
             </div>
             <div>
                 <div class="text-[#4ca9f5] font-medium">Blitz Rating</div>
-                <div class="text-2xl font-bold">{{ Auth::user()->rating ?? 1200 }}</div>
+                {{-- <div class="text-2xl font-bold">{{ Auth::user()->rating ?? 1200 }}</div> --}}
             </div>
         </div>
         <nav class="sidebar-menu flex min-[768px]:flex-col max-[768px]:flex-row max-[768px]:overflow-x-auto max-[768px]:pb-1 gap-1">
