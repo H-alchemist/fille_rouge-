@@ -5,37 +5,9 @@
 @section('dashboard-content')
 <div class="mb-6">
   <h1 class="text-2xl text-[#4ca9f5] mb-2.5">Game History</h1>
-  <p class="text-base text-gray-400">Review your previous games and analyze your performance</p>
+ 
 </div>
 
-<!-- Stats Summary -->
-{{-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-7">
-  <div class="bg-[#262626] rounded-lg p-5 flex flex-col items-center text-center">
-    <div class="text-sm text-gray-400">Total Games</div>
-    <div class="text-3xl font-bold my-2.5">483</div>
-    <div class="text-sm text-gray-400">Lifetime</div>
-  </div>
-  
-  <div class="bg-[#262626] rounded-lg p-5 flex flex-col items-center text-center">
-    <div class="text-sm text-gray-400">Wins</div>
-    <div class="text-3xl font-bold my-2.5 text-[#4caf50]">257</div>
-    <div class="text-sm text-gray-400">53.2%</div>
-  </div>
-  
-  <div class="bg-[#262626] rounded-lg p-5 flex flex-col items-center text-center">
-    <div class="text-sm text-gray-400">Losses</div>
-    <div class="text-3xl font-bold my-2.5 text-[#f44336]">198</div>
-    <div class="text-sm text-gray-400">41.0%</div>
-  </div>
-  
-  <div class="bg-[#262626] rounded-lg p-5 flex flex-col items-center text-center">
-    <div class="text-sm text-gray-400">Draws</div>
-    <div class="text-3xl font-bold my-2.5 text-[#ff9800]">28</div>
-    <div class="text-sm text-gray-400">5.8%</div>
-  </div>
-</div> --}}
-
-<!-- Filters -->
 <div class="flex flex-col min-[768px]:flex-row flex-wrap gap-4 mb-6">
   <div class="flex items-center gap-2.5">
     <span class="text-sm text-gray-400">Time Period:</span>
@@ -75,8 +47,8 @@
   </div>
 </div>
 
-<!-- Game List -->
-<div class="bg-[#262626] rounded-lg overflow-hidden shadow-lg">
+
+{{-- <div class="bg-[#262626] rounded-lg overflow-hidden shadow-lg">
   <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 bg-[#333] font-semibold">
     <div class="flex items-center gap-1 cursor-pointer">Date <span class="text-xs opacity-70">▼</span></div>
     <div class="flex items-center gap-1 cursor-pointer">Opponent</div>
@@ -104,10 +76,7 @@
     <div class="hidden lg:block text-gray-400 text-sm">32 moves</div>
   </div>
   
-  <!-- Additional game entries... -->
-  <!-- The rest of your game entries would go here -->
-  
-  <!-- I'm including only a couple more for brevity -->
+
   <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 border-b border-[#333] transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer">
     <div class="text-gray-400 text-sm">Today, 13:15</div>
     <div class="flex items-center gap-2.5">
@@ -126,10 +95,64 @@
     <div class="hidden lg:block text-gray-400 text-sm">45 moves</div>
   </div>
   
-  <!-- Rest of your game entries would go here -->
+  
+</div> --}}
+
+<div class="bg-[#262626] rounded-lg overflow-hidden shadow-lg">
+    <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 bg-[#333] font-semibold">
+        <div class="flex items-center gap-1 cursor-pointer">Date <span class="text-xs opacity-70">▼</span></div>
+        <div class="flex items-center gap-1 cursor-pointer">Opponent</div>
+        <div class="hidden min-[768px]:flex items-center gap-1 cursor-pointer">Game Type</div>
+        <div class="hidden min-[768px]:flex items-center gap-1 cursor-pointer">Result</div>
+        <div class="hidden lg:flex items-center gap-1 cursor-pointer">Rating Change</div>
+        <div class="hidden lg:flex items-center gap-1 cursor-pointer">Moves</div>
+    </div>
+     
+    @foreach($res as $partie)
+    <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 border-b border-[#333] transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer">
+        <div class="text-gray-400 text-sm">
+            {{ \Carbon\Carbon::parse($partie->created_at)->format('d M Y, H:i') }}
+        </div>
+
+        <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-[#555] flex justify-center items-center text-xs font-bold text-white">
+                {{ strtoupper(substr($partie->opponent_name, 0, 2)) }}
+            </div>
+            <div>
+                <div class="font-medium">{{ $partie->opponent_name }}</div>
+                <div class="text-gray-400 text-sm">{{ $partie->opponent_elo }}</div>
+            </div>
+        </div>
+
+        <div class="hidden min-[768px]:block">
+            Blitz
+            <div class="text-gray-400 text-sm">3+2</div> 
+            {{-- You can customize this if you have real timeControl data --}}
+        </div>
+
+        <div class="hidden min-[768px]:block font-semibold 
+            @if($partie->winner == auth()->id())
+                text-[#4caf50]
+            @else
+                text-[#f44336]
+            @endif
+            flex items-center gap-1">
+            {{ $partie->winner == auth()->id() ? 'Win' : 'Loss' }}
+        </div>
+
+        <div class="hidden lg:block">
+            +0 {{-- (You can customize rating change if you have it) --}}
+        </div>
+
+        <div class="hidden lg:block text-gray-400 text-sm">
+            {{ $partie->move_count }} moves
+        </div>
+    </div>
+    @endforeach
 </div>
 
-<!-- Pagination -->
+
+
 <div class="flex justify-center gap-1 mt-6 pagination">
   <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all px-2.5">«</div>
   <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] bg-[#4ca9f5] text-white cursor-pointer transition-all">1</div>

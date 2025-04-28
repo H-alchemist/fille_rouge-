@@ -56,12 +56,12 @@ class User extends Authenticatable
 
     public function whiteParties()
 {
-    return $this->hasMany(Partie::class, 'whitePlayer');
+    return $this->hasMany(Partie::class, 'white_player');
 }
 
 public function blackParties()
 {
-    return $this->hasMany(Partie::class, 'blackPlayer');
+    return $this->hasMany(Partie::class, 'black_player');
 }
 
 public function parties()

@@ -19,23 +19,23 @@ class SavePatrieServices{
 
 
          Log::info("rr" , $allData);
-        // Log::info($allData['state']['whitePlayerData']);
+         
         
 
 
-        $dataP['whitePlayer'] = $allData['state']['whitePlayerData']['accounId'];
-        $dataP['blackPlayer'] = $allData['state']['blackPlayerData']['accounId'];
-        $dataP['partieStatus'] = $allData['gameState']['state'];
+        $dataP['white_player'] = $allData['state']['whitePlayerData']['accounId'];
+        $dataP['black_player'] = $allData['state']['blackPlayerData']['accounId'];
+        $dataP['partie_status'] = $allData['gameState']['state'];
         
         // Log::info('first' , $dataP);
        
 
         if ($allData['gameState']['winner'] == 'white') {
-            $dataP['winner'] = $dataP['whitePlayer'];
-            $dataP['loser'] = $dataP['blackPlayer'];
+            $dataP['winner'] = $dataP['white_player'];
+            $dataP['loser'] = $dataP['black_player'];
         } elseif ($allData['gameState']['winner'] == 'black') {
-            $dataP['winner'] = $dataP['blackPlayer'];
-            $dataP['loser'] = $dataP['whitePlayer'];
+            $dataP['winner'] = $dataP['black_player'];
+            $dataP['loser'] = $dataP['white_player'];
         } else {
             $dataP['winner'] = null;
             $dataP['loser'] = null;

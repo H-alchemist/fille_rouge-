@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('parties', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('whitePlayer');
-            $table->unsignedBigInteger('blackPlayer');
+            $table->unsignedBigInteger('white_player');
+            $table->unsignedBigInteger('black_player');
             $table->unsignedBigInteger('winner')->nullable();
             $table->unsignedBigInteger('loser')->nullable();
-            $table->string('partieStatus');
+            $table->string('partie_status');
             $table->string('timeControl');
             $table->timestamps();
 
 
 
-            $table->foreign('whitePlayer')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('blackPlayer')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('white_player')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('black_player')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('winner')->references('id')->on('users')->onDelete('set null');
             $table->foreign('loser')->references('id')->on('users')->onDelete('set null');
 

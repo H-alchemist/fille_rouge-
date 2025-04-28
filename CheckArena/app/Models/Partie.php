@@ -11,22 +11,22 @@ class Partie extends Model
     protected $table = 'parties';
 
     protected $fillable = [
-        'whitePlayer',
-        'blackPlayer',
+        'white_player',
+        'black_player',
         'winner',
         'loser',
-        'partieStatus',
+        'partie_status',
         'timeControl',
     ];
 
     public function whitePlayer()
 {
-    return $this->belongsTo(User::class, 'whitePlayer');
+    return $this->belongsTo(User::class, 'white_player');
 }
 
 public function blackPlayer()
 {
-    return $this->belongsTo(User::class, 'blackPlayer');
+    return $this->belongsTo(User::class, 'black_player');
 }
 
 public function moves()
