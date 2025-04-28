@@ -18,6 +18,8 @@ Route::get('/',['App\Http\Controllers\HomeController', 'index']);
 
 Route::get('/dash',['App\Http\Controllers\DashController', 'index']);
 
+Route::get('/history',['App\Http\Controllers\DashController', 'history']);
+
 
 
 

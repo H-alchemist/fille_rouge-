@@ -334,12 +334,15 @@ class GameRoom extends Room {
   }
 
   async endGame(result) {
+    console.log("endGame", result);
+
+    
 
 
     await sendToLaravel({ gameState: this.gameState, state: this.state, chat: this.chat });
 
     const currentPlayer = this.state.turn;
-    console.log("currentPlayer", currentPlayer);
+    console.log("current", currentPlayer);
 
     this.clearTurnTimer();
     // console.log(`${currentPlayer}'s turn has timed out.`);
@@ -388,7 +391,7 @@ class GameRoom extends Room {
 
 
       if (this.state.timeRemaining[currentPlayer] <= 0) {
-        this.handleTurnTimeout();
+        this.handleTurnTimeout(currentPlayer);
       } else {
         // this.broadcast('updateTime', {
         //   player: currentPlayer,
@@ -404,7 +407,17 @@ class GameRoom extends Room {
     }
   }
 
-  handleTurnTimeout() {
+  handleTurnTimeout(currentPlayer) {
+
+    if (currentPlayer === 'white') {
+      this.gameState.loser = 'white';
+      this.gameState.winner = 'black';
+    } else {
+      this.gameState.loser = 'black';
+      this.gameState.winner = 'white';
+    }
+
+    this.gameState.state = 'timeout';
 
     // this.disconnect();
     this.endGame('timeout');

@@ -23,10 +23,10 @@
             </div>
         </div>
         <nav class="sidebar-menu flex min-[768px]:flex-col max-[768px]:flex-row max-[768px]:overflow-x-auto max-[768px]:pb-1 gap-1">
-            <a href="" class="text-white no-underline py-2.5 px-4 rounded flex items-center gap-2.5 transition-colors hover:bg-[rgba(255,255,255,0.1)] {{ request()->routeIs('stats') ? 'bg-[rgba(76,169,245,0.2)] text-[#4ca9f5]' : '' }}">
+            <a href="/dash" class="text-white no-underline py-2.5 px-4 rounded flex items-center gap-2.5 transition-colors hover:bg-[rgba(255,255,255,0.1)] {{ request()->routeIs('stats') ? 'bg-[rgba(76,169,245,0.2)] text-[#4ca9f5]' : '' }}">
                 <span class="opacity-80 text-lg">📈</span> Stats
             </a>
-            <a href="" class="text-white no-underline py-2.5 px-4 rounded flex items-center gap-2.5 transition-colors hover:bg-[rgba(255,255,255,0.1)] {{ request()->routeIs('history') ? 'bg-[rgba(76,169,245,0.2)] text-[#4ca9f5]' : '' }}">
+            <a href="/history" class="text-white no-underline py-2.5 px-4 rounded flex items-center gap-2.5 transition-colors hover:bg-[rgba(255,255,255,0.1)] {{ request()->routeIs('history') ? 'bg-[rgba(76,169,245,0.2)] text-[#4ca9f5]' : '' }}">
                 <span class="opacity-80 text-lg">♟</span> History
             </a>
             <a href="" class="text-white no-underline py-2.5 px-4 rounded flex items-center gap-2.5 transition-colors hover:bg-[rgba(255,255,255,0.1)] {{ request()->routeIs('profile') ? 'bg-[rgba(76,169,245,0.2)] text-[#4ca9f5]' : '' }}">

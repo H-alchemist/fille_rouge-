@@ -9,7 +9,7 @@
 </div>
 
 <!-- Stats Summary -->
-<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-7">
+{{-- <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-7">
   <div class="bg-[#262626] rounded-lg p-5 flex flex-col items-center text-center">
     <div class="text-sm text-gray-400">Total Games</div>
     <div class="text-3xl font-bold my-2.5">483</div>
@@ -33,7 +33,7 @@
     <div class="text-3xl font-bold my-2.5 text-[#ff9800]">28</div>
     <div class="text-sm text-gray-400">5.8%</div>
   </div>
-</div>
+</div> --}}
 
 <!-- Filters -->
 <div class="flex flex-col min-[768px]:flex-row flex-wrap gap-4 mb-6">
