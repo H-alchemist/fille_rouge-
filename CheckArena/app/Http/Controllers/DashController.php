@@ -51,35 +51,50 @@ class DashController extends Controller
     
     {
 
+        
+
+
+
+        return view('dash/history');
+    }
+
+
+
+    public function fetchingData($id , $num ){
+        $userId = $id;
+
+        $res = Partie::where(function ($query) {
+            $query->where('white_player', auth()->id())
+                  ->orWhere('black_player', auth()->id());
+        })->get();
+        
+        
+        $total = $res->count();
+
         $res = DB::select('
-       
-        SELECT 
-    p.* AS partie_id,
-    u.username AS opponent_name,
-    pr.avatar AS opponent_avatar,
-    pr.elo AS opponent_elo,
-    COUNT(m.id) AS move_count
-FROM parties p
-JOIN users u ON (
-    (p.white_player = :userID AND u.id = p.black_player) 
-    OR 
-    (p.black_player = :userID AND u.id = p.white_player)
-)
-JOIN profiles pr ON pr.user_id = u.id
-LEFT JOIN moves m ON m.partie_id = p.id
-GROUP BY p.id, u.username, pr.avatar, pr.elo
-ORDER BY p.id DESC
-limit 5;
+            SELECT 
+                p.*,
+                u.username AS opponent_name,
+                pr.avatar AS opponent_avatar,
+                pr.elo AS opponent_elo,
+                COUNT(m.id) AS move_count
+            FROM parties p
+            JOIN users u ON (
+                (p.white_player = :userID AND u.id = p.black_player) 
+                OR 
+                (p.black_player = :userID AND u.id = p.white_player)
+            )
+            JOIN profiles pr ON pr.user_id = u.id
+            LEFT JOIN moves m ON m.partie_id = p.id
+            GROUP BY p.id, u.username, pr.avatar, pr.elo
+            ORDER BY p.id DESC
+            LIMIT 5
+            OFFSET :offset
 
-        ', 
-        ['userID' => 1]
+        ', ['userID' => $userId , 'offset' => $num]);
+
+         $all = ['res' => $res ,'num' => $total];
     
-    );
-
-
-     Log::info("message", ['res' => $res]);
-
-
-        return view('dash/history' , compact('res'));
+        return response()->json($all);
     }
 }

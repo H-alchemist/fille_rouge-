@@ -48,56 +48,8 @@
 </div>
 
 
-{{-- <div class="bg-[#262626] rounded-lg overflow-hidden shadow-lg">
-  <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 bg-[#333] font-semibold">
-    <div class="flex items-center gap-1 cursor-pointer">Date <span class="text-xs opacity-70">▼</span></div>
-    <div class="flex items-center gap-1 cursor-pointer">Opponent</div>
-    <div class="hidden min-[768px]:flex items-center gap-1 cursor-pointer">Game Type</div>
-    <div class="hidden min-[768px]:flex items-center gap-1 cursor-pointer">Result</div>
-    <div class="hidden lg:flex items-center gap-1 cursor-pointer">Rating Change</div>
-    <div class="hidden lg:flex items-center gap-1 cursor-pointer">Moves</div>
-  </div>
-  
-  <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 border-b border-[#333] transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer">
-    <div class="text-gray-400 text-sm">Today, 14:32</div>
-    <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-full bg-[#555] flex justify-center items-center text-xs font-bold text-white">KM</div>
-      <div>
-        <div class="font-medium">KnightMoves</div>
-        <div class="text-gray-400 text-sm">1756</div>
-      </div>
-    </div>
-    <div class="hidden min-[768px]:block">
-      Blitz
-      <div class="text-gray-400 text-sm">3+2</div>
-    </div>
-    <div class="hidden min-[768px]:block font-semibold text-[#4caf50] flex items-center gap-1">Win</div>
-    <div class="hidden lg:block">+8</div>
-    <div class="hidden lg:block text-gray-400 text-sm">32 moves</div>
-  </div>
-  
 
-  <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 border-b border-[#333] transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer">
-    <div class="text-gray-400 text-sm">Today, 13:15</div>
-    <div class="flex items-center gap-2.5">
-      <div class="w-8 h-8 rounded-full bg-[#555] flex justify-center items-center text-xs font-bold text-white">QG</div>
-      <div>
-        <div class="font-medium">QueenGambit</div>
-        <div class="text-gray-400 text-sm">1921</div>
-      </div>
-    </div>
-    <div class="hidden min-[768px]:block">
-      Blitz
-      <div class="text-gray-400 text-sm">5+3</div>
-    </div>
-    <div class="hidden min-[768px]:block font-semibold text-[#f44336] flex items-center gap-1">Loss</div>
-    <div class="hidden lg:block">-12</div>
-    <div class="hidden lg:block text-gray-400 text-sm">45 moves</div>
-  </div>
-  
-  
-</div> --}}
-
+{{-- 
 <div class="bg-[#262626] rounded-lg overflow-hidden shadow-lg">
     <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 bg-[#333] font-semibold">
         <div class="flex items-center gap-1 cursor-pointer">Date <span class="text-xs opacity-70">▼</span></div>
@@ -107,60 +59,29 @@
         <div class="hidden lg:flex items-center gap-1 cursor-pointer">Rating Change</div>
         <div class="hidden lg:flex items-center gap-1 cursor-pointer">Moves</div>
     </div>
+    <div id="gamesH" class=" grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 border-b border-[#333] transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer">
      
-    @foreach($res as $partie)
-    <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 border-b border-[#333] transition-colors hover:bg-[rgba(255,255,255,0.05)] cursor-pointer">
-        <div class="text-gray-400 text-sm">
-            {{ \Carbon\Carbon::parse($partie->created_at)->format('d M Y, H:i') }}
-        </div>
-
-        <div class="flex items-center gap-2.5">
-            <div class="w-8 h-8 rounded-full bg-[#555] flex justify-center items-center text-xs font-bold text-white">
-                {{ strtoupper(substr($partie->opponent_name, 0, 2)) }}
-            </div>
-            <div>
-                <div class="font-medium">{{ $partie->opponent_name }}</div>
-                <div class="text-gray-400 text-sm">{{ $partie->opponent_elo }}</div>
-            </div>
-        </div>
-
-        <div class="hidden min-[768px]:block">
-            Blitz
-            <div class="text-gray-400 text-sm">3+2</div> 
-            {{-- You can customize this if you have real timeControl data --}}
-        </div>
-
-        <div class="hidden min-[768px]:block font-semibold 
-            @if($partie->winner == auth()->id())
-                text-[#4caf50]
-            @else
-                text-[#f44336]
-            @endif
-            flex items-center gap-1">
-            {{ $partie->winner == auth()->id() ? 'Win' : 'Loss' }}
-        </div>
-
-        <div class="hidden lg:block">
-            +0 {{-- (You can customize rating change if you have it) --}}
-        </div>
-
-        <div class="hidden lg:block text-gray-400 text-sm">
-            {{ $partie->move_count }} moves
-        </div>
+  
     </div>
-    @endforeach
+</div> --}}
+
+<div id="tableH" class="bg-[#262626] rounded-lg overflow-hidden shadow-lg max-w-5xl mx-auto">
+    <div class="grid grid-cols-2 min-[768px]:grid-cols-4 lg:grid-cols-6 py-4 px-5 bg-[#333] font-semibold">
+        <div class="flex items-center gap-1 cursor-pointer">Date <span class="text-xs opacity-70">▼</span></div>
+        <div class="flex items-center gap-1 cursor-pointer">Opponent</div>
+        <div class="hidden min-[768px]:flex items-center gap-1 cursor-pointer">Game Type</div>
+        <div class="hidden min-[768px]:flex items-center gap-1 cursor-pointer">Result</div>
+        <div class="hidden lg:flex items-center gap-1 cursor-pointer">Rating Change</div>
+        <div class="hidden lg:flex items-center gap-1 cursor-pointer">Moves</div>
+    </div>
+   
 </div>
 
 
 
-<div class="flex justify-center gap-1 mt-6 pagination">
+<div id='pagine' class="flex justify-center gap-1 mt-6 pagination">
   <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all px-2.5">«</div>
-  <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] bg-[#4ca9f5] text-white cursor-pointer transition-all">1</div>
-  <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all hover:border-[#4ca9f5] hover:text-[#4ca9f5]">2</div>
-  <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all hover:border-[#4ca9f5] hover:text-[#4ca9f5]">3</div>
-  <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all hover:border-[#4ca9f5] hover:text-[#4ca9f5]">4</div>
-  <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all hover:border-[#4ca9f5] hover:text-[#4ca9f5]">5</div>
-  <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all px-2.5">»</div>
+    <div class="w-9 h-9 flex justify-center items-center rounded border border-[#333] text-white cursor-pointer transition-all px-2.5">»</div>
 </div>
 @endsection
 

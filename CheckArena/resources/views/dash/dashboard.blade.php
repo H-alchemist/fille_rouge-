@@ -1,8 +1,6 @@
 @extends('app')
 @section('title', 'CheckArena - Dashboard')
-@push('styles')
-@vite('resources/css/game/dash.css')
-@endpush
+
 @section('content')
 <div class="main-content flex flex-col min-[768px]:flex-row min-h-screen">
    
@@ -59,4 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+@endpush
+@push('styles')
+@vite('resources/js/history/history.js')
 @endpush

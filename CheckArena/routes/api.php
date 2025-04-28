@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\PartieDataController;
+use App\Http\Controllers\DashController;
 
 use APP\Services\SavePatrieServices;
 
@@ -15,3 +16,6 @@ Route::get('/user', function (Request $request) {
 // use Illuminate\Support\Facades\Log;
 
 Route::post('/partie', [PartieDataController::class, 'savePartieData']);
+
+
+Route::get('/getHistory/{id}/{num}', [DashController::class, 'fetchingData']);
