@@ -22,6 +22,7 @@ class GameController extends Controller
             'playerName' =>  Auth::user()->username  , 
             'playerElo' => Auth::user()->profile->elo ,
             'playerId' => Auth::user()->id ,
+            'playerAvatar' => Auth::user()->profile->avatar ,
 
         ]);
 

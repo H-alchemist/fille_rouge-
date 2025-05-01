@@ -154,13 +154,14 @@ document.getElementById('filter').addEventListener('click', function () {
             time: parseInt(time),
             type: parseInt(type),
             result: result,
+            id: Player.id
           
             
         }),
     })
     .then(res => res.json())
     .then(data => {
-        console.log(data);
+        console.log(' from here', data);
 
         displayDAta(data);
         paginBtn(0);

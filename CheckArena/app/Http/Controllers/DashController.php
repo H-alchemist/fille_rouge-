@@ -118,9 +118,10 @@ class DashController extends Controller
 
     public function filterdData(Request $request)
     {
-
+               
         
-        $userID = (int) $request->input('time', ); 
+        
+        $userID = (int) $request->input('id',0 ); 
         $timePeriod = (int) $request->input('time', 0);
         $type = (int) $request->input('type', 0);
         $result = $request->input('result', 'all');
@@ -204,6 +205,7 @@ public function updateProfile(Request $request)
     if ($request->hasFile('avatar')) {
         $path = $request->file('avatar')->store('avatars', 'public'); 
         $user->profile->avatar = $path; 
+        $user->profile->save();
     }
 
     

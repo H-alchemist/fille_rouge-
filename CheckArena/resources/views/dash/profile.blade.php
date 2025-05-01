@@ -31,8 +31,8 @@
         <label for="avatar" class="text-sm text-gray-400">Profile Image:</label>
         <div class="w-32 h-32 rounded-full bg-gray-600 overflow-hidden mb-4 sm:mb-0">
             <img 
-                src="{{  Auth::user()->profile && Auth::user()->profile->avatar 
-                    ? asset('storage/'.Auth::user()->avatar) 
+                src="{{  Auth::user()->profile->avatar
+                    ? asset('/storage/'.Auth::user()->profile->avatar) 
                     : asset('images/default-avatar.png') }}" 
                 alt="Avatar" 
                 class="w-full h-full object-cover"

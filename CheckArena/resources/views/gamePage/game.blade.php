@@ -13,15 +13,14 @@
 
 @section('content')
 
-  <div id="gameStatus"  class="text-xl">none</div>
+  {{-- <div id="gameStatus"  class="text-xl">none</div> --}}
 
     <div class="h-[calc(100%-70px)] w-[94%] ml-[-10px] block min-[1100px]:flex min-[1100px]:flex-row-reverse items-center gap-[2%] pt-5 max-[750px]:w-full ">
         <section class="w-[73%] h-[100%] mb-2   flex justify-center items-center  max-[1100px]:w-full  max-[750px]:w-full  max-[750px]:flex-col">
             <div class="  h-auto w-[64%] -mt-6  min-[750px]:hidden">
                 <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
-                    <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
-                        M
-                    </div>
+                    <img src="/storage/avatars/image.png" class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold"/>
+                    
                     <div class="flex flex-col justify-center h-full w-auto">
                         <span id="apponent_name" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
                         <span id="apponent_rating" class="text-gray-400 text-sm">2863</span>
@@ -44,12 +43,11 @@
             </div>
             <div class="  h-auto w-[64%] -mt-12  min-[750px]:hidden">
                 <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
-                    <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
-                        M
-                    </div>
+                    <img src="/storage/{{$playerAvatar}}" class="w-10 h-10 rounded-full  mr-4 flex justify-center items-center text-white font-bold"/>
+                       
                     <div class="flex flex-col justify-center h-full w-auto">
-                        <span id="My_name" class="font-bold text-base text-white max-[750px]:text-xs">Hikaru</span>
-                        <span id="My_rating" class="text-gray-400 text-sm">2863</span>
+                        <span id="My_name" class="font-bold text-base text-white max-[750px]:text-xs">{{$playerName}}</span>
+                        <span id="My_rating" class="text-gray-400 text-sm">{{$playerElo}}</span>
                     </div>
                     <div id="My_time-short" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px] max-[750px]:text-sm max-[750px]:p-1">
                         00:00
@@ -60,9 +58,8 @@
             <div id="infoContainer" class="mb-3 w-[36%] min-h-[300px] max-h-[500px] bg-[#1e1e1e] p-2.5 flex flex-col gap-8 rounded max-[750px]:min-h-[80px]  max-[750px]:min-h-[40px] max-[750px]:max-h-[150px] max-[750px]:w-[70%]  ">
                 <div class="h-auto w-full max-[750px]:hidden">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
-                        <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
-                            M
-                        </div>
+                        <img src="/storage/avatars/image.png" class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold"/>
+                    
                         <div class="flex flex-col justify-center h-full w-auto">
                             <span id="apponent_nameFull" class="font-bold text-base text-white max-[750px]:text-xs">MagnusCarlsen</span>
                             <span id="apponent_ratingFull" class="text-gray-400 text-sm">2863</span>
@@ -99,12 +96,11 @@
                 
                 <div class="h-auto w-full max-[750px]:hidden">
                     <div class="flex items-center p-2.5 bg-[#2a2a2a] rounded">
-                        <div class="w-10 h-10 rounded-full bg-blue-500 mr-4 flex justify-center items-center text-white font-bold">
-                            H
-                        </div>
+                        <img src="/storage/{{$playerAvatar}}" class="w-10 h-10 rounded-full  mr-4 flex justify-center items-center text-white font-bold"/>
+                    
                         <div class="flex flex-col justify-center h-full w-auto">
-                            <span class="font-bold text-base text-white">Hikaru</span>
-                            <span class="text-gray-400 text-sm">2775</span>
+                            <span class="font-bold text-base text-white">{{$playerName}}</span>
+                            <span class="text-gray-400 text-sm">{{$playerElo}}</span>
                         </div>
                         <div id="My_time" class="bg-[#2a2a2a] p-2.5 text-center text-2xl font-semibold rounded ml-auto text-white h-auto w-auto min-w-[70px]">
                             00:00
@@ -126,8 +122,8 @@
             <div class="bg-[#1e1e1e] h-[500px] w-[100%] rounded-b flex flex-col">
                 <div id="chatContainer" class="flex-1 overflow-y-auto p-4">
                     <div class="mb-4 py-1 h-auto w-full">
-                        <span class="font-semibold mr-2 h-auto w-auto block mb-1">System :</span>
-                        <span class="h-auto w-auto">game started</span>
+                        {{-- <span class="font-semibold mr-2 h-auto w-auto block mb-1">System :</span>
+                        <span class="h-auto w-auto">game started</span> --}}
                     </div>
                     
                 </div>
