@@ -118,7 +118,7 @@ class DashController extends Controller
     
         $baseQuery = "
             SELECT 
-                p.id AS partie_id,
+                p.*,
                 u.username AS opponent_name,
                 pr.avatar AS opponent_avatar,
                 pr.elo AS opponent_elo,
@@ -137,7 +137,7 @@ class DashController extends Controller
         $params = ['userID' => $userID];
         Log::info("timePeriod" , [$timePeriod]);
         if ($timePeriod > 0) {
-            $conditions[] = "p.created_at < NOW() - INTERVAL '$timePeriod days'";
+            $conditions[] = "p.created_at > NOW() - INTERVAL '$timePeriod days'";
         }
     
         if ($result === 'winner') {
