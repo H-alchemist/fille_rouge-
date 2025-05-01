@@ -128,7 +128,7 @@
         </div>
         
         <!-- Right Panel -->
-        <div class="lg:col-span-1">
+        <div class=" lg:col-span-1 min-[1220]:mr-60">
             <div class="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
                 <div class="bg-gray-700 p-4 flex justify-between items-center">
                     <div class="font-semibold">Game Moves</div>
@@ -139,20 +139,38 @@
                     </div>
                 </div>
                 
-                <div class="p-4 max-h-96 overflow-y-auto">
-                    <div class="flex flex-col gap-1">
-                        @foreach($moves ?? [] as $index => $move)
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">{{ $index + 1 }}.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="{{ $index * 2 }}">
-                                    {{ $move->white ?? '' }}
-                                </div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer {{ $index == 2 ? 'bg-opacity-20 bg-blue-900 text-blue-400' : '' }}" 
-                                     data-ply="{{ $index * 2 + 1 }}">
-                                    {{ $move->black ?? '' }}
-                                </div>
-                            </div>
-                        @endforeach
+                <div class="p-2 max-h-96 overflow-y-auto">
+                    <div class="flex flex-col gap-1 text-sm">
+                        @php
+                         function getPieceIcon($pieceNumber) {
+                             $icons = [
+                                 1 => '♙', 3 => '♘', 4 => '♗', 2 => '♖', 5 => '♕', 6 => '♔',
+                                 -1 => '♟︎', -4 => '♞', -3 => '♝', -2 => '♜', -5 => '♛', -6 => '♚'
+                             ];
+                             return $icons[$pieceNumber] ?? '';
+                         }
+                     @endphp
+                       @for($i = 0; $i < count($moves); $i += 2)
+                       <div class="flex gap-1">
+                           <div class="w-0 text-gray-400">{{ ($i / 2) + 1 }}.</div>
+                   
+                           @php
+                               $whiteMove = $moves[$i] ?? null;
+                               $blackMove = $moves[$i + 1] ?? null;
+                           @endphp
+                   
+                           <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer"
+                                data-ply="{{ $i }}">
+                               {{ $whiteMove ? getPieceIcon($whiteMove->piece_number) . ' ' . $whiteMove->from_position . ' → ' . $whiteMove->to_position : '' }}
+                           </div>
+                   
+                           <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer {{ $i == 4 ? 'bg-opacity-20 bg-blue-900 text-blue-400' : '' }}"
+                                data-ply="{{ $i + 1 }}">
+                               {{ $blackMove ? getPieceIcon($blackMove->piece_number) . ' ' . $blackMove->from_position . ' → ' . $blackMove->to_position : '' }}
+                           </div>
+                       </div>
+                   @endfor
+
                         
 
                         @if(empty($moves))
@@ -211,7 +229,7 @@
     const moves = @json($partie->moves);
 </script>
 
-@vite('resources/js/review/review.js');
+@vite('resources/js/review/review.js')
 
 
 

@@ -30,7 +30,7 @@ class ReviewController extends Controller
         $moves = json_decode($partie->moves);
 
       
-        // dd($partie->messages, json_last_error_msg());
+        // dd($partie->moves, json_last_error_msg());  
 
 
 
