@@ -4,14 +4,27 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Partie;
+use  App\Services\ReviewService;
 
 class ReviewController extends Controller
 {
-    public function index()
+
+    protected $reviewService;
+
+
+    public function __construct(ReviewService $reviewService)
     {
-        $partie = Partie::find(1);
-        return view('review/review' );
+        $this->reviewService = $reviewService;
+    }
+
+
+    public function index($id)
+    {
+
+       
+
+        $partie = $this->reviewService->getPartieData($id);
+        return view('review/review'  , compact('partie'));
     }
     
 }

@@ -21,7 +21,7 @@ Route::get('/dash',['App\Http\Controllers\DashController', 'index']);
 Route::get('/history',['App\Http\Controllers\DashController', 'history']);
 
 
-Route::get('/review',['App\Http\Controllers\ReviewController', 'index']);
+Route::get('/review/{id}',['App\Http\Controllers\ReviewController', 'index']);
 
 
 Route::middleware('auth:sanctum')->get('/play', [App\Http\Controllers\GameController::class, 'index']);

@@ -126,4 +126,8 @@
 
 
     
-    
+{{-- @push('scripts')
+
+@vite('resources/js/auth.js')
+
+@endpush --}}

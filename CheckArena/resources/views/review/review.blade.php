@@ -16,6 +16,8 @@
 @endpush
 
 @section('content')
+
+
 <div class="container mx-auto px-4 py-6">
     <!-- Game Header -->
     <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
@@ -61,6 +63,7 @@
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
                         <span class="font-bold">GM</span>
+                        
                     </div>
                     <div>
                         <div class="font-semibold">{{ $user->name ?? 'GrandMaster42' }}</div>
@@ -261,183 +264,13 @@
 @endsection
 
 @push('scripts')
+
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Define the piece map
-        const pieceMap = {
-            '1': 'https://assets-themes.chess.com/image/ejgfv/150/wp.png',
-            '2': 'https://assets-themes.chess.com/image/ejgfv/150/wr.png',
-            '3': 'https://assets-themes.chess.com/image/ejgfv/150/wn.png',
-            '4': 'https://assets-themes.chess.com/image/ejgfv/150/wb.png',
-            '5': 'https://assets-themes.chess.com/image/ejgfv/150/wq.png',
-            '6': 'https://assets-themes.chess.com/image/ejgfv/150/wk.png',
-            '-1': 'https://assets-themes.chess.com/image/ejgfv/150/bp.png',
-            '-2': 'https://assets-themes.chess.com/image/ejgfv/150/br.png',
-            '-3': 'https://assets-themes.chess.com/image/ejgfv/150/bn.png',
-            '-4': 'https://assets-themes.chess.com/image/ejgfv/150/bb.png',
-            '-5': 'https://assets-themes.chess.com/image/ejgfv/150/bq.png',
-            '-6': 'https://assets-themes.chess.com/image/ejgfv/150/bk.png'
-        };
-        
-        // Initial board position (Sicilian Defense after 3...cxd4)
-        let currentPosition = [
-            [-2, -3, -4, -5, -6, -4, -3, -2],
-            [-1, -1, 0, -1, -1, -1, -1, -1],
-            [0, 0, 0, 0, 0, 0, 0, 0],
-            [0, 0, -1, 0, 0, 0, 0, 0],
-            [0, 0, 0, 0, 1, 0, 0, 0],
-            [0, 0, 0, 0, 0, 3, 0, 0],
-            [1, 1, 1, 0, 0, 1, 1, 1],
-            [2, 3, 4, 5, 6, 4, 0, 2]
-        ];
-        
-        // Current move index
-        let currentMoveIndex = 5; // 3...cxd4
-        
-        // Board flipped state
-        let boardFlipped = false;
-        
-        // Generate the chessboard
-        function generateBoard() {
-            const chessboard = document.getElementById('chessboard');
-            chessboard.innerHTML = '';
-            chessboard.style.backgroundImage = "url('https://images.chesscomfiles.com/chess-themes/boards/icy_sea/200.png')";
-            chessboard.style.display = 'grid';
-            chessboard.style.gridTemplateColumns = 'repeat(8, 1fr)';
-            chessboard.style.gridTemplateRows = 'repeat(8, 1fr)';
-            
-            // Create squares
-            for (let row = 0; row < 8; row++) {
-                for (let col = 0; col < 8; col++) {
-                    const square = document.createElement('div');
-                    square.className = 'relative flex items-center justify-center';
-                    
-                    // Add coordinates
-                    if (col === 0) {
-                        const rankCoord = document.createElement('span');
-                        rankCoord.className = 'absolute top-0.5 left-1 text-xs text-white z-10 drop-shadow-md';
-                        rankCoord.textContent = boardFlipped ? row + 1 : 8 - row;
-                        square.appendChild(rankCoord);
-                    }
-                    
-                    if (row === 7) {
-                        const fileCoord = document.createElement('span');
-                        fileCoord.className = 'absolute bottom-0.5 right-1 text-xs text-white z-10 drop-shadow-md';
-                        fileCoord.textContent = String.fromCharCode(97 + (boardFlipped ? 7 - col : col));
-                        square.appendChild(fileCoord);
-                    }
-                    
-                    // Get piece at this position
-                    const pieceValue = boardFlipped 
-                        ? currentPosition[7 - row][7 - col] 
-                        : currentPosition[row][col];
-                    
-                    if (pieceValue !== 0) {
-                        const piece = document.createElement('div');
-                        piece.className = 'w-full h-full bg-no-repeat bg-center bg-contain cursor-pointer z-10';
-                        piece.style.backgroundImage = `url(${pieceMap[pieceValue]})`;
-                        square.appendChild(piece);
-                    }
-                    
-                    chessboard.appendChild(square);
-                }
-            }
-        }
-        
-        // Initialize the board
-        generateBoard();
-        
-        // Make moves clickable
-        const moves = document.querySelectorAll('[data-ply]');
-        moves.forEach(move => {
-            move.addEventListener('click', function() {
-                // Remove active class from all moves
-                moves.forEach(m => {
-                    m.classList.remove('bg-opacity-20', 'bg-blue-900', 'text-blue-400');
-                });
-                
-                // Add active class to clicked move
-                this.classList.add('bg-opacity-20', 'bg-blue-900', 'text-blue-400');
-                
-                // Update current move index
-                currentMoveIndex = parseInt(this.getAttribute('data-ply'));
-                
-                // In a real implementation, this would update the board position
-                console.log('Move clicked:', this.textContent, 'Ply:', currentMoveIndex);
-            });
-        });
-        
-        // Board control buttons
-        document.getElementById('first-move').addEventListener('click', function() {
-            console.log('First move');
-            // Would set currentMoveIndex to 0 and update board
-        });
-        
-        document.getElementById('prev-move').addEventListener('click', function() {
-            console.log('Previous move');
-            // Would decrement currentMoveIndex and update board
-        });
-        
-        document.getElementById('play-pause').addEventListener('click', function() {
-            console.log('Play/Pause');
-            // Would toggle auto-play of moves
-        });
-        
-        document.getElementById('next-move').addEventListener('click', function() {
-            console.log('Next move');
-            // Would increment currentMoveIndex and update board
-        });
-        
-        document.getElementById('last-move').addEventListener('click', function() {
-            console.log('Last move');
-            // Would set currentMoveIndex to last move and update board
-        });
-        
-        document.getElementById('flip-board').addEventListener('click', function() {
-            boardFlipped = !boardFlipped;
-            generateBoard();
-            console.log('Board flipped:', boardFlipped);
-        });
-        
-        // Chat functionality
-        const chatInput = document.querySelector('input[placeholder="Type a message..."]');
-        const chatButton = document.querySelector('.bg-blue-500.rounded-r-md');
-        const chatMessages = document.querySelector('.flex-1.p-4.overflow-y-auto');
-        
-        if (chatButton && chatInput && chatMessages) {
-            chatButton.addEventListener('click', function() {
-                if (chatInput.value.trim() !== '') {
-                    // Create new message element
-                    const messageDiv = document.createElement('div');
-                    messageDiv.className = 'flex gap-3';
-                    messageDiv.innerHTML = `
-                        <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                            <span class="text-xs font-bold">GM</span>
-                        </div>
-                        <div>
-                            <div class="font-semibold text-sm">GrandMaster42</div>
-                            <div class="text-gray-400 text-sm">${chatInput.value}</div>
-                        </div>
-                    `;
-                    
-                    // Add message to chat
-                    chatMessages.appendChild(messageDiv);
-                    
-                    // Clear input
-                    chatInput.value = '';
-                    
-                    // Scroll to bottom
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-            });
-            
-            // Allow Enter key to send message
-            chatInput.addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    chatButton.click();
-                }
-            });
-        }
-    });
+    const moves = @json($partie->moves);
 </script>
+
+@vite('resources/js/review/review.js');
+
+
+
 @endpush
