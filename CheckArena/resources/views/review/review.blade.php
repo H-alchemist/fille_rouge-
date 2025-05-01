@@ -19,20 +19,30 @@
 
 @section('content')
 
+{{-- {{var_dump($partie)}} --}}
 
 <div class="container mx-auto px-4 py-6">
     
     <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
-        <h1 class="text-2xl text-blue-400">{{ $game->title ?? 'Blitz Game vs. KnightMoves' }}</h1>
+        <h1 class="text-2xl text-blue-400">{{ $matchInfo['white_username'] . ' vs ' . $matchInfo['black_username'] }}</h1>
         
         <div class="flex gap-4 text-gray-300 text-sm flex-wrap">
             <div class="flex items-center gap-1">
                 <span class="opacity-80">🕒</span>
-                <span>{{ $game->date ?? 'Mar 20, 2025, 14:32' }}</span>
+                <span>{{ \Carbon\Carbon::parse($matchInfo['created_at'])->format('M d, Y, H:i') }}</span>
             </div>
+            @php
+            function getTime($time) {
+               $type=[
+                   1 => 'bullet' , 3 => 'blitz' , 10 => 'rapid' , 15 => 'classical'
+            ];
+               return $type[$time];
+
+            }
+        @endphp
             <div class="flex items-center gap-1">
                 <span class="opacity-80">⏱️</span>
-                <span>{{ $game->time_control ?? '3+2 Blitz' }}</span>
+                <span>{{ $matchInfo['time_control']  . ' '. getTime($matchInfo['time_control'])  }}</span>
             </div>
             <div class="flex items-center gap-1">
                 <span class="opacity-80">🏆</span>
@@ -41,46 +51,49 @@
         </div>
     </div>
     
-    <!-- Game Content -->
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-        <!-- Left Panel -->
+      
         <div class="lg:col-span-1">
-            <!-- Player Info -->
-            <div class="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
-                        <span class="font-bold">KM</span>
-                    </div>
-                    <div>
-                        <div class="font-semibold">{{ $game->opponent->name ?? 'KnightMoves' }}</div>
-                        <div class="text-gray-400 text-sm">{{ $game->opponent->rating ?? '1756' }}</div>
-                    </div>
-                </div>
-                <div class="px-3 py-1 rounded bg-opacity-20 bg-red-900 text-red-500 font-semibold">
-                    Loss
-                </div>
-            </div>
+          
+           @php
+    $whiteIsWinner = $matchInfo['winner'] === $matchInfo['white_player'];
+@endphp
+
+
+<div class="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center overflow-hidden">
+            <img src="{{ asset($matchInfo['white_avatar']) }}" alt="White Avatar" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+            <div class="font-semibold">{{ $matchInfo['white_username'] }}</div>
+            <div class="text-gray-400 text-sm">{{ $matchInfo['white_elo'] }}</div>
+        </div>
+    </div>
+    <div class="px-3 py-1 rounded bg-opacity-20 {{ $whiteIsWinner ? 'bg-green-900 text-green-500' : 'bg-red-900 text-red-500' }} font-semibold">
+        {{ $whiteIsWinner ? 'Win' : 'Loss' }}
+    </div>
+</div>
+
+<div class="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 flex justify-between items-center">
+    <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center overflow-hidden">
+            <img src="{{ asset($matchInfo['black_avatar']) }}" alt="Black Avatar" class="w-full h-full object-cover rounded-full">
+        </div>
+        <div>
+            <div class="font-semibold">{{ $matchInfo['black_username'] }}</div>
+            <div class="text-gray-400 text-sm">{{ $matchInfo['black_elo'] }}</div>
+        </div>
+    </div>
+    <div class="px-3 py-1 rounded bg-opacity-20 {{ !$whiteIsWinner ? 'bg-green-900 text-green-500' : 'bg-red-900 text-red-500' }} font-semibold">
+        {{ !$whiteIsWinner ? 'Win' : 'Loss' }}
+    </div>
+</div>
+
             
-            <div class="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 flex justify-between items-center">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center">
-                        <span class="font-bold">GM</span>
-                        
-                    </div>
-                    <div>
-                        <div class="font-semibold">{{ $user->name ?? 'GrandMaster42' }}</div>
-                        <div class="text-gray-400 text-sm">{{ $user->rating ?? '1842 (+8)' }}</div>
-                    </div>
-                </div>
-                <div class="px-3 py-1 rounded bg-opacity-20 bg-green-900 text-green-500 font-semibold">
-                    Win
-                </div>
-            </div>
-            
-            <!-- Game Chat -->
-            <div class="bg-gray-800 rounded-lg border border-gray-700 h-96 flex flex-col">
+            <div class="bg-gray-800 rounded-lg border border-gray-700 h-70 flex flex-col">
                 <div class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
-                    <!-- Chat messages -->
+                 
                     {{-- {{var_dump($messages)}} --}}
                     @foreach($messages ?? [] as $message)
                     <div class="flex gap-3">
@@ -127,7 +140,7 @@
             </div>
         </div>
         
-        <!-- Right Panel -->
+        
         <div class=" lg:col-span-1 min-[1220]:mr-60">
             <div class="bg-gray-800 rounded-lg border border-gray-700 overflow-hidden">
                 <div class="bg-gray-700 p-4 flex justify-between items-center">
@@ -149,7 +162,8 @@
                              ];
                              return $icons[$pieceNumber] ?? '';
                          }
-                     @endphp
+                         @endphp
+                        
                        @for($i = 0; $i < count($moves); $i += 2)
                        <div class="flex gap-1">
                            <div class="w-0 text-gray-400">{{ ($i / 2) + 1 }}.</div>
@@ -160,60 +174,33 @@
                            @endphp
                    
                            <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer"
-                                data-ply="{{ $i }}">
+                                data-ply="{{ $i+1 }}">
                                {{ $whiteMove ? getPieceIcon($whiteMove->piece_number) . ' ' . $whiteMove->from_position . ' → ' . $whiteMove->to_position : '' }}
                            </div>
                    
-                           <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer {{ $i == 4 ? 'bg-opacity-20 bg-blue-900 text-blue-400' : '' }}"
-                                data-ply="{{ $i + 1 }}">
+                           <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer {{ $i == 4 ? 'bg-opacity-20  ' : '' }}"
+                                data-ply="{{ $i + 2 }}">
                                {{ $blackMove ? getPieceIcon($blackMove->piece_number) . ' ' . $blackMove->from_position . ' → ' . $blackMove->to_position : '' }}
                            </div>
                        </div>
                    @endfor
 
+                   <div class="flex gap-1">
+                    <div class="flex-1 px-3 py-1 text-center bg-blue-900 rounded hover:bg-gray-700  ">
+
+                    {{$matchInfo['partie_status']}}
+
+                    </div>
+
+                </div>
+
                         
 
                         @if(empty($moves))
                             <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">1.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="0">e4</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="1">c5</div>
+                            no moves in this game   
                             </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">2.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="2">Nf3</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="3">d6</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">3.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="4">d4</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer bg-opacity-20 bg-blue-900 text-blue-400" data-ply="5">cxd4</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">4.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="6">Nxd4</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="7">Nf6</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">5.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="8">Nc3</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="9">a6</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">6.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="10">Be3</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="11">e5</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">7.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="12">Nb3</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="13">Be7</div>
-                            </div>
-                            <div class="flex gap-3">
-                                <div class="w-8 text-gray-400">8.</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="14">Be2</div>
-                                <div class="flex-1 px-3 py-1 rounded hover:bg-gray-700 cursor-pointer" data-ply="15">O-O</div>
-                            </div>
+                         
                         @endif
                     </div>
                 </div>

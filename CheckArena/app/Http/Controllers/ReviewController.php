@@ -29,12 +29,28 @@ class ReviewController extends Controller
 
         $moves = json_decode($partie->moves);
 
-      
+        $matchInfo = [
+            'white_player' => $partie->white_player,
+            'black_player' => $partie->black_player,
+            'winner' => $partie->winner,
+            'loser' => $partie->loser,
+            'partie_status' => $partie->partie_status,
+            'time_control' => $partie->time_control,
+            'created_at' => $partie->created_at,
+            
+            'white_username' => $partie->white_username,
+            'black_username' => $partie->black_username,
+            'white_avatar' => $partie->white_avatar,
+            'black_avatar' => $partie->black_avatar,
+            'white_elo' => $partie->white_elo,
+            'black_elo' => $partie->black_elo
+        ];
+        
         // dd($partie->moves, json_last_error_msg());  
 
 
 
-        return view('review/review'  , compact('partie' , 'messages' , 'moves'));
+        return view('review/review'  , compact('partie','matchInfo' , 'messages' , 'moves'));
     }
     
 }

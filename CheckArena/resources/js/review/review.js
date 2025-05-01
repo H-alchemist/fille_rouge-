@@ -181,3 +181,10 @@ renderBoard(records[moveNum].board);
    
 
 });
+
+document.querySelectorAll('[data-ply]').forEach(el => {
+    el.addEventListener('click', () => {
+        const ply = parseInt(el.getAttribute('data-ply'));
+        renderBoard(records[ply].board );
+    });
+});
