@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Models\Partie;
 
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -23,6 +25,15 @@ class DashController extends Controller
                   ->orWhere('black_player', auth()->id());
         })->get();
         
+
+       
+            $playerName =  Auth::user()->username  ; 
+            $playerElo = Auth::user()->profile->elo ;
+            $playerAvatar = Auth::user()->profile->avatar ;
+            $playerId = Auth::user()->id ;
+
+
+     
         
         $total = $res->count();
         $wins = $res->where('winner', auth()->id())->count();
@@ -42,7 +53,7 @@ class DashController extends Controller
         $lossesByCheckmate = $res->where('loser', auth()->id())->where('partie_status', 'checkmate')->count();
     
         return view('dash/stat', compact('total', 'wins', 'losses', 'draws', 'winPercentage', 'lossPercentage', 'drawPercentage', 
-            'winsByResign', 'winsByTimeout', 'winsByCheckmate', 'lossesByResign', 'lossesByTimeout', 'lossesByCheckmate'));
+            'winsByResign', 'winsByTimeout', 'winsByCheckmate', 'lossesByResign', 'lossesByTimeout', 'lossesByCheckmate' , 'playerName' , 'playerElo' , 'playerId' , 'playerAvatar' ));
     }
     
 
@@ -53,7 +64,7 @@ class DashController extends Controller
 
         
 
-
+    
 
         return view('dash/history');
     }
@@ -108,9 +119,8 @@ class DashController extends Controller
     public function filterdData(Request $request)
     {
 
-        Log::info("message" , $request->all());
-
-        $userID = 1; 
+        
+        $userID = (int) $request->input('time', ); 
         $timePeriod = (int) $request->input('time', 0);
         $type = (int) $request->input('type', 0);
         $result = $request->input('result', 'all');

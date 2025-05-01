@@ -39,25 +39,7 @@
     </main>
 </div>
 @endsection
-@push('scripts')
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    
-    const pageItems = document.querySelectorAll('.pagination div');
-    if (pageItems.length) {
-        pageItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
-                pageItems.forEach(p => p.classList.remove('bg-[#4ca9f5]', 'text-white'));
-                if (!item.textContent.includes('«') && !item.textContent.includes('»')) {
-                    item.classList.add('bg-[#4ca9f5]', 'text-white');
-                }
-            });
-        });
-    }
-});
-</script>
-@endpush
+
 @push('styles')
 @vite('resources/js/history/history.js')
 @endpush

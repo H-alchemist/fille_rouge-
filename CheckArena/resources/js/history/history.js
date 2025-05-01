@@ -1,3 +1,6 @@
+const Player = JSON.parse(localStorage.getItem('Info'));
+console.log(Player);
+
 document.addEventListener('DOMContentLoaded', function () {
     
      
@@ -10,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
  function fetchHistory(num) {
-        fetch(`/api/getHistory/1/${num}`)
+        fetch(`/api/getHistory/${Player.id}/${num}`)
             .then(response => response.json())
             .then(data => {
                
@@ -201,7 +204,7 @@ function displayDAta(data){
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-full bg-gray-700 flex items-center justify-center overflow-hidden">
                     ${game.opponent_avatar ? 
-                      `<img src="${game.opponent_avatar}" alt="${game.opponent_name}" class="w-full h-full object-cover">` :
+                      `<img src="/storage/${game.opponent_avatar}" alt="${game.opponent_name}" class="w-full h-full object-cover">` :
                       `<span class="text-xs font-semibold">${game.opponent_name.slice(0, 2).toUpperCase()}</span>`}
                 </div>
                 <div>
