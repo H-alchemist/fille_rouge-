@@ -16,7 +16,7 @@ class Partie extends Model
         'winner',
         'loser',
         'partie_status',
-        'timeControl',
+        'time_control',
     ];
 
     public function whitePlayer()

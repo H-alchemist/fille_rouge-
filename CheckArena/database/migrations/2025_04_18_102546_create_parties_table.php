@@ -18,7 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('winner')->nullable();
             $table->unsignedBigInteger('loser')->nullable();
             $table->string('partie_status');
-            $table->string('timeControl');
+            $table->string('time_control');
             $table->timestamps();
 
 

@@ -15,7 +15,7 @@
   @include('partials.header')
 
   <!-- Chess piece decoration -->
-  <div class="absolute opacity-20 text-9xl z-0 top-15 right-10">♞</div>
+  {{-- <div class="absolute opacity-20 text-xl z-0 top-40 right-10">♞</div> --}}
   <div class="absolute opacity-20 text-9xl z-0 bottom-5 left-10">♜</div>
 
   <main class="flex-1">

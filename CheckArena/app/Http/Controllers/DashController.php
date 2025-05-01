@@ -105,44 +105,69 @@ class DashController extends Controller
     }
 
 
-    public function filterdData(Request $request){
+    public function filterdData(Request $request)
+    {
 
+        Log::info("message" , $request->all());
 
-
-
-
-
-
-        DB::select(`
-         SELECT 
-    p.id AS partie_id,
-    u.username AS opponent_name,
-    pr.avatar AS opponent_avatar,
-    pr.elo AS opponent_elo,
-    COUNT(m.id) AS move_count
-FROM parties p
-JOIN users u ON (
-    (p.white_player = 1 AND u.id = p.black_player) 
-    OR 
-    (p.black_player = 1 AND u.id = p.white_player)
-)
-JOIN profiles pr ON pr.user_id = u.id
-LEFT JOIN moves m ON m.partie_id = p.id
-where  p.partie_status = 'checkmate' and p.winner = 1 and  p.created_at > NOW() - INTERVAL  '1 days'
-GROUP BY p.id, u.username, pr.avatar, pr.elo
-ORDER BY p.id DESC;
-
-        `);
-
-
-
-
-
-
-
+        $userID = 1; 
+        $timePeriod = (int) $request->input('time', 0);
+        $type = (int) $request->input('type', 0);
+        $result = $request->input('result', 'all');
+        
+    
+        $baseQuery = "
+            SELECT 
+                p.id AS partie_id,
+                u.username AS opponent_name,
+                pr.avatar AS opponent_avatar,
+                pr.elo AS opponent_elo,
+                COUNT(m.id) AS move_count
+            FROM parties p
+            JOIN users u ON (
+                (p.white_player = :userID AND u.id = p.black_player) 
+                OR 
+                (p.black_player = :userID AND u.id = p.white_player)
+            )
+            JOIN profiles pr ON pr.user_id = u.id
+            LEFT JOIN moves m ON m.partie_id = p.id
+        ";
+    
+        $conditions = [];
+        $params = ['userID' => $userID];
+        Log::info("timePeriod" , [$timePeriod]);
+        if ($timePeriod > 0) {
+            $conditions[] = "p.created_at < NOW() - INTERVAL '$timePeriod days'";
+        }
+    
+        if ($result === 'winner') {
+            $conditions[] = "p.winner = :userID ";
+        } elseif ($result === 'losser') {
+            $conditions[] = "p.winner != :userID";
+        } elseif ($result === 'draw') {
+            $conditions[] = "p.partie_status = 'draw'";
+        }
+    
+        if ($type > 0) {
+            $conditions[] = "p.time_control = :type";
+            $params['type'] = $type;
+        }
+    
+        if (!empty($conditions)) {
+            $baseQuery .= " WHERE " . implode(' AND ', $conditions);
+        }
+    
+        $baseQuery .= " GROUP BY p.id, u.username, pr.avatar, pr.elo
+                        ORDER BY p.id DESC
+                        ";
+    
+       
+    
+        $results = DB::select($baseQuery, $params);
+    
+        return response()->json($results);
     }
-
-
+    
 
 
 }

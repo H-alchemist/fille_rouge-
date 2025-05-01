@@ -11,9 +11,8 @@
 <div class="w-4/5   flex   justify-evenly  mb-6 ">
   <div class="flex items-center gap-2.5">
     <span class="text-sm text-gray-400">Time Period:</span>
-    <select class="py-2 px-3 bg-[#333] border border-[#333] rounded text-white text-sm cursor-pointer">
+    <select id="time" class="py-2 px-3 bg-[#333] border border-[#333] rounded text-white text-sm cursor-pointer">
       <option value= 0 >All Time</option>
-    
       <option value= 30>Last 30 Days</option>
       <option value= 7 >Last 7 Days</option>
       <option value= 1>Today</option>
@@ -22,7 +21,7 @@
   
   <div class="flex items-center gap-2.5">
     <span class="text-sm text-gray-400">Game Type:</span>
-    <select class="py-2 px-3 bg-[#333] border border-[#333] rounded text-white text-sm cursor-pointer">
+    <select id="type" class="py-2 px-3 bg-[#333] border border-[#333] rounded text-white text-sm cursor-pointer">
       <option value="0">All Types</option>
       <option value="3">Blitz</option>
       <option value="10">Rapid</option>
@@ -33,7 +32,7 @@
   
   <div class="flex items-center gap-2.5">
     <span class="text-sm text-gray-400">Result:</span>
-    <select class="py-2 px-3 bg-[#333] border border-[#333] rounded text-white text-sm cursor-pointer">
+    <select id="result" class="py-2 px-3 bg-[#333] border border-[#333] rounded text-white text-sm cursor-pointer">
       <option>All Results</option>
       <option value="winner">Wins</option>
       <option value="losser">Losses</option>

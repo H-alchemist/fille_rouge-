@@ -64,7 +64,7 @@ function renderGameHistory(data) {
                     <div class="text-xs opacity-70">${game.opponent_elo}</div>
                 </div>
             </div>
-            <div class="hidden min-[768px]:flex items-center text-sm">${game.timeControl} min</div>
+            <div class="hidden min-[768px]:flex items-center text-sm">${game.time_control} min</div>
             <div class="hidden min-[768px]:flex items-center ${resultClass} text-sm">${isWin ? 'Win' : 'Loss'} (${game.partie_status})</div>
             <div class="hidden lg:flex items-center ${resultClass} text-sm font-medium">${ratingChange}</div>
             <div class="hidden lg:flex items-center text-sm">${game.move_count} moves</div>
@@ -132,3 +132,54 @@ function paginBtn(data){
     
 
 }
+
+
+// document.getElementById('filter').addEventListener('click', function() {
+//     const time = document.getElementById('time').value;
+//     const type = document.getElementById('type').value;
+//     const result = document.getElementById('result').value;
+
+//     console.log('Time Period:', time);
+//     console.log('Game Type:', type);
+//     console.log('Result:', result);
+
+//     fetch(`/api/filterHistory/` , 
+//         {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 time: time,
+//                 type: type,
+//                 result: result
+//             })
+//         }
+//     )
+// });
+
+
+document.getElementById('filter').addEventListener('click', function () {
+    const time = document.getElementById('time').value;
+    const type = document.getElementById('type').value;
+    const result = document.getElementById('result').value;
+
+    fetch(`/api/filterHistory`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            time: parseInt(time),
+            type: parseInt(type),
+            result: result,
+          
+            
+        }),
+    })
+    .then(res => res.json())
+    .then(data => {
+        console.log(data);
+        
+    });
+});

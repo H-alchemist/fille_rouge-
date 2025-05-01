@@ -41,7 +41,7 @@ class SavePatrieServices{
             $dataP['loser'] = null;
         }
         
-        $dataP['timeControl'] = $allData['state']['timeControl'];
+        $dataP['time_control'] = $allData['state']['timeControl'];
 
         $partie = Partie::create($dataP);
         

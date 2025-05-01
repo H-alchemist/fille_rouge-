@@ -6,6 +6,7 @@
     <div class="flex gap-5">
       <a href="/" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Home</a>
       <a href="/play" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">Play</a>
+      <a href="/dash" class="text-white hover:bg-white/10 px-3 py-2 rounded transition">dash</a>
       
     </div>
 
