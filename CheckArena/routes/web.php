@@ -26,3 +26,12 @@ Route::get('/review/{id}',['App\Http\Controllers\ReviewController', 'index']);
 
 Route::middleware('auth:sanctum')->get('/play', [App\Http\Controllers\GameController::class, 'index']);
 
+
+Route::get('/profile', ['App\Http\Controllers\DashController', 'showProfile']);
+
+
+Route::post('/profile', ['App\Http\Controllers\DashController', 'updateProfile'])->name('profile.update');
+
+
+
+

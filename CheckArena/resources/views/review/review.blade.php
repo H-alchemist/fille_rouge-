@@ -63,7 +63,7 @@
 <div class="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 flex justify-between items-center">
     <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center overflow-hidden">
-            <img src="{{ asset($matchInfo['white_avatar']) }}" alt="White Avatar" class="w-full h-full object-cover rounded-full">
+            <img src="/storage/{{$matchInfo['white_avatar'] }}" alt="White Avatar" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
             <div class="font-semibold">{{ $matchInfo['white_username'] }}</div>
@@ -78,7 +78,7 @@
 <div class="bg-gray-800 rounded-lg border border-gray-700 p-4 mb-6 flex justify-between items-center">
     <div class="flex items-center gap-3">
         <div class="w-10 h-10 rounded-full bg-gray-600 flex items-center justify-center overflow-hidden">
-            <img src="{{ asset($matchInfo['black_avatar']) }}" alt="Black Avatar" class="w-full h-full object-cover rounded-full">
+            <img src="/storage/{{$matchInfo['black_avatar'] }}" alt="Black Avatar" class="w-full h-full object-cover rounded-full">
         </div>
         <div>
             <div class="font-semibold">{{ $matchInfo['black_username'] }}</div>

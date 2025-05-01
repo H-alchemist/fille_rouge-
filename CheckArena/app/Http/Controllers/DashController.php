@@ -180,4 +180,45 @@ class DashController extends Controller
     
 
 
+
+
+
+public function showProfile()
+{
+    return view('/dash/profile');
+}
+
+
+
+public function updateProfile(Request $request)
+{
+    $user = Auth::user();
+
+    
+    $request->validate([
+        'avatar' => 'nullable|image|mimes:jpg,png,jpeg,gif,svg|max:2048', 
+        'username' => 'nullable|string|max:255',
+    ]);
+
+    
+    if ($request->hasFile('avatar')) {
+        $path = $request->file('avatar')->store('avatars', 'public'); 
+        $user->profile->avatar = $path; 
+    }
+
+    
+    if ($request->filled('username')) {
+        $user->username = $request->input('username');
+    }
+
+    
+    $user->save();
+
+    
+    return redirect('/profile');
+}
+
+
+
+
 }

@@ -179,8 +179,10 @@ function displayDAta(data){
 
       
     data.forEach(game => {
-        const gameItem = document.createElement('div');
+        const gameItem = document.createElement('a');
+        gameItem.href = `/review/${game.id}`;
         gameItem.classList.add(
+            
             'grid', 
             'grid-cols-7', 
             'min-[768px]:grid-cols-4', 
@@ -193,7 +195,7 @@ function displayDAta(data){
             'hover:bg-[rgba(255,255,255,0.05)]', 
             'cursor-pointer'
         );
-    
+         gameItem.dataset.gameId = game.id;
         const formattedDate = new Date(game.created_at).toLocaleString();
         const isWin = game.winner === game.white_player;  // win if white_player wins
         const resultClass = isWin ? 'text-green-400' : 'text-red-400';
@@ -221,4 +223,18 @@ function displayDAta(data){
         gamesHistory.appendChild(gameItem);
     });
 
+    // addEvents();
+
 }
+
+
+// function addEvents(){
+// document.querySelectorAll(`[data-game-id]`).forEach(item => {
+
+
+    
+//     item.addEventListener('click', () => {
+//         console.log(item.dataset.gameId);
+//     });
+// });
+// }
