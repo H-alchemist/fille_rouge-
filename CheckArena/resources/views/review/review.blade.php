@@ -21,7 +21,7 @@
 
 
 <div class="container mx-auto px-4 py-6">
-    <!-- Game Header -->
+    
     <div class="flex justify-between items-center mb-6 flex-wrap gap-4">
         <h1 class="text-2xl text-blue-400">{{ $game->title ?? 'Blitz Game vs. KnightMoves' }}</h1>
         
@@ -81,66 +81,21 @@
             <div class="bg-gray-800 rounded-lg border border-gray-700 h-96 flex flex-col">
                 <div class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
                     <!-- Chat messages -->
+                    {{-- {{var_dump($messages)}} --}}
                     @foreach($messages ?? [] as $message)
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                                <span class="text-xs font-bold">{{ $message->user_initial ?? 'KM' }}</span>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-sm">{{ $message->username ?? 'KnightMoves' }}</div>
-                                <div class="text-gray-400 text-sm">{{ $message->text ?? 'Good luck, have fun!' }}</div>
-                            </div>
+                    <div class="flex gap-3">
+                        <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
+                            <span class="text-xs font-bold">{{ $message->sender_name[0] ?? 'U' }}</span>
                         </div>
-                    @endforeach
+                        <div>
+                            <div class="font-semibold text-sm">{{ $message->sender_name ?? 'Unknown' }}</div>
+                            <div class="text-gray-400 text-sm">{{ $message->content ?? '...' }}</div>
+                        </div>
+                    </div>
+                @endforeach
+                
                     
-                    <!-- Fallback messages if no data provided -->
-                    @if(empty($messages))
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                                <span class="text-xs font-bold">KM</span>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-sm">KnightMoves</div>
-                                <div class="text-gray-400 text-sm">Good luck, have fun!</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                                <span class="text-xs font-bold">GM</span>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-sm">GrandMaster42</div>
-                                <div class="text-gray-400 text-sm">You too!</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                                <span class="text-xs font-bold">KM</span>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-sm">KnightMoves</div>
-                                <div class="text-gray-400 text-sm">Nice Sicilian defense</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                                <span class="text-xs font-bold">GM</span>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-sm">GrandMaster42</div>
-                                <div class="text-gray-400 text-sm">Thanks! I've been practicing it</div>
-                            </div>
-                        </div>
-                        <div class="flex gap-3">
-                            <div class="w-8 h-8 rounded-full bg-gray-600 flex-shrink-0 flex items-center justify-center">
-                                <span class="text-xs font-bold">KM</span>
-                            </div>
-                            <div>
-                                <div class="font-semibold text-sm">KnightMoves</div>
-                                <div class="text-gray-400 text-sm">Good game!</div>
-                            </div>
-                        </div>
-                    @endif
+                  
                 </div>
                 
                
@@ -199,7 +154,7 @@
                             </div>
                         @endforeach
                         
-                        <!-- Fallback moves if no data provided -->
+
                         @if(empty($moves))
                             <div class="flex gap-3">
                                 <div class="w-8 text-gray-400">1.</div>

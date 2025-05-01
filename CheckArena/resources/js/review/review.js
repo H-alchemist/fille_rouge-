@@ -10,7 +10,7 @@
      [0, 0, 0, 0, 0, 0, 0, 0],
      [0, 0, 0, 0, 0, 0, 0, 0],
      [1, 1, 1, 1, 1, 1, 1, 1],
-     [2, 3, 4, 5, 6, 4, 0, 2]
+     [2, 3, 4, 5, 6, 4, 3, 2]
     ];
     
 
@@ -100,7 +100,7 @@ function createRecord(liste) {
     
 }
 
-let playerColor = "white";
+let playerColor = "black";
 
 
 function renderBoard(board) {
@@ -150,18 +150,34 @@ function deepCopyBoard(board) {
 }
 
 
-document.getElementById('next-move').addEventListener(()=>{
+document.getElementById('next-move').addEventListener('click' , ()=>{
 
 
-
+if(moveNum >= records.length - 1) return;
     moveNum++;
     renderBoard(records[moveNum].board);
 
+});
 
 
+document.getElementById('prev-move').addEventListener('click' , ()=>{
 
 
+    if(moveNum <= 0) return;
+
+    moveNum--;
+    renderBoard(records[moveNum].board);
+
+});
 
 
+// flip-board
+
+document.getElementById('flip-board').addEventListener('click' , ()=>{
+
+playerColor = playerColor === "white" ? "black" : "white";
+
+renderBoard(records[moveNum].board);
+   
 
 });

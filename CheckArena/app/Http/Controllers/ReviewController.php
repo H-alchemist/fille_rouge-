@@ -24,7 +24,17 @@ class ReviewController extends Controller
        
 
         $partie = $this->reviewService->getPartieData($id);
-        return view('review/review'  , compact('partie'));
+
+        $messages = json_decode($partie->messages);
+
+        $moves = json_decode($partie->moves);
+
+      
+        // dd($partie->messages, json_last_error_msg());
+
+
+
+        return view('review/review'  , compact('partie' , 'messages' , 'moves'));
     }
     
 }
