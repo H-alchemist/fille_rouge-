@@ -37,4 +37,9 @@ Route::get('/scorBoard', ['App\Http\Controllers\ScoreController', 'index']);
 
 
 
+Route::get('/explore', ['App\Http\Controllers\ExploreController', 'index']);
+
+
+
+
 
