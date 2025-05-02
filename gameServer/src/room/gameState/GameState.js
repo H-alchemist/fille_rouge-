@@ -7,7 +7,7 @@ const GameState = {
       turn: "white",
       whitePlayerData,  
       blackPlayerData,  
-      isCheck:false,  // to keep the path of check and use it in the next move 
+      isCheck:false,  
       castling: {
         white: { kingSide: false, queenSide: false },
         black: { kingSide: false, queenSide: false }

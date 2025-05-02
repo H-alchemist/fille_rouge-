@@ -33,5 +33,8 @@ Route::get('/profile', ['App\Http\Controllers\DashController', 'showProfile']);
 Route::post('/profile', ['App\Http\Controllers\DashController', 'updateProfile'])->name('profile.update');
 
 
+Route::get('/scorBoard', ['App\Http\Controllers\ScoreController', 'index']);
+
+
 
 
