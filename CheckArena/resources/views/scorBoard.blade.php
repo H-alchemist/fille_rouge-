@@ -118,10 +118,10 @@
         <div class="time-control-tab" data-time-control="classic">Classic</div>
     </div>
     
-    <!-- Bullet Leaderboard (default visible) -->
+    
     <div id="bullet-leaderboard" class="time-control-content">
         <div class="podium">
-            <!-- 2nd Place -->
+            
             <div class="podium-place">
                 <div class="podium-stand second-place">2</div>
                 <img src="/storage/avatars/player2.jpg" class="player-avatar">
@@ -132,7 +132,7 @@
                 </div>
             </div>
             
-            <!-- 1st Place -->
+            
             <div class="podium-place">
                 <div class="podium-stand first-place">1</div>
                 <img src="/storage/avatars/player1.jpg" class="player-avatar">
@@ -143,7 +143,7 @@
                 </div>
             </div>
             
-            <!-- 3rd Place -->
+            
             <div class="podium-place">
                 <div class="podium-stand third-place">3</div>
                 <img src="/storage/avatars/player3.jpg" class="player-avatar">
@@ -215,19 +215,19 @@
         </table>
     </div>
     
-    <!-- Blitz Leaderboard (hidden by default) -->
+    
     <div id="blitz-leaderboard" class="time-control-content hidden">
-        <!-- Similar structure as bullet leaderboard with blitz data -->
+        
     </div>
     
-    <!-- Rapid Leaderboard (hidden by default) -->
+    
     <div id="rapid-leaderboard" class="time-control-content hidden">
-        <!-- Similar structure as bullet leaderboard with rapid data -->
+        
     </div>
     
-    <!-- Classic Leaderboard (hidden by default) -->
+    
     <div id="classic-leaderboard" class="time-control-content hidden">
-        <!-- Similar structure as bullet leaderboard with classic data -->
+        
     </div>
 </div>
 
