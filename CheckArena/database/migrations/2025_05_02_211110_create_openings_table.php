@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('openings', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->string('color');
             $table->text('commentary'); 
             $table->timestamps();
         });
