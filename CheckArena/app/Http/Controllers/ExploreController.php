@@ -13,9 +13,9 @@ class ExploreController extends Controller
     
 
 
-    public function index(){
+    public function index($id){
 
-        $opening = Opening::with(['openingMoves', 'openingCharacteristics'])->find(2);
+        $opening = Opening::with(['openingMoves', 'openingCharacteristics'])->find($id);
 
         if (!$opening) {
             return "Opening not found.";

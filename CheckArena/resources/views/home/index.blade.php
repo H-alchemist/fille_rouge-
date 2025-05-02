@@ -71,7 +71,7 @@
       <p class="text-xl mb-8 text-gray-400 max-w-3xl mx-auto">Set up custom games with unique rules, special positions, or classic variations. Play chess your way on CheckArena - no registration required.</p>
       <div class="flex justify-center gap-4">
         <a href="#" class="px-6 py-3 rounded font-semibold bg-blue-500 text-white hover:bg-green-600 text-lg">Create a Game</a>
-        <a href="#" class="px-6 py-3 rounded font-semibold bg-transparent text-white border border-blue-500 hover:bg-blue-500/10 text-lg">Join a Game</a>
+        {{-- <a href="#" class="px-6 py-3 rounded font-semibold bg-transparent text-white border border-blue-500 hover:bg-blue-500/10 text-lg">Join a Game</a> --}}
       </div>
     </section>
 
@@ -79,32 +79,44 @@
     <section class="bg-gray-800 rounded-lg p-6 mb-10">
       <div class="flex justify-between items-center mb-5">
         <h2 class="text-2xl text-blue-400">Openings</h2>
-        <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a>
+        {{-- <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a> --}}
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+       
         @php
-          $openings = [
-            ['name' => 'The Vienna Gambit', 'desc' => 'An aggressive opening that sacrifices a pawn for rapid development and attacking chances.', 'moves' => '1. e4 e5 2. Nc3 Nf6 3. f4'],
-            ['name' => 'The Elephant Gambit', 'desc' => 'A surprising counterattack that challenges White\'s center control from the very beginning.', 'moves' => '1. e4 e5 2. Nf3 d5'],
-            ['name' => 'The Halloween Gambit', 'desc' => 'A tricky opening where White sacrifices a knight for a strong pawn center and attacking chances.', 'moves' => '1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Nxe5'],
-            ['name' => 'The Stafford Gambit', 'desc' => 'A dangerous trap-filled gambit that can lead to quick victories with creative tactical play.', 'moves' => '1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6']
-          ];
+        function getPieceIcon($pieceNumber) {
+            $icons = [
+                1 => '♙', 3 => '♘', 4 => '♗', 2 => '♖', 5 => '♕', 6 => '♔',
+                -1 => '♟︎', -4 => '♞', -3 => '♝', -2 => '♜', -5 => '♛', -6 => '♚'
+            ];
+            return $icons[$pieceNumber] ?? '';
+        }
         @endphp
-
         @foreach ($openings as $opening)
-          <div class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md">
-            <h3 class="text-lg mb-2 font-bold text-white">{{ $opening['name'] }}</h3>
-            <p class="text-sm text-gray-300 mb-2">{{ $opening['desc'] }}</p>
-            <div class="text-xs text-blue-300 font-mono">{{ $opening['moves'] }}</div>
-          </div>
-        @endforeach
+  <a href="/explore/{{$opening->id}}" class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md poiter">
+    <h3 class="text-lg mb-2 font-bold text-white">{{ $opening->title }}</h3>
+    <p class="text-sm text-gray-300 mb-2">{{ $opening->commentary }}</p>
+
+    <!-- Display the first 5 moves -->
+    <div class="text-xs text-blue-300 font-mono">
+      @foreach ($opening->openingMoves as $move)
+        <span>
+          {{ getPieceIcon($move->piece_number) }} 
+          {{ $move->from_position }} → {{ $move->to_position }}
+        </span>
+      @endforeach
+    </div>
+  </a>
+@endforeach
+      
+
       </div>
     </section>
     <section class="bg-gray-800 rounded-lg p-6 mb-10">
       <div class="flex justify-between items-center mb-5">
         <h2 class="text-2xl text-blue-400">Tactics</h2>
-        <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a>
+        {{-- <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a> --}}
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -130,7 +142,7 @@
     <section class="bg-gray-800 rounded-lg p-6 mb-10">
       <div class="flex justify-between items-center mb-5">
         <h2 class="text-2xl text-blue-400">EndGames</h2>
-        <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a>
+        {{-- <a href="#" class="px-4 py-2 rounded font-semibold border border-blue-500 text-white hover:bg-blue-500/10">Explore More</a> --}}
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
