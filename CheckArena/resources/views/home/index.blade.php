@@ -5,6 +5,8 @@
 @section('content')
 <div class="flex flex-1">
   
+  
+  
   <aside class="w-72 bg-gray-800 border-r border-gray-700 p-5 flex flex-col">
     <div class="w-64 h-64 mb-5">
       <img src="storage/board.png" alt="Chess board in starting position" class="w-full h-full object-contain">
@@ -92,6 +94,8 @@
             ];
             return $icons[$pieceNumber] ?? '';
         }
+
+        
         @endphp
         @foreach ($openings as $opening)
   <a href="/explore/{{$opening->id}}" class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md poiter">
@@ -146,22 +150,30 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        @php
-          $openings = [
-            ['name' => 'The Vienna Gambit', 'desc' => 'An aggressive opening that sacrifices a pawn for rapid development and attacking chances.', 'moves' => '1. e4 e5 2. Nc3 Nf6 3. f4'],
-            ['name' => 'The Elephant Gambit', 'desc' => 'A surprising counterattack that challenges White\'s center control from the very beginning.', 'moves' => '1. e4 e5 2. Nf3 d5'],
-            ['name' => 'The Halloween Gambit', 'desc' => 'A tricky opening where White sacrifices a knight for a strong pawn center and attacking chances.', 'moves' => '1. e4 e5 2. Nf3 Nc6 3. Nc3 Nf6 4. Nxe5'],
-            ['name' => 'The Stafford Gambit', 'desc' => 'A dangerous trap-filled gambit that can lead to quick victories with creative tactical play.', 'moves' => '1. e4 e5 2. Nf3 Nf6 3. Nxe5 Nc6']
-          ];
-        @endphp
-
-        @foreach ($openings as $opening)
-          <div class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md">
-            <h3 class="text-lg mb-2 font-bold text-white">{{ $opening['name'] }}</h3>
-            <p class="text-sm text-gray-300 mb-2">{{ $opening['desc'] }}</p>
-            <div class="text-xs text-blue-300 font-mono">{{ $opening['moves'] }}</div>
-          </div>
-        @endforeach
+       
+    
+    @foreach ($endgames as $endgame)
+        <div class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md">
+            <h3 class="text-lg mb-2 font-bold text-white">{{ $endgame->title }}</h3>
+            <p class="text-sm text-gray-300 mb-2">{{ $endgame->commentary }}</p>
+            
+            <div class="grid grid-cols-8 gap-1 text-white text-center text-xl">
+                @php
+                    $position = json_decode($endgame->starting_position, true);
+                    $rowCount = 0;
+                @endphp
+    
+                @foreach ($position as $row)
+                    @php $rowCount++; @endphp
+                    @if ($rowCount > 2)
+                        @break
+                    @endif
+                    
+                @endforeach
+            </div>
+        </div>
+    @endforeach
+    
       </div>
     </section>
   </main>

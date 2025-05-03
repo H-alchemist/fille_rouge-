@@ -75,7 +75,7 @@ if (!empty($allData['state']['gameMoves'])) {
             'from_position' => implode(',', $move['from']), // example: "6,7"
             'to_position' => implode(',', $move['to']),     // example: "5,7"
             'piece_number' => $move['piece'], 
-            'moveNumber' => $moveNumber++,
+            'move_number' => $moveNumber++,
             'timestamp' => now(),
         ];
     }

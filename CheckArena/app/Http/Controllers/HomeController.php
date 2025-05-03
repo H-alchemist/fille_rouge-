@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Opening;
+use App\Models\EndgameTactic;
 
 class HomeController extends Controller
 {
@@ -16,8 +17,16 @@ class HomeController extends Controller
         $openings = Opening::with(['openingMoves' => function ($query) {
             $query->orderBy('id')->limit(2); 
         }])->get();
+       
+        
 
-        return view('home.index' , compact('openings'));
+        $endgames = EndgameTactic::where('type', 'endgame')->get();
+
+
+        
+
+
+        return view('home.index' , compact('openings' , 'endgames'));
     }
 
 
