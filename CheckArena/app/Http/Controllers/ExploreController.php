@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Opening;
 use App\Models\OpeningMove;
 use App\Models\OpeningCharacteristic;
+use App\Models\EndgameTactic;
 
 class ExploreController extends Controller
 {
@@ -34,6 +35,28 @@ class ExploreController extends Controller
 
     }
 
+
+    public function endgame($id){
+
+        $endgame = EndgameTactic::with(['moves', 'comments'])->find($id);
+
+        if (!$endgame) {
+            return "Opening not found.";
+        }
+
+        // Prepare moves and comments
+        $moves = $endgame->moves;
+        $comments = $endgame->comments;
+
+        return view('explore.endGame', [
+            'opening' => $endgame,
+            'moves' => $moves,
+            'comments' => $comments,
+            'openingName' => $endgame->title
+        ]);
+    
+    
+    }
 
 
 }

@@ -23,9 +23,6 @@ class HomeController extends Controller
         $endgames = EndgameTactic::where('type', 'endgame')->get();
 
 
-        
-
-
         return view('home.index' , compact('openings' , 'endgames'));
     }
 

@@ -153,7 +153,7 @@
        
     
     @foreach ($endgames as $endgame)
-        <div class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md">
+        <a href="/exploreEndGame/{{$endgame->id}}" class="bg-gray-700 rounded-lg p-4 transition hover:shadow-md">
             <h3 class="text-lg mb-2 font-bold text-white">{{ $endgame->title }}</h3>
             <p class="text-sm text-gray-300 mb-2">{{ $endgame->commentary }}</p>
             
@@ -171,7 +171,7 @@
                     
                 @endforeach
             </div>
-        </div>
+          </a>
     @endforeach
     
       </div>

@@ -40,6 +40,12 @@ Route::get('/scorBoard', ['App\Http\Controllers\ScoreController', 'index']);
 Route::get('/explore/{id}', ['App\Http\Controllers\ExploreController', 'index']);
 
 
+Route::get('/exploreEndGame/{id}', ['App\Http\Controllers\ExploreController', 'endgame']);
+
+
+
+
+
 
 
 
