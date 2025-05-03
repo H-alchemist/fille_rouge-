@@ -36,7 +36,8 @@
                     Move Comments
                 </div>
                 <h1 class="m-auto text-2xl text-blue-400">{{ $openingName }}</h1>
-                <div class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
+                <h1 class="ml-5 text-2xl font-bold  text-white">{{ $opening['type'] }}</h1>
+                  <div class="flex-1 p-4 overflow-y-auto flex flex-col gap-3">
                     @foreach($comments as $ply => $comment)
                         <div class="bg-gray-700 p-3 rounded text-sm">
                             <div class="text-gray-400 mb-1">Move {{ $ply + 1 }}:</div>
